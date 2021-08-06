@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <link
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
       rel="stylesheet"
     />
@@ -25,15 +30,23 @@
         <p class="nav-header">This Week</p>
         <p class="nav-header">Projects</p>
         <p class="nav-header">Notes</p>
-        <button class="btn add-task">+</button>
+        <button class="btn add-task">
+          <span class="material-icons icon-add-task"> add </span>
+        </button>
       </div>
 
       <div class="task-display">
-        <div class="task">
-          <div class="task-checkbox">CHECK</div>
+        <div class="task priority-low">
+          <div class="task-checkbox"></div>
           <div class="task-name">Brush teeth</div>
           <div class="task-details">Details</div>
           <div class="task-date">Aug 6th</div>
+          <div class="task-edit">
+            <span class="material-icons icon-edit"> mode_edit </span>
+          </div>
+          <div class="task-delete">
+            <span class="material-icons icon-delete"> delete </span>
+          </div>
         </div>
       </div>
     </div>
