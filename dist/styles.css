@@ -78,6 +78,8 @@ html {
 .task-display {
   padding: 4rem 2.5rem;
   flex-grow: 1;
+  overflow-y: scroll;
+  max-height: 100vh;
 }
 
 .task {
@@ -87,6 +89,7 @@ html {
   padding: 1rem;
   min-width: 500px;
   width: 100%;
+  margin: 1rem auto;
 }
 
 .priority-high {
@@ -147,4 +150,12 @@ html {
 .material-icons.icon-edit,
 .material-icons.icon-delete {
   color: rgba(0, 0, 0, 0.507);
+}
+
+.material-icons.icon-edit:hover {
+  color: var(--primary-yellow);
+}
+
+.material-icons.icon-delete:hover {
+  color: var(--primary-red);
 }
