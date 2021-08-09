@@ -8,6 +8,7 @@ export default class ModalView extends View {
 
   _btnOpen = document.querySelector('.btn.add-task');
   _btnClose = document.querySelector('.material-icons.icon--close-modal');
+  _btnSubmit = document.querySelector('.btn.submit-new');
 
   constructor() {
     super();
@@ -21,10 +22,6 @@ export default class ModalView extends View {
 
   _addHandlerCloseModal() {
     this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
-  }
-
-  addHandlerAddTask(handler) {
-    this._btnSubmit.addEventListener('click', this.uploadData.bind(this));
   }
 
   toggleWindow() {

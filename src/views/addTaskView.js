@@ -1,7 +1,6 @@
 import ModalView from './modalView';
 
 class AddTaskView extends ModalView {
-  _btnSubmit = document.querySelector('.btn.submit-new');
   _priorityLabels = document.querySelector('.new-task--task-priority-wrapper');
 
   constructor() {
@@ -9,7 +8,7 @@ class AddTaskView extends ModalView {
     this._addHandlerPriority();
   }
 
-  uploadData(e) {
+  uploadData(handler) {
     const taskTitle = this._parentElement.querySelector(
       '.new-task--task-title'
     ).value;
@@ -29,16 +28,25 @@ class AddTaskView extends ModalView {
     const validationArr = [taskTitle, taskDetails, taskDate, taskPriority];
 
     if (this._validateTask(validationArr)) {
-      console.log('success');
-      return {
+      const data = {
         title: taskTitle,
         details: taskDetails,
         date: taskDate,
         priority: taskPriority,
       };
+
+      this.toggleWindow();
+      handler(data);
     } else {
       this._renderFormError();
     }
+  }
+
+  addHandlerAddTask(handler) {
+    this._btnSubmit.addEventListener(
+      'click',
+      this.uploadData.bind(this, handler)
+    );
   }
 
   _addHandlerPriority() {

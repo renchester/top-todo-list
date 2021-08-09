@@ -1,6 +1,9 @@
 'use strict';
 
+import * as model from './model';
+
 import addTaskView from './views/addTaskView';
+import taskView from './views/taskView';
 
 // Index js for the application logic (controller)
 
@@ -45,8 +48,10 @@ class Task {
   }
 }
 
-const controlAddTask = function () {
-  console.log('This works');
+const controlAddTask = function (data) {
+  model.addTask(data);
+
+  taskView.render(model.state.tasks);
 };
 
 // const controlAddTask = function () {};
