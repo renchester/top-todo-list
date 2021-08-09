@@ -1,5 +1,7 @@
 'use strict';
 
+import addTaskView from './views/addTaskView';
+
 // Index js for the application logic (controller)
 
 class Task {
@@ -43,4 +45,14 @@ class Task {
   }
 }
 
-const controlTasks = function () {};
+const controlAddTask = function () {
+  console.log('This works');
+};
+
+// const controlAddTask = function () {};
+
+const init = function () {
+  addTaskView.addHandlerAddTask(controlAddTask);
+};
+
+init();
