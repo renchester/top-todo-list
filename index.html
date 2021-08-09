@@ -24,12 +24,12 @@
     <div class="content-wrapper">
       <div class="nav-bar">
         <div class="nav-logo">TO-DO LIST</div>
-        <p class="nav-header">Home</p>
-        <p class="nav-header">Today</p>
-        <p class="nav-header">Tomorrow</p>
-        <p class="nav-header">This Week</p>
-        <p class="nav-header">Projects</p>
-        <p class="nav-header">Notes</p>
+        <p class="nav-header header--home">Home</p>
+        <p class="nav-header header--today">Today</p>
+        <p class="nav-header header--tomorrow">Tomorrow</p>
+        <p class="nav-header header--week">This Week</p>
+        <p class="nav-header header--projects">Projects</p>
+        <p class="nav-header header--notes">Notes</p>
         <button class="btn add-task">
           <span class="material-icons icon--add-task"> add </span>
         </button>
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="modal--add-task">
+      <div class="modal--add-task hidden">
         <div class="add-task--header">
           <p class="add-task--header-content">Create a new...</p>
           <span class="material-icons icon--close-modal"> close </span>
@@ -64,7 +64,7 @@
           <div class="add-task--content">
             <!-- NEW TASK FORM  -->
 
-            <form action="" class="content-form content-form--new-task hidden">
+            <form action="" class="content-form content-form--new-task">
               <textarea
                 class="new-task--form-element new-task--task-title"
                 placeholder="Title: Go to doctor's appointment"
@@ -144,7 +144,7 @@
 
             <!--  NEW NOTE FORM -->
 
-            <form action="" class="content-form content-form--new-note">
+            <form action="" class="content-form content-form--new-note hidden">
               <textarea
                 class="new-note--form-element new-note--note-title"
                 placeholder="Title"
