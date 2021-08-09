@@ -67,12 +67,13 @@ html {
   margin: 0.75rem 0;
   color: white;
   cursor: pointer;
-  transition: all ease-in-out 100ms;
+  transition: all ease-in-out 150ms;
 }
 
 .nav-header:hover,
 .nav-header--active {
   transform: scale(1.05);
+  transform-origin: left;
 }
 
 .btn.add-task {
