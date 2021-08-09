@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="modal--add-task hidden">
+      <div class="modal--add-task">
         <div class="add-task--header">
           <p class="add-task--header-content">Create a new...</p>
           <span class="material-icons icon--close-modal"> close </span>
@@ -62,7 +62,9 @@
             <p class="sidebar--label sidebar--new-note">Note</p>
           </div>
           <div class="add-task--content">
-            <form action="" class="content-form--new-task">
+            <!-- NEW TASK FORM  -->
+
+            <form action="" class="content-form content-form--new-task hidden">
               <textarea
                 class="new-task--form-element new-task--task-title"
                 placeholder="Title: Go to doctor's appointment"
@@ -123,6 +125,38 @@
                   >High</label
                 >
               </div>
+            </form>
+
+            <!--  NEW PROJECT FORM -->
+
+            <form
+              action=""
+              class="content-form content-form--new-project hidden"
+            >
+              <textarea
+                class="new-project--form-element new-project--project-title"
+                placeholder="Project: Europe Trip 2022"
+                minlength="1"
+                maxlength="60"
+                required
+              ></textarea>
+            </form>
+
+            <!--  NEW NOTE FORM -->
+
+            <form action="" class="content-form content-form--new-note">
+              <textarea
+                class="new-note--form-element new-note--note-title"
+                placeholder="Title"
+                minlength="1"
+                maxlength="60"
+                required
+              ></textarea>
+              <textarea
+                class="new-note--form-element new-note--note-details"
+                placeholder="Details"
+                minlength="1"
+              ></textarea>
             </form>
           </div>
         </div>
