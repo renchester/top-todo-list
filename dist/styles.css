@@ -257,6 +257,7 @@ html {
 .new-task--task-title,
 .new-task--task-details {
   width: 95%;
+  padding: 0.5rem;
 }
 
 .new-task--task-title {
@@ -333,6 +334,29 @@ html {
 
 .priority-label-high.priority-label-active {
   background-color: red;
+}
+
+.new-project--project-title {
+  width: 95%;
+  padding: 0.5rem;
+}
+
+.new-project--project-title:focus {
+  outline: 2px solid var(--secondary-gray);
+}
+
+.new-note--form-element {
+  width: 95%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.new-note--form-element:focus {
+  outline: 2px solid var(--secondary-gray);
+}
+
+.new-note--note-details {
+  min-height: 150px;
 }
 
 .btn.submit-new {
