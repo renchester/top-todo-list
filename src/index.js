@@ -42,3 +42,5 @@ class Task {
     this.description = value;
   }
 }
+
+const controlTasks = function () {};
