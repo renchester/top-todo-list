@@ -67,6 +67,12 @@ html {
   margin: 0.75rem 0;
   color: white;
   cursor: pointer;
+  transition: all ease-in-out 100ms;
+}
+
+.nav-header:hover,
+.nav-header--active {
+  transform: scale(1.05);
 }
 
 .btn.add-task {
@@ -78,6 +84,16 @@ html {
   border-radius: 50%;
   height: 50px;
   width: 50px;
+  transition: all ease-in-out 100ms;
+}
+
+.btn.add-task:hover {
+  transform: scale(1.1);
+}
+
+.material-icons.icon--add-task {
+  font-size: 1.75rem;
+  color: var(--primary-blue);
 }
 
 /*  TASK DISPLAY */
@@ -319,20 +335,20 @@ html {
   border-color: red;
 }
 
-.priority-label-active {
+.priority-label--active {
   color: white;
   font-weight: 600;
 }
 
-.priority-label-low.priority-label-active {
+.priority-label-low.priority-label--active {
   background-color: green;
 }
 
-.priority-label-medium.priority-label-active {
+.priority-label-medium.priority-label--active {
   background-color: orange;
 }
 
-.priority-label-high.priority-label-active {
+.priority-label-high.priority-label--active {
   background-color: red;
 }
 
