@@ -58,6 +58,9 @@ const controlAddTask = function (data) {
 
 const controlAddProject = function (data) {
   model.addProject(data);
+
+  console.log(model.state.projects);
+  sidebarView.render(model.state.projects);
 };
 
 const init = function () {

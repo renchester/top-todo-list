@@ -40,6 +40,7 @@ class AddTaskView extends ModalView {
         details: taskDetails,
         date: taskDate,
         priority: taskPriority,
+        id: `${taskDate}--${taskTitle}`,
       };
 
       this._clearForm();
