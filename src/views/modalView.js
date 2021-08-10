@@ -8,7 +8,9 @@ export default class ModalView extends View {
   _sidebarLabels = document.querySelectorAll('.sidebar--label');
 
   _btnOpen = document.querySelector('.btn.add-task');
-  _btnClose = document.querySelector('.material-icons.icon--close-modal');
+  _btnClose = document.querySelector(
+    '.material-icons.icon--close-add-new-modal'
+  );
 
   constructor() {
     super();

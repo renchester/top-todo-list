@@ -1,11 +1,12 @@
 import View from './view';
+import detailsView from './detailsView';
 
 class TaskView extends View {
   _parentElement = document.querySelector('.task-display');
+  _taskDetails = document.querySelector('.modal--task-details');
 
   constructor() {
     super();
-    // this._addHandlerTaskDetails();
   }
 
   _generateMarkup() {
@@ -15,7 +16,9 @@ class TaskView extends View {
 
   _generateTaskMarkup(task) {
     return `
-        <div class="task priority-${task.priority.toLowerCase()}">
+        <div class="task priority-${task.priority.toLowerCase()}" data-id="${
+      task.id
+    }">
           <div class="task-checkbox"></div>
           <div class="task-title">${task.title}</div>
           <div class="task-details">Details</div>
@@ -28,15 +31,6 @@ class TaskView extends View {
           </div>
         </div>`;
   }
-
-  // _addHandlerTaskDetails() {
-  //   this._parentElement.addEventListener('click', this._showDetails.bind(this));
-  // }
-
-  // _showDetails(e) {
-  //   console.log('wtf');
-  //   // if (!e.target.classList.contains('task-details')) return;
-  // }
 }
 
 export default new TaskView();

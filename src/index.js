@@ -8,6 +8,7 @@ import addNoteView from './views/addNoteView';
 
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
+import detailsView from './views/detailsView';
 
 // Index js for the application logic (controller)
 
@@ -56,6 +57,8 @@ const controlAddTask = function (data) {
   model.addTask(data);
 
   taskView.render(model.state.tasks);
+
+  detailsView.addHandlerTaskDetails(controlShowDetails);
 };
 
 const controlAddProject = function (data) {
@@ -66,6 +69,13 @@ const controlAddProject = function (data) {
 
 const controlAddNote = function (data) {
   model.addNote(data);
+};
+
+const controlShowDetails = function (id) {
+  const taskToShow = model.state.tasks.find((task) => task.id === id);
+  console.log(taskToShow);
+
+  detailsView.render(taskToShow);
 };
 
 const init = function () {
