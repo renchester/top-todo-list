@@ -4,6 +4,8 @@ import * as model from './model';
 
 import addTaskView from './views/addTaskView';
 import addProjectView from './views/addProjectView';
+import addNoteView from './views/addNoteView';
+
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 
@@ -59,13 +61,17 @@ const controlAddTask = function (data) {
 const controlAddProject = function (data) {
   model.addProject(data);
 
-  console.log(model.state.projects);
   sidebarView.render(model.state.projects);
+};
+
+const controlAddNote = function (data) {
+  model.addNote(data);
 };
 
 const init = function () {
   addTaskView.addHandlerAddTask(controlAddTask);
   addProjectView.addHandlerAddProject(controlAddProject);
+  addNoteView.addHandlerAddNote(controlAddNote);
 };
 
 init();

@@ -15,23 +15,6 @@ export default class ModalView extends View {
     this._addHandlerModalSidebar();
   }
 
-  _addHandlerShowModal() {
-    // Shows/opens the modal
-    this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
-  }
-
-  _addHandlerCloseModal() {
-    // Closes the modal
-    this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
-  }
-
-  _addHandlerModalSidebar() {
-    // Changes the form display
-    this._sidebarLabels.forEach((el) =>
-      el.addEventListener('click', this.toggleFormDisplay.bind(this))
-    );
-  }
-
   toggleWindow() {
     // this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
@@ -52,6 +35,23 @@ export default class ModalView extends View {
     this._parentElement
       .querySelector(`.content-form--new-${formType}`)
       .classList.remove('hidden');
+  }
+
+  _addHandlerShowModal() {
+    // Shows/opens the modal
+    this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
+  }
+
+  _addHandlerCloseModal() {
+    // Closes the modal
+    this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
+  }
+
+  _addHandlerModalSidebar() {
+    // Changes the form display
+    this._sidebarLabels.forEach((el) =>
+      el.addEventListener('click', this.toggleFormDisplay.bind(this))
+    );
   }
 
   _clearForm() {
