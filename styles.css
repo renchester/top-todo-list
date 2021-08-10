@@ -175,8 +175,7 @@ html {
   text-align: left;
 }
 
-.task-edit,
-.task-delete {
+.task-display--icon-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -403,10 +402,9 @@ html {
 /*  TASK DETAILS */
 .modal--task-details {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   min-width: 400px;
@@ -441,16 +439,7 @@ html {
 
 .task-details--task-editor-wrapper {
   display: flex;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin-right: 2rem;
-  margin-bottom: 2rem;
-}
-
-.task-details--icons {
-  font-size: 1.75rem;
-  margin-right: 0.25rem;
+  justify-content: flex-end;
 }
 
 .task-details--icon-wrapper {
@@ -458,6 +447,8 @@ html {
   border: 2px solid;
   border-radius: 5px;
   padding: 0.5rem 1.5rem;
+  margin-left: 0.75rem;
+  cursor: pointer;
 }
 
 .task-details--icon-wrapper.task-edit:hover {
