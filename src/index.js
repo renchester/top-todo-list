@@ -3,6 +3,7 @@
 import * as model from './model';
 
 import addTaskView from './views/addTaskView';
+import addProjectView from './views/addProjectView';
 import taskView from './views/taskView';
 
 // Index js for the application logic (controller)
@@ -54,10 +55,13 @@ const controlAddTask = function (data) {
   taskView.render(model.state.tasks);
 };
 
-// const controlAddTask = function () {};
+const controlAddProject = function (data) {
+  model.addProject(data);
+};
 
 const init = function () {
   addTaskView.addHandlerAddTask(controlAddTask);
+  addProjectView.addHandlerAddProject(controlAddProject);
 };
 
 init();

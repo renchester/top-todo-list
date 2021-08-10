@@ -50,6 +50,8 @@ export default class ModalView extends View {
 
     this._clearForm();
 
+    this._changeBtnContent(formType);
+
     this._parentElement
       .querySelector(`.content-form--new-${formType}`)
       .classList.remove('hidden');
@@ -78,5 +80,12 @@ export default class ModalView extends View {
 
     // Clear task date
     this._parentElement.querySelector('.new-task--task-date').value = '';
+  }
+
+  _changeBtnContent(type) {
+    this._btnSubmit.textContent = `Add ${type.replace(
+      type[0],
+      type[0].toUpperCase()
+    )}`;
   }
 }
