@@ -189,11 +189,11 @@ html {
   color: rgba(0, 0, 0, 0.507);
 }
 
-.material-icons.icon--edit:hover {
+.material-icons.icon--edit.task-display--icons:hover {
   color: var(--primary-yellow);
 }
 
-.material-icons.icon--delete:hover {
+.material-icons.icon--delete.task-display--icons:hover {
   color: var(--primary-red);
 }
 
@@ -237,7 +237,7 @@ html {
   font-size: 1.2rem;
 }
 
-.material-icons.icon--close-modal {
+.material-icons.icon--close-add-new-modal {
   position: absolute;
   right: 0;
   margin-right: 1rem;
@@ -398,6 +398,78 @@ html {
   background-color: white;
   border: 2px solid var(--secondary-blue);
   color: var(--secondary-blue);
+}
+
+/*  TASK DETAILS */
+.modal--task-details {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  max-width: 60%;
+  max-height: 360px;
+  border-radius: 10px;
+  padding: 2rem;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0px 0px 5px 2px rgb(128, 128, 128);
+}
+
+.material-icons.icon--close-details-modal {
+  position: absolute;
+  right: 0;
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+.task-details--task-title {
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.task-details--task-details {
+  margin-top: 1rem;
+}
+
+.task-details--task-date-wrapper {
+  margin-top: 1rem;
+}
+
+.task-details--task-editor-wrapper {
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.task-details--icons {
+  font-size: 1.75rem;
+  margin-right: 0.25rem;
+}
+
+.task-details--icon-wrapper {
+  position: relative;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+}
+
+.task-details--icon-wrapper.task-edit:hover {
+  background-color: var(--primary-yellow);
+  border: 2px solid var(--primary-yellow);
+  color: white;
+}
+
+.task-details--icon-wrapper.task-delete:hover {
+  background-color: var(--primary-red);
+  border: 2px solid var(--primary-red);
+  color: white;
 }
 
 /*  HELPER STYLES */

@@ -39,16 +39,20 @@
       </div>
 
       <div class="task-display">
-        <div class="task priority-low">
+        <div class="task priority-low" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
           <div class="task-details">Details</div>
           <div class="task-date">Aug 6th</div>
           <div class="task-edit">
-            <span class="material-icons icon--edit"> mode_edit </span>
+            <span class="material-icons icon--edit task-display--icons">
+              mode_edit
+            </span>
           </div>
           <div class="task-delete">
-            <span class="material-icons icon--delete"> delete </span>
+            <span class="material-icons icon--delete task-display--icons">
+              delete
+            </span>
           </div>
         </div>
       </div>
@@ -56,7 +60,7 @@
       <div class="modal--add-task hidden">
         <div class="add-task--header">
           <p class="add-task--header-content">Create a new...</p>
-          <span class="material-icons icon--close-modal"> close </span>
+          <span class="material-icons icon--close-add-new-modal"> close </span>
         </div>
         <div class="add-task--display">
           <div class="add-task--sidebar">
@@ -170,7 +174,44 @@
         </div>
       </div>
 
-      <!-- <div class="modal--task-details">div.</div> -->
+      <div class="modal--task-details hidden">
+        <span class="material-icons icon--close-details-modal"> close </span>
+        <div class="task-details--task-title">Sample Task</div>
+        <div class="task-details--task-details">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+        <div class="task-details--task-date-wrapper">
+          Due date:
+          <span class="task-details--task-date">2021-08-10</span>
+        </div>
+        <div class="task-details--task-priority-wrapper">
+          Priority:
+          <span
+            class="task-details--task-priority task-details--task-priority-low"
+            >Low</span
+          >
+        </div>
+        <div class="task-details--task-editor-wrapper">
+          <div class="task-details--icon-wrapper task-edit">
+            <!-- <span class="material-icons icon--edit task-details--icons">
+              mode_edit
+            </span> -->
+            Edit
+          </div>
+          <div class="task-details--icon-wrapper task-delete">
+            <!-- <span class="material-icons icon--delete task-details--icons">
+              delete
+            </span> -->
+            Delete
+          </div>
+        </div>
+      </div>
     </div>
     <script src="main.js"></script>
   </body>
