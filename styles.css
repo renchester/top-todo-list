@@ -61,7 +61,8 @@ html {
   color: var(--primary-yellow);
 }
 
-.nav-header {
+.nav-header,
+.nav-subdiv--content.project--title {
   font-size: 1.25rem;
   padding: 0.5rem 0;
   margin: 0.75rem 0;
@@ -71,9 +72,18 @@ html {
 }
 
 .nav-header:hover,
-.nav-header--active {
+.nav-header--active,
+.nav-subdiv--content.project--title:hover {
   transform: scale(1.05);
   transform-origin: left;
+}
+
+.nav-subdiv.project--header {
+  padding-left: 1rem;
+}
+
+.nav-subdiv--content.project--title {
+  font-size: 1rem;
 }
 
 .btn.add-task {
