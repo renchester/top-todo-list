@@ -5,7 +5,7 @@ class TaskView extends View {
 
   constructor() {
     super();
-    this._addHandlerTaskDetails();
+    // this._addHandlerTaskDetails();
   }
 
   _generateMarkup() {
@@ -17,8 +17,8 @@ class TaskView extends View {
     return `
         <div class="task priority-${task.priority.toLowerCase()}">
           <div class="task-checkbox"></div>
-          <div class="task-name">${task.title}</div>
-          <div class="task-details">${task.details}</div>
+          <div class="task-title">${task.title}</div>
+          <div class="task-details">Details</div>
           <div class="task-date">${task.date}</div>
           <div class="task-edit">
             <span class="material-icons icon--edit"> mode_edit </span>
@@ -29,13 +29,14 @@ class TaskView extends View {
         </div>`;
   }
 
-  _addHandlerTaskDetails() {
-    this._parentElement.addEventListener('click', this._showDetails.bind(this));
-  }
+  // _addHandlerTaskDetails() {
+  //   this._parentElement.addEventListener('click', this._showDetails.bind(this));
+  // }
 
-  _showDetails(e) {
-    if (!e.target.classList.contains('task-details')) return;
-  }
+  // _showDetails(e) {
+  //   console.log('wtf');
+  //   // if (!e.target.classList.contains('task-details')) return;
+  // }
 }
 
 export default new TaskView();

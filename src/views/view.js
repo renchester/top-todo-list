@@ -15,7 +15,7 @@ export default class View {
     const markup = `
     <div class="error">
     <p>${message}</p>
-    </div>;`;
+    </div>`;
 
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);

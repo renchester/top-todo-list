@@ -9,12 +9,9 @@ export default class ModalView extends View {
 
   _btnOpen = document.querySelector('.btn.add-task');
   _btnClose = document.querySelector('.material-icons.icon--close-modal');
-  _btnSubmit = document.querySelector('.btn.submit-new');
 
   constructor() {
     super();
-    this._addHandlerShowModal();
-    this._addHandlerCloseModal();
     this._addHandlerModalSidebar();
   }
 
@@ -46,12 +43,12 @@ export default class ModalView extends View {
       .querySelectorAll('.content-form')
       .forEach((el) => el.classList.add('hidden'));
 
+    // Establishes which form to show
     const formType = Array.from(e.target.classList)[1].split('new-')[1];
 
     this._clearForm();
 
-    this._changeBtnContent(formType);
-
+    // Show form to display
     this._parentElement
       .querySelector(`.content-form--new-${formType}`)
       .classList.remove('hidden');
@@ -80,12 +77,5 @@ export default class ModalView extends View {
 
     // Clear task date
     this._parentElement.querySelector('.new-task--task-date').value = '';
-  }
-
-  _changeBtnContent(type) {
-    this._btnSubmit.textContent = `Add ${type.replace(
-      type[0],
-      type[0].toUpperCase()
-    )}`;
   }
 }

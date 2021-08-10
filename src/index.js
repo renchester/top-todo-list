@@ -4,6 +4,7 @@ import * as model from './model';
 
 import addTaskView from './views/addTaskView';
 import addProjectView from './views/addProjectView';
+import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 
 // Index js for the application logic (controller)

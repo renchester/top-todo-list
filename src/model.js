@@ -45,7 +45,7 @@ const persistNotes = function () {
 
 export const addTask = function (task) {
   // Add task to app state
-  state.tasks.push(task);
+  state.tasks.unshift(task);
 
   // Set to local storage
   persistTasks();
@@ -53,7 +53,7 @@ export const addTask = function (task) {
 
 export const addProject = function (project) {
   // Add project to app state
-  state.tasks.push(project);
+  state.projects.push(project);
 
   // Set to local storage
   persistProjects();
