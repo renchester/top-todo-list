@@ -212,6 +212,73 @@
           </div>
         </div>
       </div>
+
+      <div class="modal--add-task modal--task-editor">
+        <span class="material-icons icon--close-editor-modal"> close </span>
+        <input
+          class="task-editor--task-title"
+          type="text"
+          placeholder="Sample Title"
+          minlength="1"
+          maxlength="60"
+        />
+        <textarea
+          class="task-editor--task-details"
+          type="text"
+          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitati ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          maxlength="240"
+        ></textarea>
+
+        <div class="task-editor--task-date-wrapper">
+          Due date:
+          <input
+            class="task-editor--task-date"
+            type="date"
+            value="2021-08-10"
+          />
+        </div>
+
+        <div class="task-editor--task-priority-wrapper">
+          <p for="task-editor-priority">Priority:</p>
+          <input
+            type="radio"
+            class="task-editor--task-priority priority-low"
+            name="task-editor-priority"
+            value="low"
+          />
+          <label
+            for="task-editor-priority"
+            class="task-editor--task-priority-label priority-label-low"
+            >Low</label
+          >
+          <input
+            type="radio"
+            class="task-editor--task-priority priority-medium"
+            name="task-editor-priority"
+            value="medium"
+          />
+          <label
+            for="task-editor-priority"
+            class="task-editor--task-priority-label priority-label-medium"
+            >Medium</label
+          >
+          <input
+            type="radio"
+            class="task-editor--task-priority priority-high"
+            name="task-editor-priority"
+            value="high"
+          />
+          <label
+            for="task-editor-priority"
+            class="task-editor--task-priority-label priority-label-high"
+            >High</label
+          >
+        </div>
+        <div class="task-editor--task-editor-wrapper">
+          <div class="task-editor--icon-wrapper task-save">Save</div>
+          <div class="task-editor--icon-wrapper task-delete">Delete</div>
+        </div>
+      </div>
       <div class="overlay hidden"></div>
     </div>
     <script src="main.js"></script>

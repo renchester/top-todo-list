@@ -53,6 +53,12 @@ const controlDeleteTaskOnModal = function (id) {
   addHandlersToTask();
 };
 
+const controlEditTask = function (id) {
+  const taskToShow = model.state.tasks.find((task) => task.id === id);
+
+  detailsView.renderEdit(taskToShow);
+};
+
 const controlShowDetails = function (id) {
   const taskToShow = model.state.tasks.find((task) => task.id === id);
 
@@ -67,6 +73,7 @@ const init = function () {
   addNoteView.addHandlerAddNote(controlAddNote);
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
+  detailsView.addHandlerEditTask(controlEditTask);
 };
 
 init();
