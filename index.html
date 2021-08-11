@@ -197,6 +197,10 @@
             >Low</span
           >
         </div>
+        <div class="task-details--task-status-wrapper">
+          Status:
+          <span class="task-details--task-status">Completed</span>
+        </div>
         <div class="task-details--task-editor-wrapper">
           <div class="task-details--icon-wrapper task-edit">
             <!-- <span class="material-icons icon--edit task-details--icons">
@@ -274,6 +278,29 @@
             >High</label
           >
         </div>
+
+        <div class="task-editor--task-status-wrapper">
+          Status:
+          <input
+            type="radio"
+            class="task-editor--form-element task-editor--task-status"
+            name="task-editor-status"
+            value="completed"
+          />
+          <label for="task-editor-status" class="task-editor--task-status-label"
+            >Completed</label
+          >
+          <input
+            type="radio"
+            class="task-editor--form-element task-editor--task-status"
+            name="task-editor-status"
+            value=""
+          />
+          <label for="task-editor-status" class="task-editor--task-status-label"
+            >On-going</label
+          >
+        </div>
+
         <div class="task-editor--task-editor-wrapper">
           <div class="task-editor--icon-wrapper task-save">Save</div>
           <div class="task-editor--icon-wrapper task-delete">Delete</div>
