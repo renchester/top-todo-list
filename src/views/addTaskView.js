@@ -14,8 +14,6 @@ class AddTaskView extends ModalView {
   uploadData(handler, e) {
     e.preventDefault();
 
-    console.log('Upload task');
-
     const taskTitle = this._parentElement.querySelector(
       '.new-task--task-title'
     ).value;

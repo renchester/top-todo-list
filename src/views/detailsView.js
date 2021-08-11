@@ -24,9 +24,13 @@ class DetailsView extends ModalView {
   }
 
   deleteTask(handler, e) {
-    if (!e.target.classList.contains('icon--delete')) return;
-
     const id = e.target.closest('.task').dataset.id;
+
+    handler(id);
+  }
+
+  deleteTaskOnModal(handler, e) {
+    const id = e.target.closest('.modal--task-details').dataset.id;
 
     handler(id);
   }
@@ -41,12 +45,16 @@ class DetailsView extends ModalView {
 
   addHandlerDeleteTask(handler) {
     document
-      .querySelectorAll('.task')
+      .querySelectorAll('.material-icons.icon--delete.task-display--icons')
       .forEach((el) =>
         el.addEventListener('click', this.deleteTask.bind(this, handler))
       );
+  }
 
-    // document.querySelector();
+  addHandlerDeleteTaskOnModal(handler) {
+    document
+      .querySelector('.task-details--icon-wrapper.task-delete')
+      .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
   }
 
   _generateMarkup() {
@@ -82,6 +90,8 @@ class DetailsView extends ModalView {
           </div>
         </div>
     `;
+
+    this._parentElement.dataset.id = this._data.id;
 
     return markup;
   }

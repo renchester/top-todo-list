@@ -12,6 +12,74 @@ import detailsView from './views/detailsView';
 
 // Index js for the application logic (controller)
 
+const controlAddTask = function (data) {
+  model.addTask(data);
+
+  taskView.render(model.state.tasks);
+
+  addHandlersToTask();
+};
+
+const controlAddProject = function (data) {
+  model.addProject(data);
+
+  sidebarView.render(model.state.projects);
+};
+
+const controlAddNote = function (data) {
+  model.addNote(data);
+};
+
+const controlShowTasks = function () {
+  taskView.render(model.state.tasks);
+  sidebarView.render(model.state.projects);
+};
+
+const controlDeleteTask = function (id) {
+  model.deleteTask(id);
+
+  taskView.render(model.state.tasks);
+
+  addHandlersToTask();
+};
+
+const controlDeleteTaskOnModal = function (id) {
+  model.deleteTask(id);
+
+  detailsView.toggleWindow();
+
+  taskView.render(model.state.tasks);
+
+  addHandlersToTask();
+};
+
+const controlShowDetails = function (id) {
+  const taskToShow = model.state.tasks.find((task) => task.id === id);
+
+  detailsView.render(taskToShow);
+  detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
+};
+
+const init = function () {
+  controlShowTasks();
+  addTaskView.addHandlerAddTask(controlAddTask);
+  addProjectView.addHandlerAddProject(controlAddProject);
+  addNoteView.addHandlerAddNote(controlAddNote);
+  detailsView.addHandlerTaskDetails(controlShowDetails);
+  detailsView.addHandlerDeleteTask(controlDeleteTask);
+};
+
+init();
+
+//  HELPER FUNCTIONS
+
+function addHandlersToTask() {
+  detailsView.addHandlerTaskDetails(controlShowDetails);
+  detailsView.addHandlerDeleteTask(controlDeleteTask);
+}
+
+/*
+
 class Task {
   constructor(name, date, priority, description) {
     this.name = name;
@@ -53,57 +121,4 @@ class Task {
   }
 }
 
-const controlAddTask = function (data) {
-  model.addTask(data);
-
-  taskView.render(model.state.tasks);
-
-  addHandlersToTask();
-};
-
-const controlAddProject = function (data) {
-  model.addProject(data);
-
-  sidebarView.render(model.state.projects);
-};
-
-const controlAddNote = function (data) {
-  model.addNote(data);
-};
-
-const controlShowDetails = function (id) {
-  const taskToShow = model.state.tasks.find((task) => task.id === id);
-
-  detailsView.render(taskToShow);
-};
-
-const controlShowTasks = function () {
-  taskView.render(model.state.tasks);
-  sidebarView.render(model.state.projects);
-};
-
-const controlDeleteTask = function (id) {
-  model.deleteTask(id);
-
-  taskView.render(model.state.tasks);
-
-  addHandlersToTask();
-};
-
-const init = function () {
-  controlShowTasks();
-  addTaskView.addHandlerAddTask(controlAddTask);
-  addProjectView.addHandlerAddProject(controlAddProject);
-  addNoteView.addHandlerAddNote(controlAddNote);
-  detailsView.addHandlerTaskDetails(controlShowDetails);
-  detailsView.addHandlerDeleteTask(controlDeleteTask);
-};
-
-init();
-
-//  HELPER FUNCTIONS
-
-function addHandlersToTask() {
-  detailsView.addHandlerTaskDetails(controlShowDetails);
-  detailsView.addHandlerDeleteTask(controlDeleteTask);
-}
+*/
