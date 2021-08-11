@@ -73,7 +73,17 @@ const controlShowDetails = function (id) {
   const taskToShow = model.state.tasks.find((task) => task.id === id);
 
   detailsView.render(taskToShow);
+
   detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
+};
+
+const controlToggleCompleted = function (id) {
+  const taskToMark = model.state.tasks.find((task) => task.id === id);
+
+  model.toggleTaskComplete(id);
+
+  controlShowTasks();
+  addHandlersToTask();
 };
 
 const init = function () {
@@ -84,6 +94,7 @@ const init = function () {
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
+  taskView.addHandlerToggleCompleted(controlToggleCompleted);
 };
 
 init();
@@ -94,6 +105,7 @@ function addHandlersToTask() {
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
+  taskView.addHandlerToggleCompleted(controlToggleCompleted);
 }
 
 /*

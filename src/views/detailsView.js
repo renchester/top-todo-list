@@ -75,6 +75,17 @@ class DetailsView extends ModalView {
             >${this._data.priority}</span
           >
         </div>
+
+        <div class="task-details--task-status-wrapper">
+          Status:
+          <span
+            class="task-details--task-status"
+            >${
+              this._data.status === 'completed' ? 'Completed' : 'On-going'
+            }</span
+          >
+        </div>
+
         <div class="task-details--task-editor-wrapper">
           <div class="task-details--icon-wrapper task-edit">
             <!-- <span class="material-icons icon--edit task-details--icons">

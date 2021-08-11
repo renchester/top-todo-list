@@ -19,8 +19,12 @@ class TaskView extends View {
         <div class="task priority-${task.priority.toLowerCase()}" data-id="${
       task.id
     }">
-          <div class="task-checkbox"></div>
-          <div class="task-title">${task.title}</div>
+          <div class="task-checkbox ${
+            task.status === 'completed' ? 'task-checkbox--checked' : ''
+          }"></div>
+          <div class="task-title ${
+            task.status === 'completed' ? 'task--completed' : ''
+          }">${task.title}</div>
           <div class="task-details">Details</div>
           <div class="task-date">${task.date}</div>
           <div class="task-display--icon-wrapper task-edit">
@@ -30,6 +34,27 @@ class TaskView extends View {
             <span class="material-icons icon--delete task-display--icons"> delete </span>
           </div>
         </div>`;
+  }
+
+  toggleCompleted(handler, e) {
+    if (!e.target.classList.contains('task-checkbox')) return;
+
+    const taskToMark = e.target.closest('.task');
+    const id = taskToMark.dataset.id;
+
+    e.target.classList.toggle('task-checkbox--checked');
+
+    taskToMark.querySelector('.task-title').classList.toggle('task--completed');
+
+    handler(id);
+  }
+
+  addHandlerToggleCompleted(handler) {
+    document
+      .querySelectorAll('.task')
+      .forEach((el) =>
+        el.addEventListener('click', this.toggleCompleted.bind(this, handler))
+      );
   }
 }
 

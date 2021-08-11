@@ -43,7 +43,19 @@ class EditTaskView extends ModalView {
       '.priority-label--active'
     )?.textContent;
 
-    const validationArr = [taskTitle, taskDetails, taskDate, taskPriority];
+    const taskStatus = this._parentElement.querySelector(
+      '.task-editor--task-status'
+    ).value;
+
+    console.log(taskStatus);
+
+    const validationArr = [
+      taskTitle,
+      taskDetails,
+      taskDate,
+      taskPriority,
+      taskStatus,
+    ];
 
     if (this._validateTask(validationArr)) {
       const data = {
@@ -51,6 +63,7 @@ class EditTaskView extends ModalView {
         details: taskDetails,
         date: taskDate,
         priority: taskPriority,
+        status: taskStatus,
         id: `${taskDate}--${taskTitle}`,
       };
 
@@ -158,6 +171,33 @@ class EditTaskView extends ModalView {
             >High</label
           >
         </div>
+
+        <div class="task-editor--task-status-wrapper">
+          Status:
+          <input
+            type="radio"
+            class="task-editor--form-element task-editor--task-status"
+            name="task-editor-status"
+            value="completed"
+            ${this._data.status === 'completed' ? 'checked' : ''}
+          />
+          <label for="task-editor-status" class="task-editor--task-status-label"
+            >Completed</label
+          >
+          <input
+            type="radio"
+            class="task-editor--form-element task-editor--task-status"
+            name="task-editor-status"
+            value=""
+            ${this._data.status === 'completed' ? '' : 'checked'}
+          />
+          <label for="task-editor-status" class="task-editor--task-status-label"
+            >On-going</label
+          >
+        </div>
+
+
+
         <div class="task-editor--task-editor-wrapper">
           <div class="task-editor--icon-wrapper task-save">Save</div>
           <div class="task-editor--icon-wrapper task-delete">Delete</div>
@@ -183,8 +223,8 @@ class EditTaskView extends ModalView {
   }
 
   _validateTask(arr) {
-    const [title, details, date, priority] = arr;
-    if (!title || !date || !priority) {
+    const [title, _, date, priority, status] = arr;
+    if (!title || !date || !priority || !status) {
       return false;
     } else return true;
   }

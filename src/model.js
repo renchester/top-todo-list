@@ -81,6 +81,15 @@ export const updateTask = function (id, replacement) {
   persistTasks();
 };
 
+export const toggleTaskComplete = function (id) {
+  const index = state.tasks.findIndex((el) => el.id === id);
+
+  state.tasks[index].status =
+    state.tasks[index].status === 'completed' ? '' : 'completed';
+
+  persistTasks();
+};
+
 const init = function () {
   const localTasks = localStorage.getItem('tasks');
   const localProjects = localStorage.getItem('projects');
