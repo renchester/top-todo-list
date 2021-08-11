@@ -213,6 +213,7 @@ html {
   margin: auto;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgb(128, 128, 128);
+  z-index: 2;
 }
 
 .add-task--display {
@@ -415,6 +416,7 @@ html {
   margin: auto;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgb(128, 128, 128);
+  z-index: 2;
 }
 
 .material-icons.icon--close-details-modal {
@@ -467,4 +469,14 @@ html {
 
 .hidden {
   display: none;
+}
+
+.overlay {
+  position: absolute;
+  background-color: rgba(22, 22, 22, 0.25);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* cursor: pointer; */
 }
