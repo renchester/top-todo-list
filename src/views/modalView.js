@@ -6,6 +6,7 @@ export default class ModalView extends View {
   _parentElement = document.querySelector('.add-task--content');
   _window = document.querySelector('.modal--add-task');
   _sidebarLabels = document.querySelectorAll('.sidebar--label');
+  _overlay = document.querySelector('.overlay');
 
   _btnOpen = document.querySelector('.btn.add-task');
   _btnClose = document.querySelector(
@@ -18,7 +19,7 @@ export default class ModalView extends View {
   }
 
   toggleWindow() {
-    // this._overlay.classList.toggle('hidden');
+    this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
   }
 
@@ -47,6 +48,7 @@ export default class ModalView extends View {
   _addHandlerCloseModal() {
     // Closes the modal
     this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
+    // this._overlay.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   _addHandlerModalSidebar() {
