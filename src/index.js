@@ -78,10 +78,16 @@ const controlShowDetails = function (id) {
   detailsView.render(taskToShow);
 };
 
+const controlShowTasks = function () {
+  taskView.render(model.state.tasks);
+  sidebarView.render(model.state.projects);
+};
+
 const init = function () {
   addTaskView.addHandlerAddTask(controlAddTask);
   addProjectView.addHandlerAddProject(controlAddProject);
   addNoteView.addHandlerAddNote(controlAddNote);
+  controlShowTasks();
 };
 
 init();

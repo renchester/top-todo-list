@@ -23,11 +23,11 @@ class TaskView extends View {
           <div class="task-title">${task.title}</div>
           <div class="task-details">Details</div>
           <div class="task-date">${task.date}</div>
-          <div class="task-edit">
-            <span class="material-icons icon--edit"> mode_edit </span>
+          <div class="task-display--icon-wrapper task-edit">
+            <span class="material-icons icon--edit task-display--icons"> mode_edit </span>
           </div>
-          <div class="task-delete">
-            <span class="material-icons icon--delete"> delete </span>
+          <div class="task-display--icon-wrapper task-delete">
+            <span class="material-icons icon--delete task-display--icons"> delete </span>
           </div>
         </div>`;
   }

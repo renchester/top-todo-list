@@ -67,6 +67,25 @@ export const addNote = function (note) {
   persistNotes();
 };
 
+const init = function () {
+  const localTasks = localStorage.getItem('tasks');
+  const localProjects = localStorage.getItem('projects');
+  const localNotes = localStorage.getItem('notes');
+
+  if (localTasks) {
+    state.tasks = JSON.parse(localTasks);
+  }
+
+  if (localProjects) {
+    state.projects = JSON.parse(localProjects);
+  }
+
+  if (localNotes) {
+    state.notes = JSON.parse(localNotes);
+  }
+};
+init();
+
 /*
 export const deleteTask = function (id) {
   const index = state.tasks.findIndex((el) => el.id === id);
