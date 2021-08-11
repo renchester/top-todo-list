@@ -35,17 +35,6 @@ class DetailsView extends ModalView {
     handler(id);
   }
 
-  editTask(handler, e) {
-    const id = e.target.closest('.task').dataset.id;
-
-    this.toggleWindow();
-
-    handler(id);
-
-    this._btnClose = document.querySelector('.icon--close-details-modal');
-    this._addHandlerCloseModal();
-  }
-
   addHandlerTaskDetails(handler) {
     document
       .querySelectorAll('.task')
@@ -66,14 +55,6 @@ class DetailsView extends ModalView {
     document
       .querySelector('.task-details--icon-wrapper.task-delete')
       .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
-  }
-
-  addHandlerEditTask(handler) {
-    document
-      .querySelectorAll('.material-icons.icon--edit.task-display--icons')
-      .forEach((el) =>
-        el.addEventListener('click', this.editTask.bind(this, handler))
-      );
   }
 
   _generateMarkup() {
@@ -108,46 +89,6 @@ class DetailsView extends ModalView {
             Delete
           </div>
         </div>
-    `;
-
-    this._parentElement.dataset.id = this._data.id;
-
-    return markup;
-  }
-
-  renderEdit(data) {
-    this._data = data;
-    const markup = this._generateEditMarkup();
-
-    this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  _generateEditMarkup() {
-    const markup = `
-      <div class="modal--task-editor">
-        <span class="material-icons icon--close-details-modal"> close </span>
-        <div class="task-details--task-title">${this._data.title}</div>
-        <div class="task-details--task-details">
-          ${this._data.details}
-        </div>
-        <div class="task-details--task-date-wrapper">
-          Due date:
-          <span class="task-details--task-date">${this._data.date}</span>
-        </div>
-        <div class="task-details--task-priority-wrapper">
-          Priority:
-          <span
-            class="task-details--task-priority task-details--task-priority-${this._data.priority.toLowerCase()}"
-            >${this._data.priority}</span
-          >
-        </div>
-        <div class="task-details--task-editor-wrapper">
-          <div class="task-details--icon-wrapper task-delete">
-            Delete
-          </div>
-        </div>
-      </div>
     `;
 
     this._parentElement.dataset.id = this._data.id;

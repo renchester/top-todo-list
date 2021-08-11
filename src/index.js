@@ -9,6 +9,7 @@ import addNoteView from './views/addNoteView';
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
+import editTaskView from './views/editTaskView';
 
 // Index js for the application logic (controller)
 
@@ -53,10 +54,19 @@ const controlDeleteTaskOnModal = function (id) {
   addHandlersToTask();
 };
 
-const controlEditTask = function (id) {
-  const taskToShow = model.state.tasks.find((task) => task.id === id);
+const controlSaveEditTask = function (id, replacement) {
+  model.updateTask(id, replacement);
 
-  detailsView.renderEdit(taskToShow);
+  controlShowTasks();
+  addHandlersToTask();
+};
+
+const controlEditTask = function (id) {
+  const taskToEdit = model.state.tasks.find((task) => task.id === id);
+
+  editTaskView.render(taskToEdit);
+
+  editTaskView.addHandlerSaveEdit(controlSaveEditTask);
 };
 
 const controlShowDetails = function (id) {
@@ -73,7 +83,7 @@ const init = function () {
   addNoteView.addHandlerAddNote(controlAddNote);
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
-  detailsView.addHandlerEditTask(controlEditTask);
+  editTaskView.addHandlerShowEditor(controlEditTask);
 };
 
 init();
@@ -83,6 +93,7 @@ init();
 function addHandlersToTask() {
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
+  editTaskView.addHandlerShowEditor(controlEditTask);
 }
 
 /*
