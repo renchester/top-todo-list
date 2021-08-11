@@ -69,6 +69,7 @@ const controlEditTask = function (id) {
 
   editTaskView.addHandlerSaveEdit(controlSaveEditTask);
   editTaskView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
+  editTaskView.addHandlerPriority();
 };
 
 const controlShowDetails = function (id) {
@@ -77,6 +78,7 @@ const controlShowDetails = function (id) {
   detailsView.render(taskToShow);
 
   detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
+  detailsView.addHandlerEditTask(controlEditTask);
 };
 
 const controlToggleCompleted = function (id) {

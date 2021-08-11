@@ -23,6 +23,14 @@ class DetailsView extends ModalView {
     this._addHandlerCloseModal();
   }
 
+  allowTaskEdit(handler, e) {
+    const id = e.target.closest('.modal--task-details').dataset.id;
+
+    this._clear();
+
+    handler(id);
+  }
+
   deleteTask(handler, e) {
     const id = e.target.closest('.task').dataset.id;
 
@@ -41,6 +49,12 @@ class DetailsView extends ModalView {
       .forEach((el) =>
         el.addEventListener('click', this.showDetails.bind(this, handler))
       );
+  }
+
+  addHandlerEditTask(handler) {
+    document
+      .querySelector('.task-details--icon-wrapper.task-edit')
+      .addEventListener('click', this.allowTaskEdit.bind(this, handler));
   }
 
   addHandlerDeleteTask(handler) {

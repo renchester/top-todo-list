@@ -23,7 +23,7 @@ class EditTaskView extends ModalView {
 
     this._btnClose = document.querySelector('.icon--close-editor-modal');
     this._addHandlerCloseModal();
-    this._addHandlerPriority();
+    this.addHandlerPriority();
   }
 
   saveEdit(handler, e) {
@@ -44,7 +44,7 @@ class EditTaskView extends ModalView {
     )?.textContent;
 
     const taskStatus = this._parentElement.querySelector(
-      '.task-editor--task-status'
+      '.task-editor--task-status:checked'
     ).value;
 
     const validationArr = [
@@ -99,7 +99,7 @@ class EditTaskView extends ModalView {
       .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
   }
 
-  _addHandlerPriority() {
+  addHandlerPriority() {
     document
       .querySelector('.task-editor--task-priority-wrapper')
       .addEventListener('click', this._togglePriority.bind(this));
@@ -234,13 +234,17 @@ class EditTaskView extends ModalView {
 
   _validateTask(arr) {
     const [title, _, date, priority, status] = arr;
-    if (!title || !date || !priority || !status) {
+    if (!title || !date || !priority) {
       return false;
     } else return true;
   }
 
   _clearForm() {
     this._parentElement.querySelectorAll('.task-editor--form-element');
+  }
+
+  _renderFormError() {
+    console.log('form error');
   }
 }
 
