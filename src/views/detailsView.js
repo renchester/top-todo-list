@@ -15,8 +15,6 @@ class DetailsView extends ModalView {
 
     const id = e.target.closest('.task').dataset.id;
 
-    // this._parentElement.classList.remove('hidden');
-
     this.toggleWindow();
 
     handler(id);
@@ -25,12 +23,30 @@ class DetailsView extends ModalView {
     this._addHandlerCloseModal();
   }
 
+  deleteTask(handler, e) {
+    if (!e.target.classList.contains('icon--delete')) return;
+
+    const id = e.target.closest('.task').dataset.id;
+
+    handler(id);
+  }
+
   addHandlerTaskDetails(handler) {
     document
       .querySelectorAll('.task')
       .forEach((el) =>
         el.addEventListener('click', this.showDetails.bind(this, handler))
       );
+  }
+
+  addHandlerDeleteTask(handler) {
+    document
+      .querySelectorAll('.task')
+      .forEach((el) =>
+        el.addEventListener('click', this.deleteTask.bind(this, handler))
+      );
+
+    // document.querySelector();
   }
 
   _generateMarkup() {

@@ -67,6 +67,13 @@ export const addNote = function (note) {
   persistNotes();
 };
 
+export const deleteTask = function (id) {
+  const index = state.tasks.findIndex((el) => el.id === id);
+  state.tasks.splice(index, 1);
+
+  persistTasks();
+};
+
 const init = function () {
   const localTasks = localStorage.getItem('tasks');
   const localProjects = localStorage.getItem('projects');
@@ -85,12 +92,3 @@ const init = function () {
   }
 };
 init();
-
-/*
-export const deleteTask = function (id) {
-  const index = state.tasks.findIndex((el) => el.id === id);
-  state.tasks.splice(index, 1);
-
-  persistTasks();
-};
-*/

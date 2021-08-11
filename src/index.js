@@ -58,7 +58,7 @@ const controlAddTask = function (data) {
 
   taskView.render(model.state.tasks);
 
-  detailsView.addHandlerTaskDetails(controlShowDetails);
+  addHandlersToTask();
 };
 
 const controlAddProject = function (data) {
@@ -73,7 +73,6 @@ const controlAddNote = function (data) {
 
 const controlShowDetails = function (id) {
   const taskToShow = model.state.tasks.find((task) => task.id === id);
-  console.log(taskToShow);
 
   detailsView.render(taskToShow);
 };
@@ -83,11 +82,28 @@ const controlShowTasks = function () {
   sidebarView.render(model.state.projects);
 };
 
+const controlDeleteTask = function (id) {
+  model.deleteTask(id);
+
+  taskView.render(model.state.tasks);
+
+  addHandlersToTask();
+};
+
 const init = function () {
+  controlShowTasks();
   addTaskView.addHandlerAddTask(controlAddTask);
   addProjectView.addHandlerAddProject(controlAddProject);
   addNoteView.addHandlerAddNote(controlAddNote);
-  controlShowTasks();
+  detailsView.addHandlerTaskDetails(controlShowDetails);
+  detailsView.addHandlerDeleteTask(controlDeleteTask);
 };
 
 init();
+
+//  HELPER FUNCTIONS
+
+function addHandlersToTask() {
+  detailsView.addHandlerTaskDetails(controlShowDetails);
+  detailsView.addHandlerDeleteTask(controlDeleteTask);
+}
