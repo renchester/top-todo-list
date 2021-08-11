@@ -47,8 +47,6 @@ class EditTaskView extends ModalView {
       '.task-editor--task-status'
     ).value;
 
-    console.log(taskStatus);
-
     const validationArr = [
       taskTitle,
       taskDetails,
@@ -75,6 +73,12 @@ class EditTaskView extends ModalView {
     }
   }
 
+  deleteTaskOnModal(handler, e) {
+    const id = e.target.closest('.modal--task-details').dataset.id;
+
+    handler(id);
+  }
+
   addHandlerShowEditor(handler) {
     document
       .querySelectorAll('.material-icons.icon--edit.task-display--icons')
@@ -87,6 +91,12 @@ class EditTaskView extends ModalView {
     document
       .querySelector('.task-editor--icon-wrapper.task-save')
       .addEventListener('click', this.saveEdit.bind(this, handler));
+  }
+
+  addHandlerDeleteTaskOnModal(handler) {
+    document
+      .querySelector('.task-editor--icon-wrapper.task-delete')
+      .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
   }
 
   _addHandlerPriority() {

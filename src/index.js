@@ -10,6 +10,7 @@ import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
 import editTaskView from './views/editTaskView';
+import modalView from './views/modalView';
 
 // Index js for the application logic (controller)
 
@@ -67,6 +68,7 @@ const controlEditTask = function (id) {
   editTaskView.render(taskToEdit);
 
   editTaskView.addHandlerSaveEdit(controlSaveEditTask);
+  editTaskView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
 };
 
 const controlShowDetails = function (id) {
