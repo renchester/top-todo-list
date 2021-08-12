@@ -1,5 +1,4 @@
 import ModalView from './modalView';
-import AddTaskView from './addTaskView';
 
 class AddProjectView extends ModalView {
   _btnSubmit = document.querySelector('.btn--submit.submit--new-project');

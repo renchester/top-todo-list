@@ -26,7 +26,7 @@ const controlAddTask = function (data) {
 const controlAddProject = function (data) {
   model.addProject(data);
 
-  sidebarView.render(model.state.projects);
+  sidebarView.render(model.state.projects.slice(1));
 };
 
 const controlAddNote = function (data) {
@@ -35,7 +35,7 @@ const controlAddNote = function (data) {
 
 const controlShowTasks = function () {
   taskView.render(model.state.tasks);
-  sidebarView.render(model.state.projects);
+  sidebarView.render(model.state.projects.slice(1));
 };
 
 const controlDeleteTask = function (id) {
@@ -91,18 +91,22 @@ const controlToggleCompleted = function (id) {
   addHandlersToTask();
 };
 
-const controlShowProject = function (title) {};
+const controlShowProjectsOnForm = function () {
+  console.log('show projects');
+  addTaskView.renderProjectOptions(model.state.projects);
+};
 
 const init = function () {
   controlShowTasks();
   addTaskView.addHandlerAddTask(controlAddTask);
+  addTaskView.addHandlerRenderProjectsOnForm(controlShowProjectsOnForm);
   addProjectView.addHandlerAddProject(controlAddProject);
   addNoteView.addHandlerAddNote(controlAddNote);
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
-  sidebarView.addHandlerShowProject(controlShowProject);
+  // sidebarView.addHandlerShowProject(controlShowProject);
 };
 
 init();

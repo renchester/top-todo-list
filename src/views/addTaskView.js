@@ -30,6 +30,9 @@ class AddTaskView extends ModalView {
       '.priority-label--active'
     )?.textContent;
 
+    const taskProject =
+      this._parentElement.querySelector('#new-task-project').value;
+
     const validationArr = [taskTitle, taskDetails, taskDate, taskPriority];
 
     if (this._validateTask(validationArr)) {
@@ -38,6 +41,7 @@ class AddTaskView extends ModalView {
         details: taskDetails,
         date: taskDate,
         priority: taskPriority,
+        project: taskProject,
         id: `${taskDate}--${taskTitle}`,
       };
 
@@ -82,6 +86,40 @@ class AddTaskView extends ModalView {
 
   _renderFormError() {
     console.log('error');
+  }
+
+  renderProjectOptions(projectsArr) {
+    const markup = this._generateProjOptionsMarkup(projectsArr);
+
+    this._clearProjectOptions();
+
+    document
+      .querySelector('#new-task-project')
+      .insertAdjacentHTML('afterbegin', markup);
+  }
+
+  _generateProjOptionsMarkup(projectsArr) {
+    const markupArr = [];
+
+    projectsArr.slice(1).forEach((project) =>
+      markupArr.push(`
+      <option value="${project.title}">${project.title}</option>
+    `)
+    );
+
+    return markupArr.join('');
+  }
+
+  _clearProjectOptions() {
+    document.querySelector('#new-task-project').innerHTML = `
+    <option value="Home">Home</option>
+    `;
+  }
+
+  addHandlerRenderProjectsOnForm(handler) {
+    this._btnOpen.addEventListener('click', function (e) {
+      handler();
+    });
   }
 }
 

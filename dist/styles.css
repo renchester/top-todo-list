@@ -75,16 +75,20 @@ html {
 .nav-header:hover,
 .nav-header--active,
 .nav-subdiv--content.project--title:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
   transform-origin: left;
 }
 
 .nav-subdiv.project--header {
   padding-left: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .nav-subdiv--content.project--title {
   font-size: 1rem;
+  max-width: 140px;
 }
 
 .btn.add-task {
@@ -187,6 +191,17 @@ html {
   align-items: center;
   margin-right: 0.75rem;
   cursor: pointer;
+}
+
+.task-display--project-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  /* background-color: var(--secondary-gray);
+  color: white; */
+  color: var(--secondary-blue);
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
 }
 
 .material-icons.icon--edit,
@@ -300,7 +315,7 @@ html {
 }
 
 .new-task--task-details {
-  min-height: 150px;
+  min-height: 120px;
   margin-bottom: 1rem;
 }
 
@@ -339,6 +354,14 @@ html {
   cursor: pointer;
 }
 
+.new-task--task-project-wrapper {
+  margin-top: 1rem;
+}
+
+#new-task-project {
+  cursor: pointer;
+}
+
 .new-project--project-title {
   width: 95%;
   padding: 0.5rem;
@@ -371,6 +394,7 @@ html {
   background-color: white;
   border: 2px solid var(--secondary-blue);
   color: var(--secondary-blue);
+  cursor: pointer;
 }
 
 /*  TASK DETAILS */

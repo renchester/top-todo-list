@@ -3,7 +3,11 @@
 export const state = {
   tasks: [],
   notes: [],
-  projects: [],
+  projects: [
+    {
+      title: 'Home',
+    },
+  ],
   currTask: {},
   currNote: {},
 };
