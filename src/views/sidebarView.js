@@ -19,6 +19,13 @@ class SidebarView extends View {
     <p class="nav-subdiv--content project--title">${project.title}</p>`;
     return markup;
   }
+
+  addHandlerShowProject(handler) {
+    this._window.addEventListener('click', function (e) {
+      if (!e.target.classList.contains('project--title')) return;
+      console.log('hi');
+    });
+  }
 }
 
 export default new SidebarView();

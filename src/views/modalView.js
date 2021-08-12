@@ -15,29 +15,11 @@ export default class ModalView extends View {
 
   constructor() {
     super();
-    this._addHandlerModalSidebar();
   }
 
   toggleWindow() {
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
-  }
-
-  toggleFormDisplay(e) {
-    // Hides all forms
-    this._parentElement
-      .querySelectorAll('.content-form')
-      .forEach((el) => el.classList.add('hidden'));
-
-    // Establishes which form to show
-    const formType = Array.from(e.target.classList)[1].split('new-')[1];
-
-    this._clearForm();
-
-    // Show form to display
-    this._parentElement
-      .querySelector(`.content-form--new-${formType}`)
-      .classList.remove('hidden');
   }
 
   _addHandlerShowModal() {
@@ -49,13 +31,6 @@ export default class ModalView extends View {
     // Closes the modal
     this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
     // this._overlay.addEventListener('click', this.toggleWindow.bind(this));
-  }
-
-  _addHandlerModalSidebar() {
-    // Changes the form display
-    this._sidebarLabels.forEach((el) =>
-      el.addEventListener('click', this.toggleFormDisplay.bind(this))
-    );
   }
 
   _clearForm() {
@@ -80,6 +55,8 @@ export default class ModalView extends View {
       .forEach((el) => el.classList.remove('priority-label--active'));
 
     // Clear task date
-    this._parentElement.querySelector('.new-task--task-date').value = '';
+    if (this._parentElement.querySelector('.new-task--task-date')) {
+      this._parentElement.querySelector('.new-task--task-date').value = '';
+    }
   }
 }

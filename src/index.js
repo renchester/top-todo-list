@@ -10,6 +10,7 @@ import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
 import editTaskView from './views/editTaskView';
+import formView from './views/formView';
 import modalView from './views/modalView';
 
 // Index js for the application logic (controller)
@@ -90,6 +91,8 @@ const controlToggleCompleted = function (id) {
   addHandlersToTask();
 };
 
+const controlShowProject = function (title) {};
+
 const init = function () {
   controlShowTasks();
   addTaskView.addHandlerAddTask(controlAddTask);
@@ -99,6 +102,7 @@ const init = function () {
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
+  sidebarView.addHandlerShowProject(controlShowProject);
 };
 
 init();
