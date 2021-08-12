@@ -25,9 +25,9 @@
       <div class="nav-bar">
         <div class="nav-logo">TO-DO LIST</div>
         <p class="nav-header header--home">Home</p>
-        <p class="nav-header header--today">Today</p>
+        <!-- <p class="nav-header header--today">Today</p>
         <p class="nav-header header--tomorrow">Tomorrow</p>
-        <p class="nav-header header--week">This Week</p>
+        <p class="nav-header header--week">This Week</p> -->
         <p class="nav-header header--projects">Projects</p>
         <div class="nav-subdiv project--header">
           <p class="nav-subdiv--content project--title">Example Project</p>
@@ -39,7 +39,29 @@
       </div>
 
       <div class="task-display">
-        <div class="task priority-low" data-id="Sample Task">
+        <!--  TASKS -->
+
+        <div class="task priority-low hidden" data-id="Sample Task">
+          <div class="task-checkbox"></div>
+          <div class="task-title">Sample Task</div>
+          <div class="task-details">Details</div>
+          <div class="task-date">Aug 6th</div>
+          <div class="task-display--icon-wrapper task-edit">
+            <span class="material-icons icon--edit task-display--icons">
+              mode_edit
+            </span>
+          </div>
+          <div class="task-display--icon-wrapper task-delete">
+            <span class="material-icons icon--delete task-display--icons">
+              delete
+            </span>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+
+        <div class="task-display--project-title hidden">Example Project</div>
+        <div class="task priority-low hidden" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
           <div class="task-details">Details</div>
@@ -131,6 +153,13 @@
                   class="new-task--task-priority-label priority-label-high"
                   >High</label
                 >
+              </div>
+
+              <div class="new-task--task-project-wrapper">
+                <label for="new-task-project">Project:</label>
+                <select name="new-task-project" id="new-task-project">
+                  <option value="Home">Home</option>
+                </select>
               </div>
               <button class="btn--submit submit--new-task">Add Task</button>
             </form>
