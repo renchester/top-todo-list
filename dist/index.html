@@ -41,7 +41,7 @@
       <div class="task-display">
         <!--  TASKS -->
 
-        <div class="task priority-low hidden" data-id="Sample Task">
+        <div class="task priority-low" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
           <div class="task-details">Details</div>
@@ -209,11 +209,6 @@
         <div class="task-details--task-details">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
         </div>
         <div class="task-details--task-date-wrapper">
           Due date:
@@ -229,6 +224,10 @@
         <div class="task-details--task-status-wrapper">
           Status:
           <span class="task-details--task-status">Completed</span>
+        </div>
+        <div class="task-details--task-project-wrapper">
+          Project:
+          <span class="task-details--task-project">Home</span>
         </div>
         <div class="task-details--task-editor-wrapper">
           <div class="task-details--icon-wrapper task-edit">
@@ -246,7 +245,7 @@
         </div>
       </div>
 
-      <!-- <div class="modal--task-details modal--task-editor">
+      <div class="modal--task-details modal--task-editor hidden">
         <span class="material-icons icon--close-editor-modal"> close </span>
         <input
           class="task-editor--form-element task-editor--task-title"
@@ -308,6 +307,13 @@
           >
         </div>
 
+        <div class="task-editor--task-project-wrapper">
+          <label for="edit-task-project">Project:</label>
+          <select name="edit-task-project" id="edit-task-project">
+            <option value="Home">Home</option>
+          </select>
+        </div>
+
         <div class="task-editor--task-status-wrapper">
           Status:
           <input
@@ -334,7 +340,8 @@
           <div class="task-editor--icon-wrapper task-save">Save</div>
           <div class="task-editor--icon-wrapper task-delete">Delete</div>
         </div>
-      </div> -->
+      </div>
+
       <div class="overlay hidden"></div>
     </div>
     <script src="main.js"></script>

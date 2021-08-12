@@ -5,6 +5,7 @@ import addTaskView from './addTaskView';
 class EditTaskView extends ModalView {
   _parentElement = document.querySelector('.modal--task-details');
   _window = document.querySelector('.modal--task-details');
+  _projectSelection = document.querySelector('#edit-task-project');
 
   _btnClose = document.querySelector('.icon--close-editor-modal');
   _btnSubmit = document.querySelector('.task-editor--icon-wrapper.task-save');
@@ -47,12 +48,16 @@ class EditTaskView extends ModalView {
       '.task-editor--task-status:checked'
     ).value;
 
+    const taskProject =
+      this._parentElement.querySelector('#edit-task-project').value;
+
     const validationArr = [
       taskTitle,
       taskDetails,
       taskDate,
       taskPriority,
       taskStatus,
+      taskProject,
     ];
 
     if (this._validateTask(validationArr)) {
@@ -62,6 +67,7 @@ class EditTaskView extends ModalView {
         date: taskDate,
         priority: taskPriority,
         status: taskStatus,
+        project: taskProject,
         id: `${taskDate}--${taskTitle}`,
       };
 
@@ -207,6 +213,14 @@ class EditTaskView extends ModalView {
         </div>
 
 
+        <div class="task-editor--task-project-wrapper">
+          <label for="edit-task-project">Project:</label>
+          <select name="edit-task-project" id="edit-task-project">
+            <option value="${this._data.project}">${this._data.project}</option>
+          </select>
+        </div>
+
+
 
         <div class="task-editor--task-editor-wrapper">
           <div class="task-editor--icon-wrapper task-save">Save</div>
@@ -245,6 +259,38 @@ class EditTaskView extends ModalView {
 
   _renderFormError() {
     console.log('form error');
+  }
+
+  renderProjectOptions(projectsArr, taskToEdit) {
+    const markup = this._generateProjOptionsMarkup(projectsArr);
+
+    this._clearProjectOptions(taskToEdit);
+
+    document
+      .querySelector('#edit-task-project')
+      .insertAdjacentHTML('afterbegin', markup);
+  }
+
+  _generateProjOptionsMarkup(projectsArr) {
+    const markupArr = [];
+
+    projectsArr.slice(1).forEach((project) =>
+      markupArr.push(`
+      <option value="${project.title}">${project.title}</option>
+    `)
+    );
+
+    return markupArr.join('');
+  }
+
+  _clearProjectOptions(task) {
+    document.querySelector('#edit-task-project').innerHTML = `
+    <option value="${task.project}">${task.project}</option>
+    `;
+  }
+
+  addHandlerRenderProjectsOnForm(handler, task) {
+    handler(task);
   }
 }
 

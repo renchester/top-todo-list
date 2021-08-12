@@ -100,6 +100,11 @@ class DetailsView extends ModalView {
           >
         </div>
 
+        <div class="task-details--task-project-wrapper">
+          Project:
+          <span class="task-details--task-project">${this._data.project}</span>
+        </div>
+
         <div class="task-details--task-editor-wrapper">
           <div class="task-details--icon-wrapper task-edit">
             <!-- <span class="material-icons icon--edit task-details--icons">

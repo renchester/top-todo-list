@@ -3,6 +3,7 @@ import ModalView from './modalView';
 class AddTaskView extends ModalView {
   _priorityLabels = document.querySelector('.new-task--task-priority-wrapper');
   _btnSubmit = document.querySelector('.btn--submit.submit--new-task');
+  _projectSelection = document.querySelector('#new-task-project');
 
   constructor() {
     super();
@@ -93,9 +94,7 @@ class AddTaskView extends ModalView {
 
     this._clearProjectOptions();
 
-    document
-      .querySelector('#new-task-project')
-      .insertAdjacentHTML('afterbegin', markup);
+    this._projectSelection.insertAdjacentHTML('afterbegin', markup);
   }
 
   _generateProjOptionsMarkup(projectsArr) {
@@ -111,7 +110,7 @@ class AddTaskView extends ModalView {
   }
 
   _clearProjectOptions() {
-    document.querySelector('#new-task-project').innerHTML = `
+    this._projectSelection.innerHTML = `
     <option value="Home">Home</option>
     `;
   }

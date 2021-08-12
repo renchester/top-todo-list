@@ -33,6 +33,14 @@ const controlAddNote = function (data) {
   model.addNote(data);
 };
 
+const controlShowProjectsOnForm = function () {
+  addTaskView.renderProjectOptions(model.state.projects);
+};
+
+const controlShowProjectsOnEditor = function (taskToEdit) {
+  editTaskView.renderProjectOptions(model.state.projects, taskToEdit);
+};
+
 const controlShowTasks = function () {
   taskView.render(model.state.tasks);
   sidebarView.render(model.state.projects.slice(1));
@@ -68,6 +76,10 @@ const controlEditTask = function (id) {
 
   editTaskView.render(taskToEdit);
 
+  editTaskView.addHandlerRenderProjectsOnForm(
+    controlShowProjectsOnEditor,
+    taskToEdit
+  );
   editTaskView.addHandlerSaveEdit(controlSaveEditTask);
   editTaskView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
   editTaskView.addHandlerPriority();
@@ -89,11 +101,6 @@ const controlToggleCompleted = function (id) {
 
   controlShowTasks();
   addHandlersToTask();
-};
-
-const controlShowProjectsOnForm = function () {
-  console.log('show projects');
-  addTaskView.renderProjectOptions(model.state.projects);
 };
 
 const init = function () {
