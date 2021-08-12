@@ -12,6 +12,7 @@ import detailsView from './views/detailsView';
 import editTaskView from './views/editTaskView';
 import formView from './views/formView';
 import modalView from './views/modalView';
+import projectView from './views/projectView';
 
 // Index js for the application logic (controller)
 
@@ -103,6 +104,20 @@ const controlToggleCompleted = function (id) {
   addHandlersToTask();
 };
 
+const controlShowProject = function (title) {
+  const project = model.state.projects.find(
+    (project) => project.title === title
+  );
+
+  const tasksToShow = model.state.tasks.filter((el) => el.project === project);
+
+  console.log(tasksToShow);
+
+  if (!tasksToShow || tasksToShow.length < 1) return;
+
+  projectView.render(tasksToShow);
+};
+
 const init = function () {
   controlShowTasks();
   addTaskView.addHandlerAddTask(controlAddTask);
@@ -112,7 +127,9 @@ const init = function () {
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
+  projectView.addHandlerShowProject(controlShowProject);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
+
   // sidebarView.addHandlerShowProject(controlShowProject);
 };
 
