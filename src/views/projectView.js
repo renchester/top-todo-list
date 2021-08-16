@@ -68,6 +68,8 @@ class ProjectView extends View {
       .querySelector('.nav-header.header--all')
       .addEventListener('click', function (e) {
         handler();
+        document.querySelector('.task-display--project-title').textContent =
+          'All Tasks';
       });
   }
 }

@@ -114,6 +114,7 @@ const controlSaveEditProject = function (id, replacement) {
   );
 
   projectView.render(tasksToShow);
+  // controlShowTasks(tasksToShow);
 
   // Update sidebar projects
   sidebarView.render(model.state.projects.slice(1));
@@ -207,7 +208,7 @@ const init = function () {
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
   projectView.addHandlerShowHome(controlShowHome);
-
+  projectView.addHandlerShowAllTasks(controlShowAllTasks);
   // projectView.addHandlerShowProject(controlShowProject);
   // sidebarView.addHandlerShowProject(controlShowProject);
 };
