@@ -11,7 +11,6 @@ class ProjectView extends View {
   }
 
   _generateMarkup() {
-    console.log(this._data);
     const markup = `<div class="task-display--project-title">${
       this._data[0] ? this._data[0].project : this._title
     }</div> 
@@ -54,6 +53,22 @@ class ProjectView extends View {
     const title = e.target.textContent;
     this._title = title;
     handler(title);
+  }
+
+  addHandlerShowHome(handler) {
+    document
+      .querySelector('.nav-header.header--home')
+      .addEventListener('click', function (e) {
+        handler();
+      });
+  }
+
+  addHandlerShowAllTasks(handler) {
+    document
+      .querySelector('.nav-header.header--all')
+      .addEventListener('click', function (e) {
+        handler();
+      });
   }
 }
 

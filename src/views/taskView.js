@@ -10,7 +10,11 @@ class TaskView extends View {
   }
 
   _generateMarkup() {
-    const markup = this._data.map(this._generateTaskMarkup).join('');
+    const markup = `
+    <div class="task-display--project-title">${
+      this._data[0] ? this._data[0].project : 'Home'
+    }</div> 
+    ${this._data.map(this._generateTaskMarkup).join('')}`;
     return markup;
   }
 

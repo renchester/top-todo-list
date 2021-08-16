@@ -18,10 +18,25 @@ import editProjectView from './views/editProjectView';
 
 // Index js for the application logic (controller)
 
+// Change to show tasks in specific project
+const controlShowTasks = function (project = 'Home') {
+  const tasksToShow = model.state.tasks.filter(
+    (task) => task.project === project
+  );
+
+  taskView.render(tasksToShow);
+  // addHandlersToTask();
+  // console.log('added handlers');
+
+  sidebarView.render(model.state.projects.slice(1));
+
+  projectView.addHandlerShowProject(controlShowProject);
+};
+
 const controlAddTask = function (data) {
   model.addTask(data);
 
-  taskView.render(model.state.tasks);
+  controlShowTasks(data.project);
 
   addHandlersToTask();
 };
@@ -44,17 +59,17 @@ const controlShowProjectsOnEditor = function (taskToEdit) {
   editTaskView.renderProjectOptions(model.state.projects, taskToEdit);
 };
 
-const controlShowTasks = function () {
+const controlShowAllTasks = function () {
   taskView.render(model.state.tasks);
-  sidebarView.render(model.state.projects.slice(1));
-
-  projectView.addHandlerShowProject(controlShowProject);
+  addHandlersToTask();
 };
 
 const controlDeleteTask = function (id) {
   model.deleteTask(id);
 
-  taskView.render(model.state.tasks);
+  const tasksToShow = getProjectBasedOnID(id);
+
+  controlShowTasks(tasksToShow);
 
   addHandlersToTask();
 };
@@ -64,7 +79,9 @@ const controlDeleteTaskOnModal = function (id) {
 
   detailsView.toggleWindow();
 
-  taskView.render(model.state.tasks);
+  const tasksToShow = getProjectBasedOnID(id);
+
+  controlShowTasks(tasksToShow);
 
   addHandlersToTask();
 };
@@ -76,14 +93,16 @@ const controlDeleteProjectOnModal = function (id) {
 
   // projectView.render(id);
 
-  controlShowTasks();
+  const projectToShow = getProjectBasedOnID();
+
+  controlShowTasks(projectToShow);
   addHandlersToTask();
 };
 
 const controlSaveEditTask = function (id, replacement) {
   model.updateTask(id, replacement);
 
-  controlShowTasks();
+  controlShowTasks(replacement.project);
   addHandlersToTask();
 };
 
@@ -136,6 +155,19 @@ const controlToggleCompleted = function (id) {
   model.toggleTaskComplete(id);
 };
 
+const controlShowHome = function () {
+  const tasksAtHome = model.state.tasks.filter(
+    (task) => task.project.toLowerCase() === 'home'
+  );
+
+  taskView.render(tasksAtHome);
+  addHandlersToTask();
+
+  sidebarView.render(model.state.projects.slice(1));
+
+  projectView.addHandlerShowProject(controlShowProject);
+};
+
 // Init on edit function
 const controlEditProject = function (id) {
   const projectToEdit = model.state.projects.find(
@@ -174,6 +206,7 @@ const init = function () {
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
+  projectView.addHandlerShowHome(controlShowHome);
 
   // projectView.addHandlerShowProject(controlShowProject);
   // sidebarView.addHandlerShowProject(controlShowProject);
@@ -188,6 +221,16 @@ function addHandlersToTask() {
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
+}
+
+function getProjectBasedOnID(id) {
+  const project = model.state.projects.find((project) => project.id === id);
+
+  const tasksToShow = model.state.tasks.filter(
+    (el) => el.project === project.title
+  );
+
+  return tasksToShow;
 }
 
 /*

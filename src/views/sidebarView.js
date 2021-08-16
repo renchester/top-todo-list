@@ -26,6 +26,8 @@ class SidebarView extends View {
       console.log('hi');
     });
   }
+
+  addHandlerSh;
 }
 
 export default new SidebarView();
