@@ -10,10 +10,8 @@ class ProjectView extends View {
     super();
   }
 
-  _generateMarkup() {
-    const markup = `<div class="task-display--project-title">${
-      this._data[0] ? this._data[0].project : this._title
-    }</div> 
+  _generateMarkup(title) {
+    const markup = `<div class="task-display--project-title">${title}</div> 
       ${this._data.map(this._generateTaskMarkup).join('')} 
        <div class="task-display--project-btn-edit btn">Edit Project</div>`;
     return markup;
@@ -39,38 +37,6 @@ class ProjectView extends View {
             <span class="material-icons icon--delete task-display--icons"> delete </span>
           </div>
         </div>`;
-  }
-
-  addHandlerShowProject(handler) {
-    document
-      .querySelectorAll('.nav-subdiv--content.project--title')
-      .forEach((el) =>
-        el.addEventListener('click', this.showProject.bind(this, handler))
-      );
-  }
-
-  showProject(handler, e) {
-    const title = e.target.textContent;
-    this._title = title;
-    handler(title);
-  }
-
-  addHandlerShowHome(handler) {
-    document
-      .querySelector('.nav-header.header--home')
-      .addEventListener('click', function (e) {
-        handler();
-      });
-  }
-
-  addHandlerShowAllTasks(handler) {
-    document
-      .querySelector('.nav-header.header--all')
-      .addEventListener('click', function (e) {
-        handler();
-        document.querySelector('.task-display--project-title').textContent =
-          'All Tasks';
-      });
   }
 }
 

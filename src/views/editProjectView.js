@@ -44,7 +44,10 @@ class EditProjectView extends ModalView {
   }
 
   deleteProjectOnModal(handler, e) {
-    const id = this._title;
+    // const id = this._title;
+    const id = document.querySelector(
+      '.task-display--project-title'
+    ).textContent;
 
     handler(id);
   }

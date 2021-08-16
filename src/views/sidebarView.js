@@ -21,13 +21,36 @@ class SidebarView extends View {
   }
 
   addHandlerShowProject(handler) {
-    this._window.addEventListener('click', function (e) {
-      if (!e.target.classList.contains('project--title')) return;
-      console.log('hi');
-    });
+    document
+      .querySelectorAll('.nav-subdiv--content.project--title')
+      .forEach((el) =>
+        el.addEventListener('click', this.showProject.bind(this, handler))
+      );
   }
 
-  addHandlerSh;
+  showProject(handler, e) {
+    const title = e.target.textContent;
+    this._title = title;
+    handler(title);
+  }
+
+  addHandlerShowHome(handler) {
+    document
+      .querySelector('.nav-header.header--home')
+      .addEventListener('click', function (e) {
+        handler();
+      });
+  }
+
+  addHandlerShowAllTasks(handler) {
+    document
+      .querySelector('.nav-header.header--all')
+      .addEventListener('click', function (e) {
+        handler();
+        document.querySelector('.task-display--project-title').textContent =
+          'All Tasks';
+      });
+  }
 }
 
 export default new SidebarView();

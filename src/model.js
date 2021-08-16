@@ -78,12 +78,18 @@ export const deleteTask = function (id) {
   persistTasks();
 };
 
-export const deleteProject = function (id) {
-  const index = state.projects.findIndex((el) => el.title === id);
+export const deleteProject = function (projectID) {
+  const index = state.projects.findIndex((el) => el.title === projectID);
   state.projects.splice(index, 1);
 
-  const tasksToDelete = state.tasks.filter((el) => el.project === id);
+  const tasksToDelete = state.tasks.filter((el) => el.project === projectID);
+  tasksToDelete.forEach(function (item, index, array) {
+    let itemIndex = state.tasks.findIndex(
+      (task) => task.project === item.project
+    );
 
+    state.tasks.splice(itemIndex, 1);
+  });
   persistProjects();
   persistTasks();
 };

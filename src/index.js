@@ -25,12 +25,10 @@ const controlShowTasks = function (project = 'Home') {
   );
 
   taskView.render(tasksToShow);
-  // addHandlersToTask();
-  // console.log('added handlers');
 
   sidebarView.render(model.state.projects.slice(1));
 
-  projectView.addHandlerShowProject(controlShowProject);
+  sidebarView.addHandlerShowProject(controlShowProject);
 };
 
 const controlAddTask = function (data) {
@@ -45,6 +43,9 @@ const controlAddProject = function (data) {
   model.addProject(data);
 
   sidebarView.render(model.state.projects.slice(1));
+
+  sidebarView.addHandlerShowAllTasks(controlShowAllTasks);
+  sidebarView.addHandlerShowProject(controlShowProject);
 };
 
 const controlAddNote = function (data) {
@@ -114,13 +115,13 @@ const controlSaveEditProject = function (id, replacement) {
   );
 
   projectView.render(tasksToShow);
-  // controlShowTasks(tasksToShow);
+  // controlShowTasks(tasksToShow
 
   // Update sidebar projects
   sidebarView.render(model.state.projects.slice(1));
 
   // Add handlers to sidebar projects
-  projectView.addHandlerShowProject(controlShowProject);
+  sidebarView.addHandlerShowProject(controlShowProject);
 
   // Add handlers to all tasks
   addHandlersToTask();
@@ -166,7 +167,7 @@ const controlShowHome = function () {
 
   sidebarView.render(model.state.projects.slice(1));
 
-  projectView.addHandlerShowProject(controlShowProject);
+  sidebarView.addHandlerShowProject(controlShowProject);
 };
 
 // Init on edit function
@@ -192,7 +193,7 @@ const controlShowProject = function (title) {
     (el) => el.project === project.title
   );
 
-  projectView.render(tasksToShow);
+  projectView.render(tasksToShow, title);
   editProjectView.addHandlerShowEditor(controlEditProject);
   addHandlersToTask();
 };
@@ -207,10 +208,8 @@ const init = function () {
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
-  projectView.addHandlerShowHome(controlShowHome);
-  projectView.addHandlerShowAllTasks(controlShowAllTasks);
-  // projectView.addHandlerShowProject(controlShowProject);
-  // sidebarView.addHandlerShowProject(controlShowProject);
+  sidebarView.addHandlerShowHome(controlShowHome);
+  sidebarView.addHandlerShowAllTasks(controlShowAllTasks);
 };
 
 init();

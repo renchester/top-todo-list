@@ -14,7 +14,12 @@ class TaskView extends View {
     <div class="task-display--project-title">${
       this._data[0] ? this._data[0].project : 'Home'
     }</div> 
-    ${this._data.map(this._generateTaskMarkup).join('')}`;
+    ${this._data.map(this._generateTaskMarkup).join('')}
+    
+    <div class="task-display--project-btn-edit btn ${
+      this._data[0] ? this._data[0].project : 'Home'
+    }">Edit Project</div>`;
+
     return markup;
   }
 
