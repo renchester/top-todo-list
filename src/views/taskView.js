@@ -9,15 +9,15 @@ class TaskView extends View {
     super();
   }
 
-  _generateMarkup() {
+  _generateMarkup(projTitle) {
     const markup = `
     <div class="task-display--project-title">${
-      this._data[0] ? this._data[0].project : 'Home'
+      projTitle ? projTitle : this._data[0] ? this._data[0].project : 'Home'
     }</div> 
     ${this._data.map(this._generateTaskMarkup).join('')}
     
     <div class="task-display--project-btn-edit btn ${
-      this._data[0] ? this._data[0].project : 'Home'
+      this._data[0] ? this._data[0].project : 'hidden'
     }">Edit Project</div>`;
 
     return markup;

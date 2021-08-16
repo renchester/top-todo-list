@@ -19,12 +19,11 @@ import editProjectView from './views/editProjectView';
 // Index js for the application logic (controller)
 
 // Change to show tasks in specific project
-const controlShowTasks = function (project = 'Home') {
+const controlShowTasks = function (project = 'Home', other) {
   const tasksToShow = model.state.tasks.filter(
     (task) => task.project === project
   );
-
-  taskView.render(tasksToShow);
+  taskView.render(tasksToShow, other);
 
   sidebarView.render(model.state.projects.slice(1));
 
@@ -66,23 +65,23 @@ const controlShowAllTasks = function () {
 };
 
 const controlDeleteTask = function (id) {
+  const projectToShow = getProjectBasedOnID(id);
+
   model.deleteTask(id);
 
-  const tasksToShow = getProjectBasedOnID(id);
-
-  controlShowTasks(tasksToShow);
+  controlShowTasks(projectToShow);
 
   addHandlersToTask();
 };
 
 const controlDeleteTaskOnModal = function (id) {
+  const projectToShow = getProjectBasedOnID(id);
+
   model.deleteTask(id);
 
   detailsView.toggleWindow();
 
-  const tasksToShow = getProjectBasedOnID(id);
-
-  controlShowTasks(tasksToShow);
+  controlShowTasks(projectToShow);
 
   addHandlersToTask();
 };
@@ -92,11 +91,7 @@ const controlDeleteProjectOnModal = function (id) {
 
   editProjectView.toggleWindow();
 
-  // projectView.render(id);
-
-  const projectToShow = getProjectBasedOnID();
-
-  controlShowTasks(projectToShow);
+  controlShowTasks();
   addHandlersToTask();
 };
 
@@ -110,12 +105,7 @@ const controlSaveEditTask = function (id, replacement) {
 const controlSaveEditProject = function (id, replacement) {
   model.updateProject(id, replacement);
 
-  const tasksToShow = model.state.tasks.filter(
-    (el) => el.project === replacement.title
-  );
-
-  projectView.render(tasksToShow);
-  // controlShowTasks(tasksToShow
+  controlShowTasks(replacement.title, replacement.title);
 
   // Update sidebar projects
   sidebarView.render(model.state.projects.slice(1));
@@ -223,14 +213,12 @@ function addHandlersToTask() {
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
 }
 
-function getProjectBasedOnID(id) {
-  const project = model.state.projects.find((project) => project.id === id);
+function getProjectBasedOnID(taskID) {
+  console.log(taskID);
+  const chosenTask = model.state.tasks.find((task) => task.id === taskID);
+  console.log(model.state.tasks.find((task) => task.id === taskID));
 
-  const tasksToShow = model.state.tasks.filter(
-    (el) => el.project === project.title
-  );
-
-  return tasksToShow;
+  return chosenTask.project;
 }
 
 /*
