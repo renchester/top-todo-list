@@ -78,10 +78,32 @@ export const deleteTask = function (id) {
   persistTasks();
 };
 
+export const deleteProject = function (id) {
+  const index = state.projects.findIndex((el) => el.title === id);
+  state.projects.splice(index, 1);
+
+  const tasksToDelete = state.tasks.filter((el) => el.project === id);
+
+  persistProjects();
+  persistTasks();
+};
+
 export const updateTask = function (id, replacement) {
   const index = state.tasks.findIndex((el) => el.id === id);
   state.tasks.splice(index, 1, replacement);
 
+  persistTasks();
+};
+
+export const updateProject = function (id, replacement) {
+  const index = state.projects.findIndex((el) => el.title === id);
+  state.projects.splice(index, 1, replacement);
+
+  const tasksToUpdate = state.tasks.filter((el) => el.project === id);
+
+  tasksToUpdate.forEach((el) => (el.project = replacement.title));
+
+  persistProjects();
   persistTasks();
 };
 

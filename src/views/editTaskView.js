@@ -24,7 +24,6 @@ class EditTaskView extends ModalView {
 
     this._btnClose = document.querySelector('.icon--close-editor-modal');
     this._addHandlerCloseModal();
-    this.addHandlerPriority();
   }
 
   saveEdit(handler, e) {
@@ -71,7 +70,6 @@ class EditTaskView extends ModalView {
         id: `${taskDate}--${taskTitle}`,
       };
 
-      this._clearForm();
       this.toggleWindow();
       handler(this._parentElement.dataset.id, data);
     } else {
@@ -253,16 +251,12 @@ class EditTaskView extends ModalView {
     } else return true;
   }
 
-  _clearForm() {
-    this._parentElement.querySelectorAll('.task-editor--form-element');
-  }
-
   _renderFormError() {
     console.log('form error');
   }
 
   renderProjectOptions(projectsArr, taskToEdit) {
-    const markup = this._generateProjOptionsMarkup(projectsArr);
+    const markup = this._generateProjOptionsMarkup(projectsArr, taskToEdit);
 
     this._clearProjectOptions(taskToEdit);
 
@@ -271,14 +265,16 @@ class EditTaskView extends ModalView {
       .insertAdjacentHTML('afterbegin', markup);
   }
 
-  _generateProjOptionsMarkup(projectsArr) {
+  _generateProjOptionsMarkup(projectsArr, task) {
     const markupArr = [];
 
-    projectsArr.slice(1).forEach((project) =>
-      markupArr.push(`
+    projectsArr.forEach((project) => {
+      if (task.project !== project.title) {
+        markupArr.push(`
       <option value="${project.title}">${project.title}</option>
-    `)
-    );
+    `);
+      }
+    });
 
     return markupArr.join('');
   }

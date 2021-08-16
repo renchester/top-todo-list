@@ -193,17 +193,6 @@ html {
   cursor: pointer;
 }
 
-.task-display--project-title {
-  font-size: 1.75rem;
-  font-weight: bold;
-  /* background-color: var(--secondary-gray);
-  color: white; */
-  color: var(--secondary-blue);
-  padding-left: 1.25rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-}
-
 .material-icons.icon--edit,
 .material-icons.icon--delete {
   color: rgba(0, 0, 0, 0.507);
@@ -215,6 +204,33 @@ html {
 
 .material-icons.icon--delete.task-display--icons:hover {
   color: var(--primary-red);
+}
+
+.task-display--project-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  /* background-color: var(--secondary-gray);
+  color: white; */
+  color: var(--secondary-blue);
+  /* padding-left: 0.25rem; */
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.task-display--project-btn-edit {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 2rem;
+  font-weight: 800;
+  color: #dfa000;
+  padding: 0.5rem 1rem;
+  border: 2px solid #dfa000;
+}
+
+.task-display--project-btn-edit:hover {
+  background-color: #dfa000;
+  color: white;
 }
 
 /* MODAL - ADD TASK */
@@ -489,6 +505,10 @@ html {
   z-index: 2;
 }
 
+.modal--project-editor {
+  max-width: 250px;
+}
+
 .material-icons.icon--close-editor-modal {
   position: absolute;
   right: 0;
@@ -496,7 +516,8 @@ html {
   cursor: pointer;
 }
 
-.task-editor--task-title {
+.task-editor--task-title,
+.project-editor--project-title {
   font-size: 1.5rem;
   margin-top: 0.25rem;
   width: 80%;
@@ -552,7 +573,8 @@ html {
   margin-top: 1rem;
 }
 
-.task-editor--icon-wrapper {
+.task-editor--icon-wrapper,
+.project-editor--icon-wrapper {
   position: relative;
   border: 2px solid;
   border-radius: 5px;
@@ -566,29 +588,39 @@ html {
   justify-content: flex-end;
 }
 
-.task-editor--icon-wrapper {
+.project-editor--project-editor-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.task-editor--icon-wrapper,
+.project-editor--icon-wrapper {
   margin-top: 1rem;
 }
 
-.task-editor--icon-wrapper.task-save {
+.task-editor--icon-wrapper.task-save,
+.project-editor--icon-wrapper.project-save {
   color: var(--secondary-green);
   border: 2px solid var(--secondary-green);
   font-weight: 800;
 }
 
-.task-editor--icon-wrapper.task-delete {
+.task-editor--icon-wrapper.task-delete,
+.project-editor--icon-wrapper.project-delete {
   color: var(--primary-red);
   border: 2px solid var(--primary-red);
   font-weight: 800;
 }
 
-.task-editor--icon-wrapper.task-save:hover {
+.task-editor--icon-wrapper.task-save:hover,
+.project-editor--icon-wrapper.project-save:hover {
   background-color: var(--secondary-green);
   border: 2px solid var(--secondary-green);
   color: white;
 }
 
-.task-editor--icon-wrapper.task-delete:hover {
+.task-editor--icon-wrapper.task-delete:hover,
+.project-editor--icon-wrapper.project-delete:hover {
   background-color: var(--primary-red);
   border: 2px solid var(--primary-red);
   color: white;

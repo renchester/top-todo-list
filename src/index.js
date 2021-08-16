@@ -9,10 +9,12 @@ import addNoteView from './views/addNoteView';
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
-import editTaskView from './views/editTaskView';
+import projectView from './views/projectView';
 import formView from './views/formView';
 import modalView from './views/modalView';
-import projectView from './views/projectView';
+
+import editTaskView from './views/editTaskView';
+import editProjectView from './views/editProjectView';
 
 // Index js for the application logic (controller)
 
@@ -45,6 +47,8 @@ const controlShowProjectsOnEditor = function (taskToEdit) {
 const controlShowTasks = function () {
   taskView.render(model.state.tasks);
   sidebarView.render(model.state.projects.slice(1));
+
+  projectView.addHandlerShowProject(controlShowProject);
 };
 
 const controlDeleteTask = function (id) {
@@ -65,11 +69,44 @@ const controlDeleteTaskOnModal = function (id) {
   addHandlersToTask();
 };
 
+const controlDeleteProjectOnModal = function (id) {
+  model.deleteProject(id);
+
+  editProjectView.toggleWindow();
+
+  // projectView.render(id);
+
+  controlShowTasks();
+  addHandlersToTask();
+};
+
 const controlSaveEditTask = function (id, replacement) {
   model.updateTask(id, replacement);
 
   controlShowTasks();
   addHandlersToTask();
+};
+
+const controlSaveEditProject = function (id, replacement) {
+  model.updateProject(id, replacement);
+
+  const tasksToShow = model.state.tasks.filter(
+    (el) => el.project === replacement.title
+  );
+
+  projectView.render(tasksToShow);
+
+  // Update sidebar projects
+  sidebarView.render(model.state.projects.slice(1));
+
+  // Add handlers to sidebar projects
+  projectView.addHandlerShowProject(controlShowProject);
+
+  // Add handlers to all tasks
+  addHandlersToTask();
+
+  // Add handler to project editor
+  editProjectView.addHandlerShowEditor(controlEditProject);
 };
 
 const controlEditTask = function (id) {
@@ -96,26 +133,35 @@ const controlShowDetails = function (id) {
 };
 
 const controlToggleCompleted = function (id) {
-  const taskToMark = model.state.tasks.find((task) => task.id === id);
-
   model.toggleTaskComplete(id);
-
-  controlShowTasks();
-  addHandlersToTask();
 };
 
+// Init on edit function
+const controlEditProject = function (id) {
+  const projectToEdit = model.state.projects.find(
+    (project) => project.title === id
+  );
+
+  console.log(projectToEdit);
+  editProjectView.render(projectToEdit);
+
+  editProjectView.addHandlerSaveEdit(controlSaveEditProject);
+  editProjectView.addHandlerDeleteProjectOnModal(controlDeleteProjectOnModal);
+};
+
+// Init on show function
 const controlShowProject = function (title) {
   const project = model.state.projects.find(
     (project) => project.title === title
   );
 
-  const tasksToShow = model.state.tasks.filter((el) => el.project === project);
-
-  console.log(tasksToShow);
-
-  if (!tasksToShow || tasksToShow.length < 1) return;
+  const tasksToShow = model.state.tasks.filter(
+    (el) => el.project === project.title
+  );
 
   projectView.render(tasksToShow);
+  editProjectView.addHandlerShowEditor(controlEditProject);
+  addHandlersToTask();
 };
 
 const init = function () {
@@ -127,9 +173,9 @@ const init = function () {
   detailsView.addHandlerTaskDetails(controlShowDetails);
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
-  projectView.addHandlerShowProject(controlShowProject);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
 
+  // projectView.addHandlerShowProject(controlShowProject);
   // sidebarView.addHandlerShowProject(controlShowProject);
 };
 

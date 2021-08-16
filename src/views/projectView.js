@@ -4,6 +4,7 @@ import detailsView from './detailsView';
 class ProjectView extends View {
   _window = document.querySelector('.nav-subdiv.project--header');
   _parentElement = document.querySelector('.task-display');
+  _title = '';
 
   constructor() {
     super();
@@ -11,10 +12,11 @@ class ProjectView extends View {
 
   _generateMarkup() {
     console.log(this._data);
-    const markup =
-      `<div class="task-display--project-title">${this._data.title}</div>` +
-      this._data.map(this._generateTaskMarkup).join('') +
-      ` <div class="task-display--project-btn-edit btn">Edit Project</div>`;
+    const markup = `<div class="task-display--project-title">${
+      this._data[0] ? this._data[0].project : this._title
+    }</div> 
+      ${this._data.map(this._generateTaskMarkup).join('')} 
+       <div class="task-display--project-btn-edit btn">Edit Project</div>`;
     return markup;
   }
 
@@ -44,11 +46,14 @@ class ProjectView extends View {
     document
       .querySelectorAll('.nav-subdiv--content.project--title')
       .forEach((el) =>
-        el.addEventListener('click', function (e) {
-          const title = e.target.textContent;
-          handler(title);
-        })
+        el.addEventListener('click', this.showProject.bind(this, handler))
       );
+  }
+
+  showProject(handler, e) {
+    const title = e.target.textContent;
+    this._title = title;
+    handler(title);
   }
 }
 
