@@ -128,8 +128,8 @@ const controlShowDetails = function (id) {
 
   detailsView.render(taskToShow);
 
-  detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
   detailsView.addHandlerEditTask(controlEditTask);
+  detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
 };
 
 const controlToggleCompleted = function (id) {

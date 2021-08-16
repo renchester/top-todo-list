@@ -29,6 +29,9 @@ class DetailsView extends ModalView {
     this._clear();
 
     handler(id);
+
+    this._btnClose = document.querySelector('.icon--close-editor-modal');
+    this._addHandlerCloseModal();
   }
 
   deleteTask(handler, e) {
