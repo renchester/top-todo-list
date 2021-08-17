@@ -7,13 +7,19 @@ class FormView extends ModalView {
   }
 
   toggleFormDisplay(e) {
-    // Hides all forms
+    // Hide all forms
     this._parentElement
       .querySelectorAll('.content-form')
       .forEach((el) => el.classList.add('hidden'));
 
-    // Establishes which form to show
+    // Establish which form to show
     const formType = Array.from(e.target.classList)[1].split('new-')[1];
+
+    // Emphasize active label
+    this._sidebarLabels.forEach((label) =>
+      label.classList.remove('sidebar--label-active')
+    );
+    e.target.classList.add('sidebar--label-active');
 
     this._clearForm();
 
