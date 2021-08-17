@@ -17,7 +17,7 @@ class TaskView extends View {
     ${this._data.map(this._generateTaskMarkup).join('')}
     
     <div class="task-display--project-btn-edit btn ${
-      this._data[0] ? this._data[0].project : 'hidden'
+      this._data[0] ? '' : 'hidden'
     }">Edit Project</div>`;
 
     return markup;

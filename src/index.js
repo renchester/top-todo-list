@@ -15,6 +15,7 @@ import modalView from './views/modalView';
 
 import editTaskView from './views/editTaskView';
 import editProjectView from './views/editProjectView';
+import noteView from './views/noteView';
 
 // Index js for the application logic (controller)
 
@@ -49,6 +50,8 @@ const controlAddProject = function (data) {
 
 const controlAddNote = function (data) {
   model.addNote(data);
+
+  noteView.render(model.state.notes);
 };
 
 const controlShowProjectsOnForm = function () {
@@ -188,6 +191,32 @@ const controlShowProject = function (title) {
   addHandlersToTask();
 };
 
+const controlDeleteNote = function (id) {
+  model.deleteNote(id);
+
+  noteView.render(model.state.notes);
+
+  addHandlersToNote();
+};
+
+const controlPersistNoteTitle = function (id, newID, value) {
+  model.updateNoteTitle(id, newID, value);
+
+  noteView.render(model.state.notes);
+};
+
+const controlPersistNoteDetail = function (id, value) {
+  model.updateNoteDetail(id, value);
+
+  noteView.render(model.state.notes);
+};
+
+const controlShowNotes = function () {
+  noteView.render(model.state.notes);
+
+  addHandlersToNote();
+};
+
 const init = function () {
   controlShowTasks();
   addTaskView.addHandlerAddTask(controlAddTask);
@@ -200,6 +229,7 @@ const init = function () {
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
   sidebarView.addHandlerShowHome(controlShowHome);
   sidebarView.addHandlerShowAllTasks(controlShowAllTasks);
+  sidebarView.addHandlerShowNotes(controlShowNotes);
 };
 
 init();
@@ -211,6 +241,12 @@ function addHandlersToTask() {
   detailsView.addHandlerDeleteTask(controlDeleteTask);
   editTaskView.addHandlerShowEditor(controlEditTask);
   taskView.addHandlerToggleCompleted(controlToggleCompleted);
+}
+
+function addHandlersToNote() {
+  noteView.addHandlerDeleteNote(controlDeleteNote);
+  noteView.addHandlerPersistNoteTitle(controlPersistNoteTitle);
+  noteView.addHandlerPersistNoteDetail(controlPersistNoteDetail);
 }
 
 function getProjectBasedOnID(taskID) {

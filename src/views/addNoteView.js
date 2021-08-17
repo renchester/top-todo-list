@@ -21,9 +21,11 @@ class AddNoteView extends ModalView {
     const validationArr = [noteTitle, noteDetails];
 
     if (this._validateTask(validationArr)) {
+      const date = new Date();
       const data = {
         title: noteTitle,
         details: noteDetails,
+        id: `${noteTitle}--${date.getTime()}`,
       };
 
       this._clearForm();

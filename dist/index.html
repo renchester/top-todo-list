@@ -40,9 +40,12 @@
       </div>
 
       <div class="task-display">
+        <div class="task-display--project-title hidden">Example Project</div>
+        <!-- <div class="task-container"></div> -->
+
         <!--  TASKS -->
 
-        <div class="task priority-low" data-id="Sample Task">
+        <div class="task priority-low hidden" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
           <div class="task-details">Details</div>
@@ -61,7 +64,6 @@
 
         <!-- PROJECTS -->
 
-        <div class="task-display--project-title hidden">Example Project</div>
         <div class="task priority-low hidden" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
@@ -76,6 +78,84 @@
             <span class="material-icons icon--delete task-display--icons">
               delete
             </span>
+          </div>
+        </div>
+
+        <!-- NOTES -->
+        <!-- <input
+          type="text"
+          class="note--title"
+          name="note--title"
+          value="Go to this place"
+          placeholder="Enter note title here"
+        />
+        <textarea
+          name="note--details"
+          class="note--details"
+          cols="30"
+          rows="10"
+        >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</textarea
+        > -->
+
+        <div class="task-display--notes-container">
+          <div class="notes-container--col-1">
+            <!-- <div class="note">
+              <div class="note--icon-wrapper note-delete">
+                <span class="material-icons icon--delete-note"> close </span>
+              </div>
+              <div class="note--title" contenteditable="true">
+                Go to this place
+              </div>
+              <div class="note--details" contenteditable="true">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut
+              </div>
+            </div>
+            <div class="note">
+              <div class="note--icon-wrapper note-delete">
+                <span class="material-icons icon--delete-note"> close </span>
+              </div>
+              <div class="note--title" contenteditable="true">
+                Go to this place
+              </div>
+              <div class="note--details" contenteditable="true">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut
+              </div>
+            </div> -->
+          </div>
+          <div class="notes-container--col-2">
+            <!-- <div class="note">
+              <div class="note--icon-wrapper note-delete">
+                <span class="material-icons icon--delete-note"> close </span>
+              </div>
+              <div class="note--title" contenteditable="true">
+                Go to this place
+              </div>
+              <div class="note--details" contenteditable="true">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut ipsum dolor sit amet, consectetur
+                adipiscing elit, sed do eiusmod tempor incididunt ut ipsum dolor
+                sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut ipsum dolor sit amet,
+                consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+              </div>
+            </div>
+
+            <div class="note">
+              <div class="note--icon-wrapper note-delete">
+                <span class="material-icons icon--delete-note"> close </span>
+              </div>
+              <div class="note--title" contenteditable="true">
+                Go to this place
+              </div>
+              <div class="note--details" contenteditable="true">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut
+              </div>
+            </div> -->
           </div>
         </div>
       </div>

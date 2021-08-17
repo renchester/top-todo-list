@@ -51,6 +51,14 @@ class SidebarView extends View {
           'All Tasks';
       });
   }
+
+  addHandlerShowNotes(handler) {
+    document
+      .querySelector('.nav-header.header--notes')
+      .addEventListener('click', function (e) {
+        handler();
+      });
+  }
 }
 
 export default new SidebarView();

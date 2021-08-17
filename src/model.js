@@ -65,7 +65,7 @@ export const addProject = function (project) {
 
 export const addNote = function (note) {
   // Add note to app state
-  state.notes.push(note);
+  state.notes.unshift(note);
 
   // Set to local storage
   persistNotes();
@@ -94,6 +94,14 @@ export const deleteProject = function (projectID) {
   persistTasks();
 };
 
+export const deleteNote = function (noteID) {
+  const index = state.notes.findIndex((el) => el.id === noteID);
+
+  state.notes.splice(index, 1);
+
+  persistNotes();
+};
+
 export const updateTask = function (id, replacement) {
   const index = state.tasks.findIndex((el) => el.id === id);
   state.tasks.splice(index, 1, replacement);
@@ -111,6 +119,23 @@ export const updateProject = function (id, replacement) {
 
   persistProjects();
   persistTasks();
+};
+
+export const updateNoteTitle = function (noteID, newID, replacement) {
+  const index = state.notes.findIndex((el) => el.id === noteID);
+
+  state.notes[index].id = newID;
+  state.notes[index].title = replacement;
+
+  persistNotes();
+};
+
+export const updateNoteDetail = function (noteID, replacement) {
+  const index = state.notes.findIndex((el) => el.id === noteID);
+
+  state.notes[index].details = replacement;
+
+  persistNotes();
 };
 
 export const toggleTaskComplete = function (id) {
