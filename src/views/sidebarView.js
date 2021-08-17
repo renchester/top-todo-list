@@ -24,14 +24,12 @@ class SidebarView extends View {
     document
       .querySelectorAll('.nav-subdiv--content.project--title')
       .forEach((el) =>
-        el.addEventListener('click', this.showProject.bind(this, handler))
+        el.addEventListener('click', function (e) {
+          const title = e.target.textContent;
+          this._title = title;
+          handler(title);
+        })
       );
-  }
-
-  showProject(handler, e) {
-    const title = e.target.textContent;
-    this._title = title;
-    handler(title);
   }
 
   addHandlerShowHome(handler) {
