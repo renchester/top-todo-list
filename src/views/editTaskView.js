@@ -1,6 +1,4 @@
-import View from './view';
 import ModalView from './modalView';
-import addTaskView from './addTaskView';
 
 class EditTaskView extends ModalView {
   _parentElement = document.querySelector('.modal--task-details');
