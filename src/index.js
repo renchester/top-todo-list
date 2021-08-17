@@ -9,10 +9,11 @@ import addNoteView from './views/addNoteView';
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
+import noteView from './views/noteView';
+import formView from './views/formView';
 
 import editTaskView from './views/editTaskView';
 import editProjectView from './views/editProjectView';
-import noteView from './views/noteView';
 
 // Index js for the application logic (controller)
 
