@@ -9,9 +9,6 @@ import addNoteView from './views/addNoteView';
 import sidebarView from './views/sidebarView';
 import taskView from './views/taskView';
 import detailsView from './views/detailsView';
-import projectView from './views/projectView';
-import formView from './views/formView';
-import modalView from './views/modalView';
 
 import editTaskView from './views/editTaskView';
 import editProjectView from './views/editProjectView';
@@ -186,7 +183,7 @@ const controlShowProject = function (title) {
     (el) => el.project === project.title
   );
 
-  projectView.render(tasksToShow, title);
+  taskView.render(tasksToShow, title);
   editProjectView.addHandlerShowEditor(controlEditProject);
   addHandlersToTask();
 };
