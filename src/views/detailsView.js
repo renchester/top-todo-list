@@ -11,7 +11,7 @@ class DetailsView extends ModalView {
     super();
   }
 
-  showDetails(handler, e) {
+  _showDetails(handler, e) {
     if (!e.target.classList.contains('task-details')) return;
 
     const id = e.target.closest('.task').dataset.id;
@@ -24,7 +24,15 @@ class DetailsView extends ModalView {
     this._addHandlerCloseModal();
   }
 
-  allowTaskEdit(handler, e) {
+  addHandlerTaskDetails(handler) {
+    document
+      .querySelectorAll('.task')
+      .forEach((el) =>
+        el.addEventListener('click', this._showDetails.bind(this, handler))
+      );
+  }
+
+  _allowTaskEdit(handler, e) {
     const id = e.target.closest('.modal--task-details').dataset.id;
 
     this._clear();
@@ -35,44 +43,36 @@ class DetailsView extends ModalView {
     this._addHandlerCloseModal();
   }
 
-  deleteTask(handler, e) {
-    const id = e.target.closest('.task').dataset.id;
-
-    handler(id);
-  }
-
-  deleteTaskOnModal(handler, e) {
-    const id = e.target.closest('.modal--task-details').dataset.id;
-
-    handler(id);
-  }
-
-  addHandlerTaskDetails(handler) {
-    document
-      .querySelectorAll('.task')
-      .forEach((el) =>
-        el.addEventListener('click', this.showDetails.bind(this, handler))
-      );
-  }
-
   addHandlerEditTask(handler) {
     document
       .querySelector('.task-details--icon-wrapper.task-edit')
-      .addEventListener('click', this.allowTaskEdit.bind(this, handler));
+      .addEventListener('click', this._allowTaskEdit.bind(this, handler));
+  }
+
+  _deleteTask(handler, e) {
+    const id = e.target.closest('.task').dataset.id;
+
+    handler(id);
   }
 
   addHandlerDeleteTask(handler) {
     document
       .querySelectorAll('.material-icons.icon--delete.task-display--icons')
       .forEach((el) =>
-        el.addEventListener('click', this.deleteTask.bind(this, handler))
+        el.addEventListener('click', this._deleteTask.bind(this, handler))
       );
+  }
+
+  _deleteTaskOnModal(handler, e) {
+    const id = e.target.closest('.modal--task-details').dataset.id;
+
+    handler(id);
   }
 
   addHandlerDeleteTaskOnModal(handler) {
     document
       .querySelector('.task-details--icon-wrapper.task-delete')
-      .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
+      .addEventListener('click', this._deleteTaskOnModal.bind(this, handler));
   }
 
   _generateMarkup() {
@@ -118,15 +118,9 @@ class DetailsView extends ModalView {
 
         <div class="task-details--task-editor-wrapper">
           <div class="task-details--icon-wrapper task-edit">
-            <!-- <span class="material-icons icon--edit task-details--icons">
-              mode_edit
-            </span> -->
             Edit
           </div>
           <div class="task-details--icon-wrapper task-delete">
-            <!-- <span class="material-icons icon--delete task-details--icons">
-              delete
-            </span> -->
             Delete
           </div>
         </div>
