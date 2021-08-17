@@ -337,23 +337,26 @@ html {
 
 .add-task--sidebar {
   background-color: var(--secondary-gray);
-  padding: 1.2rem 1.75rem;
+  padding: 1.2rem 1.5rem;
   max-width: 30%;
   border-bottom-left-radius: 10px;
 }
 
 .sidebar--label {
   font-size: 1.1rem;
+  width: 80px;
   padding: 0.5rem 0;
   margin: 0.5rem 0;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0, 0.75);
   transition: all ease-in-out 100ms;
 }
 
-.sidebar--label:hover {
+.sidebar--label:hover,
+.sidebar--label-active {
   transform: scale(1.05);
-  color: white;
+  color: black;
+  font-weight: 800;
 }
 
 .add-task--content {
