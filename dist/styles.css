@@ -741,3 +741,27 @@ html {
 .priority-label-high.priority-label--active {
   background-color: red;
 }
+
+@media (max-width: 1200px) {
+  .task-title {
+    width: 500px;
+  }
+
+  .task-details {
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 880px) {
+  .task-display--icon-wrapper {
+    display: none;
+  }
+
+  .task-date {
+    margin-right: 0;
+  }
+
+  .task-title {
+    width: 240px;
+  }
+}
