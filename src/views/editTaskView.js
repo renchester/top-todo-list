@@ -60,6 +60,8 @@ class EditTaskView extends ModalView {
     ];
 
     if (this._validateTask(validationArr)) {
+      const date = new Date();
+
       const data = {
         title: taskTitle,
         details: taskDetails,
@@ -67,7 +69,7 @@ class EditTaskView extends ModalView {
         priority: taskPriority,
         status: taskStatus,
         project: taskProject,
-        id: `${taskDate}--${taskTitle}`,
+        id: `${taskTitle}--${date.getTime()}`,
       };
 
       this.toggleWindow();

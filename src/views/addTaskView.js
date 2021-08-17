@@ -37,13 +37,15 @@ class AddTaskView extends ModalView {
     const validationArr = [taskTitle, taskDetails, taskDate, taskPriority];
 
     if (this._validateTask(validationArr)) {
+      const date = new Date();
+
       const data = {
         title: taskTitle,
         details: taskDetails,
         date: taskDate,
         priority: taskPriority,
         project: taskProject,
-        id: `${taskDate}--${taskTitle}`,
+        id: `${taskTitle}--${date.getTime()}`,
       };
 
       this._clearForm();
