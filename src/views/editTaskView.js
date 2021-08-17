@@ -15,102 +15,6 @@ class EditTaskView extends ModalView {
     super();
   }
 
-  showEditorModal(handler, e) {
-    const id = e.target.closest('.task').dataset.id;
-
-    this.toggleWindow();
-
-    handler(id);
-
-    this._btnClose = document.querySelector('.icon--close-editor-modal');
-    this._addHandlerCloseModal();
-  }
-
-  saveEdit(handler, e) {
-    const taskTitle = this._parentElement.querySelector(
-      '.task-editor--task-title'
-    ).value;
-
-    const taskDetails = this._parentElement.querySelector(
-      '.task-editor--task-details'
-    ).value;
-
-    const taskDate = this._parentElement.querySelector(
-      '.task-editor--task-date'
-    ).value;
-
-    const taskPriority = this._parentElement.querySelector(
-      '.priority-label--active'
-    )?.textContent;
-
-    const taskStatus = this._parentElement.querySelector(
-      '.task-editor--task-status:checked'
-    ).value;
-
-    const taskProject =
-      this._parentElement.querySelector('#edit-task-project').value;
-
-    const validationArr = [
-      taskTitle,
-      taskDetails,
-      taskDate,
-      taskPriority,
-      taskStatus,
-      taskProject,
-    ];
-
-    if (this._validateTask(validationArr)) {
-      const date = new Date();
-
-      const data = {
-        title: taskTitle,
-        details: taskDetails,
-        date: taskDate,
-        priority: taskPriority,
-        status: taskStatus,
-        project: taskProject,
-        id: `${taskTitle}--${date.getTime()}`,
-      };
-
-      this.toggleWindow();
-      handler(this._parentElement.dataset.id, data);
-    } else {
-      this._renderFormError();
-    }
-  }
-
-  deleteTaskOnModal(handler, e) {
-    const id = e.target.closest('.modal--task-details').dataset.id;
-
-    handler(id);
-  }
-
-  addHandlerShowEditor(handler) {
-    document
-      .querySelectorAll('.material-icons.icon--edit.task-display--icons')
-      .forEach((el) =>
-        el.addEventListener('click', this.showEditorModal.bind(this, handler))
-      );
-  }
-
-  addHandlerSaveEdit(handler) {
-    document
-      .querySelector('.task-editor--icon-wrapper.task-save')
-      .addEventListener('click', this.saveEdit.bind(this, handler));
-  }
-
-  addHandlerDeleteTaskOnModal(handler) {
-    document
-      .querySelector('.task-editor--icon-wrapper.task-delete')
-      .addEventListener('click', this.deleteTaskOnModal.bind(this, handler));
-  }
-
-  addHandlerPriority() {
-    document
-      .querySelector('.task-editor--task-priority-wrapper')
-      .addEventListener('click', this._togglePriority.bind(this));
-  }
-
   _generateMarkup() {
     // <div class="modal--task-detailsmodal--task-editor">
     const markup = `
@@ -235,6 +139,107 @@ class EditTaskView extends ModalView {
     return markup;
   }
 
+  _validateTask(arr) {
+    const [title, _, date, priority, status] = arr;
+    if (!title || !date || !priority) {
+      return false;
+    } else return true;
+  }
+
+  _renderFormError() {
+    console.log('Form error');
+  }
+
+  _showEditorModal(handler, e) {
+    const id = e.target.closest('.task').dataset.id;
+
+    this.toggleWindow();
+
+    handler(id);
+
+    this._btnClose = document.querySelector('.icon--close-editor-modal');
+    this._addHandlerCloseModal();
+  }
+
+  addHandlerShowEditor(handler) {
+    document
+      .querySelectorAll('.material-icons.icon--edit.task-display--icons')
+      .forEach((el) =>
+        el.addEventListener('click', this._showEditorModal.bind(this, handler))
+      );
+  }
+
+  _saveEdit(handler, e) {
+    const taskTitle = this._parentElement.querySelector(
+      '.task-editor--task-title'
+    ).value;
+
+    const taskDetails = this._parentElement.querySelector(
+      '.task-editor--task-details'
+    ).value;
+
+    const taskDate = this._parentElement.querySelector(
+      '.task-editor--task-date'
+    ).value;
+
+    const taskPriority = this._parentElement.querySelector(
+      '.priority-label--active'
+    )?.textContent;
+
+    const taskStatus = this._parentElement.querySelector(
+      '.task-editor--task-status:checked'
+    ).value;
+
+    const taskProject =
+      this._parentElement.querySelector('#edit-task-project').value;
+
+    const validationArr = [
+      taskTitle,
+      taskDetails,
+      taskDate,
+      taskPriority,
+      taskStatus,
+      taskProject,
+    ];
+
+    if (this._validateTask(validationArr)) {
+      const date = new Date();
+
+      const data = {
+        title: taskTitle,
+        details: taskDetails,
+        date: taskDate,
+        priority: taskPriority,
+        status: taskStatus,
+        project: taskProject,
+        id: `${taskTitle}--${date.getTime()}`,
+      };
+
+      this.toggleWindow();
+      handler(this._parentElement.dataset.id, data);
+    } else {
+      this._renderFormError();
+    }
+  }
+
+  addHandlerSaveEdit(handler) {
+    document
+      .querySelector('.task-editor--icon-wrapper.task-save')
+      .addEventListener('click', this._saveEdit.bind(this, handler));
+  }
+
+  _deleteTaskOnModal(handler, e) {
+    const id = e.target.closest('.modal--task-details').dataset.id;
+
+    handler(id);
+  }
+
+  addHandlerDeleteTaskOnModal(handler) {
+    document
+      .querySelector('.task-editor--icon-wrapper.task-delete')
+      .addEventListener('click', this._deleteTaskOnModal.bind(this, handler));
+  }
+
   _togglePriority(e) {
     if (!e.target.classList.contains('task-editor--task-priority-label'))
       return;
@@ -246,15 +251,10 @@ class EditTaskView extends ModalView {
     e.target.classList.add('priority-label--active');
   }
 
-  _validateTask(arr) {
-    const [title, _, date, priority, status] = arr;
-    if (!title || !date || !priority) {
-      return false;
-    } else return true;
-  }
-
-  _renderFormError() {
-    console.log('form error');
+  addHandlerPriority() {
+    document
+      .querySelector('.task-editor--task-priority-wrapper')
+      .addEventListener('click', this._togglePriority.bind(this));
   }
 
   renderProjectOptions(projectsArr, taskToEdit) {
