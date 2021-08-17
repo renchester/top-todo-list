@@ -61,7 +61,7 @@ class TaskView extends View {
         </div>`;
   }
 
-  toggleCompleted(handler, e) {
+  _toggleCompleted(handler, e) {
     if (!e.target.classList.contains('task-checkbox')) return;
 
     const taskToMark = e.target.closest('.task');
@@ -78,7 +78,7 @@ class TaskView extends View {
     document
       .querySelectorAll('.task')
       .forEach((el) =>
-        el.addEventListener('click', this.toggleCompleted.bind(this, handler))
+        el.addEventListener('click', this._toggleCompleted.bind(this, handler))
       );
   }
 }
