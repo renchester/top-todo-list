@@ -1,4 +1,5 @@
 import ModalView from './modalView';
+import format from 'date-fns/format';
 
 class DetailsView extends ModalView {
   _parentElement = document.querySelector('.modal--task-details');
@@ -75,6 +76,13 @@ class DetailsView extends ModalView {
   }
 
   _generateMarkup() {
+    const [taskYear, taskMonth, taskDay] = this._data.date.split('-');
+
+    const dateToDisplay = format(
+      new Date(taskYear, taskMonth - 1, taskDay),
+      'LLLL d, yyyy'
+    );
+
     const markup = `
         <span class="material-icons icon--close-details-modal"> close </span>
         <div class="task-details--task-title">${this._data.title}</div>
@@ -83,7 +91,7 @@ class DetailsView extends ModalView {
         </div>
         <div class="task-details--task-date-wrapper">
           Due date:
-          <span class="task-details--task-date">${this._data.date}</span>
+          <span class="task-details--task-date">${dateToDisplay}</span>
         </div>
         <div class="task-details--task-priority-wrapper">
           Priority:
