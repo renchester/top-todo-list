@@ -641,6 +641,10 @@ html {
   margin-top: 1rem;
 }
 
+.task-editor--task-status {
+  margin-left: 0.5rem;
+}
+
 .task-editor--icon-wrapper,
 .project-editor--icon-wrapper {
   position: relative;
