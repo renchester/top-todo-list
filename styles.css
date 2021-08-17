@@ -126,6 +126,11 @@ html {
   overflow-y: auto;
 }
 
+.task-display--task-container {
+  max-height: 540px;
+  overflow-y: auto;
+}
+
 .task {
   display: flex;
   background-color: rgba(235, 235, 235, 0.788);
