@@ -160,8 +160,8 @@ html {
 
 .task-checkbox,
 .task-checkbox--checked {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border: 2px solid green;
   border-radius: 5px;
   background-color: white;
@@ -189,9 +189,13 @@ html {
 
 .task-date {
   color: rgba(0, 0, 0, 0.7);
-  margin-right: 2rem;
+  margin-right: 1.25rem;
   width: 90px;
   text-align: left;
+}
+
+.task-date--year {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .task-display--icon-wrapper {

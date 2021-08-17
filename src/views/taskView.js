@@ -1,5 +1,5 @@
 import View from './view';
-import detailsView from './detailsView';
+import format from 'date-fns/format';
 
 class TaskView extends View {
   _parentElement = document.querySelector('.task-display');
@@ -27,6 +27,15 @@ class TaskView extends View {
   }
 
   _generateTaskMarkup(task) {
+    const [taskYear, taskMonth, taskDay] = task.date.split('-');
+
+    const dateNow = new Date();
+
+    const dateToDisplay = format(
+      new Date(taskYear, taskMonth - 1, taskDay),
+      'LLL do'
+    );
+
     return `
         <div class="task priority-${task.priority.toLowerCase()}" data-id="${
       task.id
@@ -38,7 +47,11 @@ class TaskView extends View {
             task.status === 'completed' ? 'task--completed' : ''
           }">${task.title}</div>
           <div class="task-details">Details</div>
-          <div class="task-date">${task.date}</div>
+          <div class="task-date">${dateToDisplay}
+            <span class="task-date--year ${
+              dateNow.getFullYear() === +taskYear ? 'hidden' : ''
+            }">${taskYear}</span>
+          </div>
           <div class="task-display--icon-wrapper task-edit">
             <span class="material-icons icon--edit task-display--icons"> mode_edit </span>
           </div>
