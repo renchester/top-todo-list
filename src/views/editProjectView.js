@@ -13,63 +13,6 @@ class EditProjectView extends ModalView {
     super();
   }
 
-  showEditorModal(handler, e) {
-    const id = document.querySelector(
-      '.task-display--project-title'
-    ).textContent;
-
-    this.toggleWindow();
-
-    handler(id);
-
-    this._btnClose = document.querySelector('.icon--close-editor-modal');
-    this._addHandlerCloseModal();
-  }
-
-  saveEdit(handler, e) {
-    const projectTitle = this._parentElement.querySelector(
-      '.project-editor--project-title'
-    ).value;
-
-    if (this._validateTask(projectTitle)) {
-      const data = {
-        title: projectTitle,
-      };
-
-      this.toggleWindow();
-      handler(this._parentElement.dataset.id, data);
-    } else {
-      this._renderFormError();
-    }
-  }
-
-  deleteProjectOnModal(handler, e) {
-    // const id = this._title;
-    const id = document.querySelector(
-      '.task-display--project-title'
-    ).textContent;
-
-    handler(id);
-  }
-
-  addHandlerShowEditor(handler) {
-    document
-      .querySelector('.task-display--project-btn-edit')
-      .addEventListener('click', this.showEditorModal.bind(this, handler));
-  }
-
-  addHandlerSaveEdit(handler) {
-    document
-      .querySelector('.project-editor--icon-wrapper.project-save')
-      .addEventListener('click', this.saveEdit.bind(this, handler));
-  }
-
-  addHandlerDeleteProjectOnModal(handler) {
-    document
-      .querySelector('.project-editor--icon-wrapper.project-delete')
-      .addEventListener('click', this.deleteProjectOnModal.bind(this, handler));
-  }
-
   _generateMarkup() {
     // <div class="modal--task-detailsmodal--task-editor">
     const markup = `
@@ -104,6 +47,66 @@ class EditProjectView extends ModalView {
 
   _renderFormError() {
     console.log('form error');
+  }
+
+  _showEditorModal(handler, e) {
+    const id = document.querySelector(
+      '.task-display--project-title'
+    ).textContent;
+
+    this.toggleWindow();
+
+    handler(id);
+
+    this._btnClose = document.querySelector('.icon--close-editor-modal');
+    this._addHandlerCloseModal();
+  }
+
+  addHandlerShowEditor(handler) {
+    document
+      .querySelector('.task-display--project-btn-edit')
+      .addEventListener('click', this._showEditorModal.bind(this, handler));
+  }
+
+  _saveEdit(handler, e) {
+    const projectTitle = this._parentElement.querySelector(
+      '.project-editor--project-title'
+    ).value;
+
+    if (this._validateTask(projectTitle)) {
+      const data = {
+        title: projectTitle,
+      };
+
+      this.toggleWindow();
+      handler(this._parentElement.dataset.id, data);
+    } else {
+      this._renderFormError();
+    }
+  }
+
+  addHandlerSaveEdit(handler) {
+    document
+      .querySelector('.project-editor--icon-wrapper.project-save')
+      .addEventListener('click', this._saveEdit.bind(this, handler));
+  }
+
+  _deleteProjectOnModal(handler, e) {
+    // const id = this._title;
+    const id = document.querySelector(
+      '.task-display--project-title'
+    ).textContent;
+
+    handler(id);
+  }
+
+  addHandlerDeleteProjectOnModal(handler) {
+    document
+      .querySelector('.project-editor--icon-wrapper.project-delete')
+      .addEventListener(
+        'click',
+        this._deleteProjectOnModal.bind(this, handler)
+      );
   }
 }
 
