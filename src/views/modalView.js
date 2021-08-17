@@ -30,7 +30,6 @@ export default class ModalView extends View {
   _addHandlerCloseModal() {
     // Closes the modal
     this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
-    // this._overlay.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   _clearForm() {
