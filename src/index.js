@@ -15,9 +15,8 @@ import formView from './views/formView';
 import editTaskView from './views/editTaskView';
 import editProjectView from './views/editProjectView';
 
-// Index js for the application logic (controller)
+// Task Controllers
 
-// Change to show tasks in specific project
 const controlShowTasks = function (project = 'Home', other) {
   const tasksToShow = model.state.tasks.filter(
     (task) => task.project === project
@@ -37,32 +36,13 @@ const controlAddTask = function (data) {
   addHandlersToTask();
 };
 
-const controlAddProject = function (data) {
-  model.addProject(data);
+const controlShowDetails = function (id) {
+  const taskToShow = model.state.tasks.find((task) => task.id === id);
 
-  sidebarView.render(model.state.projects.slice(1));
+  detailsView.render(taskToShow);
 
-  sidebarView.addHandlerShowAllTasks(controlShowAllTasks);
-  sidebarView.addHandlerShowProject(controlShowProject);
-};
-
-const controlAddNote = function (data) {
-  model.addNote(data);
-
-  noteView.render(model.state.notes);
-};
-
-const controlShowProjectsOnForm = function () {
-  addTaskView.renderProjectOptions(model.state.projects);
-};
-
-const controlShowProjectsOnEditor = function (taskToEdit) {
-  editTaskView.renderProjectOptions(model.state.projects, taskToEdit);
-};
-
-const controlShowAllTasks = function () {
-  taskView.render(model.state.tasks);
-  addHandlersToTask();
+  detailsView.addHandlerEditTask(controlEditTask);
+  detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
 };
 
 const controlDeleteTask = function (id) {
@@ -76,24 +56,9 @@ const controlDeleteTask = function (id) {
 };
 
 const controlDeleteTaskOnModal = function (id) {
-  const projectToShow = getProjectBasedOnID(id);
-
-  model.deleteTask(id);
+  controlDeleteTask();
 
   detailsView.toggleWindow();
-
-  controlShowTasks(projectToShow);
-
-  addHandlersToTask();
-};
-
-const controlDeleteProjectOnModal = function (id) {
-  model.deleteProject(id);
-
-  editProjectView.toggleWindow();
-
-  controlShowTasks();
-  addHandlersToTask();
 };
 
 const controlSaveEditTask = function (id, replacement) {
@@ -101,24 +66,6 @@ const controlSaveEditTask = function (id, replacement) {
 
   controlShowTasks(replacement.project);
   addHandlersToTask();
-};
-
-const controlSaveEditProject = function (id, replacement) {
-  model.updateProject(id, replacement);
-
-  controlShowTasks(replacement.title, replacement.title);
-
-  // Update sidebar projects
-  sidebarView.render(model.state.projects.slice(1));
-
-  // Add handlers to sidebar projects
-  sidebarView.addHandlerShowProject(controlShowProject);
-
-  // Add handlers to all tasks
-  addHandlersToTask();
-
-  // Add handler to project editor
-  editProjectView.addHandlerShowEditor(controlEditProject);
 };
 
 const controlEditTask = function (id) {
@@ -135,46 +82,12 @@ const controlEditTask = function (id) {
   editTaskView.addHandlerPriority();
 };
 
-const controlShowDetails = function (id) {
-  const taskToShow = model.state.tasks.find((task) => task.id === id);
-
-  detailsView.render(taskToShow);
-
-  detailsView.addHandlerEditTask(controlEditTask);
-  detailsView.addHandlerDeleteTaskOnModal(controlDeleteTaskOnModal);
-};
-
 const controlToggleCompleted = function (id) {
   model.toggleTaskComplete(id);
 };
 
-const controlShowHome = function () {
-  const tasksAtHome = model.state.tasks.filter(
-    (task) => task.project.toLowerCase() === 'home'
-  );
+// Project Controllers
 
-  taskView.render(tasksAtHome);
-  addHandlersToTask();
-
-  sidebarView.render(model.state.projects.slice(1));
-
-  sidebarView.addHandlerShowProject(controlShowProject);
-};
-
-// Init on edit function
-const controlEditProject = function (id) {
-  const projectToEdit = model.state.projects.find(
-    (project) => project.title === id
-  );
-
-  console.log(projectToEdit);
-  editProjectView.render(projectToEdit);
-
-  editProjectView.addHandlerSaveEdit(controlSaveEditProject);
-  editProjectView.addHandlerDeleteProjectOnModal(controlDeleteProjectOnModal);
-};
-
-// Init on show function
 const controlShowProject = function (title) {
   const project = model.state.projects.find(
     (project) => project.title === title
@@ -189,31 +102,110 @@ const controlShowProject = function (title) {
   addHandlersToTask();
 };
 
-const controlDeleteNote = function (id) {
-  model.deleteNote(id);
+const controlAddProject = function (data) {
+  model.addProject(data);
 
-  noteView.render(model.state.notes);
+  sidebarView.render(model.state.projects.slice(1));
 
-  addHandlersToNote();
+  sidebarView.addHandlerShowAllTasks(controlShowAllTasks);
+  sidebarView.addHandlerShowProject(controlShowProject);
 };
 
-const controlPersistNoteTitle = function (id, newID, value) {
-  model.updateNoteTitle(id, newID, value);
-
-  noteView.render(model.state.notes);
+const controlShowProjectsOnForm = function () {
+  addTaskView.renderProjectOptions(model.state.projects);
 };
 
-const controlPersistNoteDetail = function (id, value) {
-  model.updateNoteDetail(id, value);
-
-  noteView.render(model.state.notes);
+const controlShowProjectsOnEditor = function (taskToEdit) {
+  editTaskView.renderProjectOptions(model.state.projects, taskToEdit);
 };
+
+const controlDeleteProjectOnModal = function (id) {
+  model.deleteProject(id);
+
+  editProjectView.toggleWindow();
+
+  controlShowTasks();
+  addHandlersToTask();
+};
+
+const controlSaveEditProject = function (id, replacement) {
+  model.updateProject(id, replacement);
+
+  controlShowTasks(replacement.title, replacement.title);
+
+  sidebarView.render(model.state.projects.slice(1));
+
+  sidebarView.addHandlerShowProject(controlShowProject);
+
+  addHandlersToTask();
+
+  editProjectView.addHandlerShowEditor(controlEditProject);
+};
+
+const controlEditProject = function (id) {
+  const projectToEdit = model.state.projects.find(
+    (project) => project.title === id
+  );
+
+  editProjectView.render(projectToEdit);
+
+  editProjectView.addHandlerSaveEdit(controlSaveEditProject);
+  editProjectView.addHandlerDeleteProjectOnModal(controlDeleteProjectOnModal);
+};
+
+// Note Controllers
 
 const controlShowNotes = function () {
   noteView.render(model.state.notes);
 
   addHandlersToNote();
 };
+
+const controlAddNote = function (data) {
+  model.addNote(data);
+
+  controlShowNotes();
+};
+
+const controlDeleteNote = function (id) {
+  model.deleteNote(id);
+
+  controlShowNotes();
+};
+
+const controlPersistNoteTitle = function (id, newID, value) {
+  model.updateNoteTitle(id, newID, value);
+
+  controlShowNotes();
+};
+
+const controlPersistNoteDetail = function (id, value) {
+  model.updateNoteDetail(id, value);
+
+  controlShowNotes();
+};
+
+// Sidebar Controllers
+
+const controlShowHome = function () {
+  const tasksAtHome = model.state.tasks.filter(
+    (task) => task.project.toLowerCase() === 'home'
+  );
+
+  taskView.render(tasksAtHome);
+  addHandlersToTask();
+
+  sidebarView.render(model.state.projects.slice(1));
+
+  sidebarView.addHandlerShowProject(controlShowProject);
+};
+
+const controlShowAllTasks = function () {
+  taskView.render(model.state.tasks);
+  addHandlersToTask();
+};
+
+// Init Function
 
 const init = function () {
   controlShowTasks();
@@ -232,7 +224,7 @@ const init = function () {
 
 init();
 
-//  HELPER FUNCTIONS
+//  Helper Functions
 
 function addHandlersToTask() {
   detailsView.addHandlerTaskDetails(controlShowDetails);
@@ -254,48 +246,3 @@ function getProjectBasedOnID(taskID) {
 
   return chosenTask.project;
 }
-
-/*
-
-class Task {
-  constructor(name, date, priority, description) {
-    this.name = name;
-    this.date = date;
-    this.priority = priority;
-    this.description = description;
-  }
-
-  get getName() {
-    return this.name;
-  }
-
-  set setName(value) {
-    this.name = value;
-  }
-
-  get getDate() {
-    return this.date;
-  }
-
-  set setDate(value) {
-    this.date = value;
-  }
-
-  get getPriority() {
-    return this.priority;
-  }
-
-  set setPriority(value) {
-    this.priority = value;
-  }
-
-  get getDescription() {
-    return this.description;
-  }
-
-  set setDescription(value) {
-    this.description = value;
-  }
-}
-
-*/
