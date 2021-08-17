@@ -11,7 +11,7 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderError(Message = this._errorMessage) {
+  renderError(message = this._errorMessage) {
     const markup = `
     <div class="error">
     <p>${message}</p>
