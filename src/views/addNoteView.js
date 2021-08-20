@@ -36,6 +36,13 @@ class AddNoteView extends ModalView {
     }
   }
 
+  addHandlerAddNote(handler) {
+    this._btnSubmit.addEventListener(
+      'click',
+      this.uploadData.bind(this, handler)
+    );
+  }
+
   _renderFormError() {
     console.log('error');
   }
@@ -45,13 +52,6 @@ class AddNoteView extends ModalView {
     if (!title) {
       return false;
     } else return true;
-  }
-
-  addHandlerAddNote(handler) {
-    this._btnSubmit.addEventListener(
-      'click',
-      this.uploadData.bind(this, handler)
-    );
   }
 }
 
