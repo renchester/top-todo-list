@@ -27,6 +27,13 @@ class AddProjectView extends ModalView {
     }
   }
 
+  addHandlerAddProject(handler) {
+    this._btnSubmit.addEventListener(
+      'click',
+      this.uploadData.bind(this, handler)
+    );
+  }
+
   _renderFormError() {
     console.log('error');
   }
@@ -35,13 +42,6 @@ class AddProjectView extends ModalView {
     if (!title || title.length < 1) {
       return false;
     } else return true;
-  }
-
-  addHandlerAddProject(handler) {
-    this._btnSubmit.addEventListener(
-      'click',
-      this.uploadData.bind(this, handler)
-    );
   }
 }
 
