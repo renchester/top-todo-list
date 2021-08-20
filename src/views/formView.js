@@ -13,7 +13,7 @@ class FormView extends ModalView {
       .forEach((el) => el.classList.add('hidden'));
 
     // Establish which form to show
-    const formType = Array.from(e.target.classList)[1].split('new-')[1];
+    const formType = [...e.target.classList][1].split('new-')[1];
 
     // Emphasize active label
     this._sidebarLabels.forEach((label) =>
