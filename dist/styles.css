@@ -796,6 +796,16 @@ html {
   }
 }
 
+@media (max-width: 830px) {
+  .task {
+    min-width: 0;
+  }
+
+  .task-date {
+    display: none;
+  }
+}
+
 @media (orientation: portrait) {
   .content-wrapper {
     margin: none;
@@ -879,5 +889,64 @@ html {
 
   .task-display {
     padding: 2rem 2.4rem;
+  }
+
+  .task-display--notes-container {
+    max-height: 75%;
+  }
+}
+
+@media (max-width: 540px) {
+  .nav-bar {
+    padding-top: 1.5rem;
+  }
+
+  .nav-logo {
+    font-size: 1.5rem;
+  }
+
+  .nav-header {
+    font-size: 1.2rem;
+  }
+
+  .header--all {
+    display: none;
+  }
+
+  .task-display {
+    padding-top: 1rem;
+  }
+
+  .task-display--project-title {
+    font-size: 1.4rem;
+  }
+
+  .task {
+    min-width: 0;
+  }
+
+  .task-date {
+    display: none;
+  }
+
+  .task-title {
+    width: 200px;
+    margin-right: 0;
+  }
+
+  .task-details {
+    margin-right: 0;
+  }
+
+  .task-display--notes-container {
+    grid-template-columns: repeat(1, auto);
+    max-height: 80%;
+  }
+}
+
+@media (max-height: 750px) {
+  .btn.add-task {
+    position: fixed;
+    opacity: 0.8;
   }
 }
