@@ -7,6 +7,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  list-style-type: none;
 }
 
 :root {
@@ -74,6 +75,14 @@ html {
   transition: all ease-in-out 150ms;
 }
 
+.nav-header.header--projects {
+  margin-bottom: 0;
+}
+
+.nav-subdiv--content.project--title {
+  margin: 0.5rem 0;
+}
+
 .nav-header:hover,
 .nav-header--active,
 .nav-subdiv--content.project--title:hover {
@@ -81,8 +90,13 @@ html {
   transform-origin: left;
 }
 
-.nav-subdiv.project--header {
+.nav-header.header--projects:hover {
+  transform: none;
+}
+
+.nav-subdiv.project--list {
   list-style-type: none;
+  margin-top: 0.5rem;
   padding-left: 1rem;
   max-height: 300px;
   overflow-y: auto;
@@ -320,7 +334,7 @@ html {
   margin: auto;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgb(128, 128, 128);
-  z-index: 2;
+  z-index: 10;
 }
 
 .add-task--display {
@@ -503,7 +517,7 @@ html {
   margin: auto;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgb(128, 128, 128);
-  z-index: 2;
+  z-index: 10;
 }
 
 .material-icons.icon--close-details-modal {
@@ -577,7 +591,7 @@ html {
   margin: auto;
   max-height: none;
   background-color: white;
-  z-index: 2;
+  z-index: 10;
 }
 
 .modal--project-editor {
@@ -718,6 +732,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 5;
   /* cursor: pointer; */
 }
 
@@ -759,7 +774,7 @@ html {
   }
 
   .task-title {
-    width: 500px;
+    width: 350px;
   }
 
   .task-details {
@@ -795,6 +810,7 @@ html {
   .nav-bar {
     display: flex;
     flex-direction: column;
+    padding-bottom: 0;
     min-width: none;
     max-width: none;
   }
@@ -810,16 +826,58 @@ html {
     align-items: center;
   }
 
-  .nav-subdiv--content.project--title {
-    display: none;
+  .nav-header {
+    margin: 0 3rem 0 0;
+    padding-bottom: 1rem;
   }
 
-  .nav-header.header--projects:hover > .nav-subdiv--content.project--title {
-    /* opacity: 1; */
+  .nav-header.header--projects {
+    position: relative;
+  }
+
+  .nav-subdiv.project--list {
+    display: none;
+    position: absolute;
+    top: 3.2rem;
+    padding-left: 0;
+    margin-top: 0;
+    background-color: var(--secondary-blue);
+    z-index: 1;
+  }
+
+  .nav-subdiv--content.project--title {
+    margin: 0;
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-subdiv--content.project--title:hover {
+    background-color: #3573a5;
+  }
+
+  .header--projects:hover .project--list {
+    display: block;
+    width: max-content;
+  }
+
+  .project--list:hover {
     display: block;
   }
 
-  .nav-header {
-    margin: 0 1rem;
+  .btn.add-task {
+    position: fixed;
+    z-index: 1;
+    background-color: var(--primary-yellow);
+    width: 60px;
+    height: 60px;
+  }
+
+  .material-icons.icon--add-task {
+    font-size: 2rem;
+    color: rgb(77, 77, 77);
+    font-weight: 800;
+  }
+
+  .task-display {
+    padding: 2rem 2.4rem;
   }
 }
