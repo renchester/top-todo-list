@@ -16,7 +16,7 @@ class SidebarView extends View {
 
   _generateProjectMarkup(project) {
     const markup = `
-    <p class="nav-subdiv--content project--title">${project.title}</p>`;
+    <li class="nav-subdiv--content project--title">${project.title}</li>`;
     return markup;
   }
 
