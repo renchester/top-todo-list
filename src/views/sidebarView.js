@@ -2,7 +2,7 @@ import View from './view';
 
 class SidebarView extends View {
   _window = document.querySelector('.nav-bar');
-  _parentElement = document.querySelector('.nav-subdiv.project--header');
+  _parentElement = document.querySelector('.nav-subdiv.project--list');
 
   constructor() {
     super();
