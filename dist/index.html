@@ -24,16 +24,19 @@
     <div class="content-wrapper">
       <div class="nav-bar">
         <div class="nav-logo">TO-DO LIST</div>
-        <p class="nav-header header--home">Home</p>
-        <p class="nav-header header--all">All Tasks</p>
-        <!-- <p class="nav-header header--today">Today</p>
-        <p class="nav-header header--tomorrow">Tomorrow</p>
-        <p class="nav-header header--week">This Week</p> -->
-        <p class="nav-header header--projects">Projects</p>
-        <div class="nav-subdiv project--header">
-          <p class="nav-subdiv--content project--title">Example Project</p>
-        </div>
-        <p class="nav-header header--notes">Notes</p>
+        <ul class="nav-headers">
+          <li class="nav-header header--home">Home</li>
+          <li class="nav-header header--all">All Tasks</li>
+          <li class="nav-header header--projects">Projects</li>
+          <li class="nav-subdiv project--header">
+            <ul>
+              <li class="nav-subdiv--content project--title">
+                Example Project
+              </li>
+            </ul>
+          </li>
+          <li class="nav-header header--notes">Notes</li>
+        </ul>
         <button class="btn add-task">
           <span class="material-icons icon--add-task"> add </span>
         </button>
@@ -41,11 +44,10 @@
 
       <div class="task-display">
         <div class="task-display--project-title hidden">Example Project</div>
-        <!-- <div class="task-container"></div> -->
 
         <!--  TASKS -->
 
-        <div class="task priority-low hidden" data-id="Sample Task">
+        <div class="task priority-low" data-id="Sample Task">
           <div class="task-checkbox"></div>
           <div class="task-title">Sample Task</div>
           <div class="task-details">Details</div>
@@ -99,64 +101,8 @@
         > -->
 
         <div class="task-display--notes-container">
-          <div class="notes-container--col-1">
-            <!-- <div class="note">
-              <div class="note--icon-wrapper note-delete">
-                <span class="material-icons icon--delete-note"> close </span>
-              </div>
-              <div class="note--title" contenteditable="true">
-                Go to this place
-              </div>
-              <div class="note--details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut
-              </div>
-            </div>
-            <div class="note">
-              <div class="note--icon-wrapper note-delete">
-                <span class="material-icons icon--delete-note"> close </span>
-              </div>
-              <div class="note--title" contenteditable="true">
-                Go to this place
-              </div>
-              <div class="note--details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut
-              </div>
-            </div> -->
-          </div>
-          <div class="notes-container--col-2">
-            <!-- <div class="note">
-              <div class="note--icon-wrapper note-delete">
-                <span class="material-icons icon--delete-note"> close </span>
-              </div>
-              <div class="note--title" contenteditable="true">
-                Go to this place
-              </div>
-              <div class="note--details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut ipsum dolor
-                sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut ipsum dolor sit amet,
-                consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              </div>
-            </div>
-
-            <div class="note">
-              <div class="note--icon-wrapper note-delete">
-                <span class="material-icons icon--delete-note"> close </span>
-              </div>
-              <div class="note--title" contenteditable="true">
-                Go to this place
-              </div>
-              <div class="note--details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut
-              </div>
-            </div> -->
-          </div>
+          <div class="notes-container--col-1"></div>
+          <div class="notes-container--col-2"></div>
         </div>
       </div>
 
