@@ -64,6 +64,22 @@ html {
   color: var(--primary-yellow);
 }
 
+.hamburger {
+  display: block;
+  position: absolute;
+  right: 2.4rem;
+  cursor: pointer;
+}
+
+.hb-line {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 7px 0;
+  border-radius: 2px;
+}
+
 .nav-header,
 .nav-subdiv--content.project--title {
   font-size: 1.25rem;
@@ -742,54 +758,7 @@ html {
   color: white;
 }
 
-/*  HELPER STYLES */
-
-.hidden {
-  display: none;
-}
-
-.overlay {
-  position: absolute;
-  background-color: rgba(22, 22, 22, 0.25);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 5;
-  /* cursor: pointer; */
-}
-
-.priority-label-low {
-  color: green;
-  border-color: green;
-}
-
-.priority-label-medium {
-  color: orange;
-  border-color: orange;
-}
-
-.priority-label-high {
-  color: red;
-  border-color: red;
-}
-
-.priority-label--active {
-  color: white;
-  font-weight: 600;
-}
-
-.priority-label-low.priority-label--active {
-  background-color: green;
-}
-
-.priority-label-medium.priority-label--active {
-  background-color: orange;
-}
-
-.priority-label-high.priority-label--active {
-  background-color: red;
-}
+/*  MEDIA QUERIES */
 
 @media (max-width: 1200px) {
   .nav-logo {
@@ -857,7 +826,7 @@ html {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    padding-bottom: 0;
+    padding-bottom: 1rem;
     min-width: none;
     max-width: none;
   }
@@ -868,14 +837,14 @@ html {
   }
 
   .nav-headers {
-    /* display: none; */
+    /* opacity: 0; */
     display: flex;
     align-items: center;
   }
 
   .nav-header {
     margin: 0 3rem 0 0;
-    padding-bottom: 1rem;
+    padding: 1.2rem 0 0.5rem 0;
   }
 
   .nav-header.header--projects {
@@ -885,7 +854,7 @@ html {
   .nav-subdiv.project--list {
     display: none;
     position: absolute;
-    top: 3.2rem;
+    top: calc(100% + 1rem);
     padding-left: 0;
     margin-top: 0;
     background-color: var(--secondary-blue);
@@ -901,13 +870,10 @@ html {
     background-color: #3573a5;
   }
 
-  .header--projects:hover .project--list {
+  .header--projects:hover .project--list,
+  .project--list.project--list-visible {
     display: block;
     width: max-content;
-  }
-
-  .project--list:hover {
-    display: block;
   }
 
   .btn.add-task {
@@ -936,6 +902,12 @@ html {
 
   .nav-header {
     font-size: 1.2rem;
+    padding: 1rem 0 0 0;
+  }
+
+  .hb-line {
+    width: 25px;
+    margin: 5px 0;
   }
 
   .header--all {
@@ -975,26 +947,25 @@ html {
 /*  Modal Queries */
 
 @media (max-width: 570px) {
+  /* Add Task Modal */
+
   .modal--add-task {
     max-height: none;
     max-width: none;
     min-width: 0;
+    min-height: 0;
     width: 100vw;
     transform: none;
+    top: 0%;
     left: 0%;
-    margin: 0;
-  }
-
-  /* Add Task Modal */
-
-  .modal--add-task {
-    min-height: 0;
-    top: 20%;
     bottom: 0%;
+    margin: 0;
+    border-radius: 0px;
   }
 
   .add-task--header {
     padding: 2rem 1.2rem 0.5rem 2rem;
+    border-radius: 0px;
   }
 
   .add-task--display {
@@ -1082,6 +1053,15 @@ html {
     width: 60%;
   }
 
+  .task-editor--task-editor-wrapper {
+    justify-content: center;
+  }
+
+  .task-editor--icon-wrapper {
+    width: 40%;
+    text-align: center;
+  }
+
   /*  Project Editor Modal */
 
   .project-editor--project-title {
@@ -1108,11 +1088,94 @@ html {
     opacity: 0.8;
   }
 
-  .modal--add-task {
-    top: 0%;
-  }
-
   .add-task--header {
     border-radius: 0;
+  }
+}
+
+/*  HELPER STYLES */
+
+.hidden {
+  display: none;
+}
+
+.overlay {
+  position: absolute;
+  background-color: rgba(22, 22, 22, 0.25);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  /* cursor: pointer; */
+}
+
+.priority-label-low {
+  color: green;
+  border-color: green;
+}
+
+.priority-label-medium {
+  color: orange;
+  border-color: orange;
+}
+
+.priority-label-high {
+  color: red;
+  border-color: red;
+}
+
+.priority-label--active {
+  color: white;
+  font-weight: 600;
+}
+
+.priority-label-low.priority-label--active {
+  background-color: green;
+}
+
+.priority-label-medium.priority-label--active {
+  background-color: orange;
+}
+
+.priority-label-high.priority-label--active {
+  background-color: red;
+}
+
+/*  JAVASCRIPT TRIGGERED STYLES & ANIMATIONS */
+
+.show-block {
+  display: block;
+}
+
+.nav-headers {
+  animation: showNavHeaders 300ms ease-in-out forwards;
+}
+
+@keyframes showNavHeaders {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.project--list.project--list-visible {
+  animation: showProjectList 200ms ease-in-out forwards;
+}
+
+@keyframes showProjectList {
+  0% {
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
   }
 }
