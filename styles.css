@@ -256,14 +256,15 @@ html {
 }
 
 .task-display--project-btn-edit {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  right: 0%;
+  bottom: 0%;
   margin: 2rem;
   font-weight: 800;
   color: #dfa000;
   padding: 0.5rem 1rem;
   border: 2px solid #dfa000;
+  border-radius: 5px;
 }
 
 .task-display--project-btn-edit:hover {
@@ -276,6 +277,7 @@ html {
 .task-display--notes-container {
   display: grid;
   grid-template-columns: repeat(2, 50%);
+  padding: 15px 0;
 }
 
 .note {
@@ -299,6 +301,12 @@ html {
   top: 1.5rem;
   right: 1rem;
   cursor: pointer;
+  transition: transform ease-in-out 200ms;
+}
+
+.material-icons.icon--delete-note:hover {
+  transform: scale(1.1);
+  color: rgb(160, 0, 0);
 }
 
 .note--title {
@@ -396,6 +404,7 @@ html {
   padding-left: 1.5rem;
   padding-top: 2rem;
   height: 100%;
+  width: max-content;
 }
 
 .add-task--content textarea {
@@ -424,6 +433,7 @@ html {
 }
 
 .new-task--task-date-wrapper {
+  width: max-content;
   margin-bottom: 1rem;
 }
 
@@ -438,6 +448,7 @@ html {
 .new-task--task-priority-wrapper {
   display: flex;
   align-items: center;
+  width: max-content;
 }
 
 .new-task--task-priority {
@@ -456,10 +467,16 @@ html {
   padding: 0.25rem 0.5rem;
   margin: 0 0.1em;
   cursor: pointer;
+  transition: transform ease-in-out 200ms;
+}
+
+.new-task--task-priority-label:hover {
+  transform: scale(1.05);
 }
 
 .new-task--task-project-wrapper {
   margin-top: 1rem;
+  width: max-content;
 }
 
 #new-task-project {
@@ -497,8 +514,14 @@ html {
   padding: 0.5rem 1rem;
   background-color: white;
   border: 2px solid var(--secondary-blue);
+  border-radius: 5px;
   color: var(--secondary-blue);
   cursor: pointer;
+}
+
+.btn--submit:hover {
+  background-color: var(--secondary-blue);
+  color: white;
 }
 
 /*  TASK DETAILS */
@@ -804,6 +827,10 @@ html {
   .task-date {
     display: none;
   }
+
+  .modal--add-task {
+    max-width: 80%;
+  }
 }
 
 @media (orientation: portrait) {
@@ -811,6 +838,13 @@ html {
     margin: none;
     height: 100vh;
     flex-direction: column;
+    min-height: 0;
+  }
+
+  .task-display {
+    padding: 2rem 2.4rem;
+    max-height: none;
+    min-height: 0;
   }
 
   .task-display--notes-container {
@@ -818,6 +852,9 @@ html {
   }
 
   .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     padding-bottom: 0;
@@ -886,14 +923,6 @@ html {
     color: rgb(77, 77, 77);
     font-weight: 800;
   }
-
-  .task-display {
-    padding: 2rem 2.4rem;
-  }
-
-  .task-display--notes-container {
-    max-height: 75%;
-  }
 }
 
 @media (max-width: 540px) {
@@ -940,7 +969,136 @@ html {
 
   .task-display--notes-container {
     grid-template-columns: repeat(1, auto);
-    max-height: 80%;
+  }
+}
+
+/*  Modal Queries */
+
+@media (max-width: 570px) {
+  .modal--add-task {
+    max-height: none;
+    max-width: none;
+    min-width: 0;
+    width: 100vw;
+    transform: none;
+    left: 0%;
+    margin: 0;
+  }
+
+  /* Add Task Modal */
+
+  .modal--add-task {
+    min-height: 0;
+    top: 20%;
+    bottom: 0%;
+  }
+
+  .add-task--header {
+    padding: 2rem 1.2rem 0.5rem 2rem;
+  }
+
+  .add-task--display {
+    flex-direction: column;
+    opacity: 1;
+  }
+
+  .add-task--sidebar {
+    display: flex;
+    justify-content: space-between;
+    max-width: none;
+    border-radius: 0;
+    padding: 0.75rem 2rem;
+    background-color: var(--primary-blue);
+  }
+
+  .add-task--content {
+    width: 100%;
+  }
+
+  .sidebar--label {
+    color: white;
+    padding: 0.5rem 0;
+    margin: 0;
+    width: max-content;
+  }
+
+  .sidebar--label-active,
+  .sidebar--label:hover {
+    color: white;
+  }
+
+  /* .btn--submit {
+    display: block;
+    position: static;
+    width: 60%;
+    margin: 1.2rem auto;
+  } */
+
+  .btn--submit {
+    bottom: 5%;
+    left: 0;
+    width: 60%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 450px) {
+  /* Task Details & Editor Modal */
+
+  .modal--task-details {
+    max-height: none;
+    max-width: none;
+    min-width: 0;
+    width: 100vw;
+    transform: none;
+    left: 0%;
+    margin: 0;
+  }
+
+  .modal--task-details {
+    height: 60vh;
+    top: 40%;
+    left: 0%;
+  }
+
+  .task-details--task-details {
+    flex-grow: 0;
+    min-height: 30px;
+  }
+
+  .task-details--task-date-wrapper {
+    margin-top: 5%;
+  }
+
+  .task-details--task-editor-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .task-details--icon-wrapper {
+    margin: 0.5rem auto;
+    text-align: center;
+    width: 60%;
+  }
+
+  /*  Project Editor Modal */
+
+  .project-editor--project-title {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .project-editor--project-editor-wrapper {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+  }
+
+  .project-editor--icon-wrapper {
+    text-align: center;
+    margin-left: 0;
+    width: 60%;
   }
 }
 
@@ -948,5 +1106,13 @@ html {
   .btn.add-task {
     position: fixed;
     opacity: 0.8;
+  }
+
+  .modal--add-task {
+    top: 0%;
+  }
+
+  .add-task--header {
+    border-radius: 0;
   }
 }
