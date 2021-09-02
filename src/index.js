@@ -93,6 +93,8 @@ const controlShowProject = function (title) {
     (project) => project.title === title
   );
 
+  if (!project) return;
+
   const tasksToShow = model.state.tasks.filter(
     (el) => el.project === project.title
   );
