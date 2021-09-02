@@ -14,7 +14,6 @@ class EditProjectView extends ModalView {
   }
 
   _generateMarkup() {
-    // <div class="modal--task-detailsmodal--task-editor">
     const markup = `
         <span class="material-icons icon--close-editor-modal"> close </span>
         <input
@@ -37,6 +36,33 @@ class EditProjectView extends ModalView {
     this._parentElement.dataset.id = this._data.title;
 
     return markup;
+  }
+
+  _generatePlaceholder() {
+    console.log('edit project view');
+
+    const markup = `
+        <span class="material-icons icon--close-editor-modal"> close </span>
+        <input
+          class="project-editor--form-element project-editor--project-title"
+          type="text"
+          placeholder="Example Project Title"
+          value="Example Project"
+          minlength="1"
+          maxlength="60"
+        />
+
+        <div class="project-editor--project-editor-wrapper">
+          <div class="project-editor--icon-wrapper project-save">Save</div>
+          
+        </div> 
+    `;
+
+    this._parentElement.classList.add('modal--project-editor');
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    // return markup;
   }
 
   _validateTask(title) {

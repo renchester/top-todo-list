@@ -30,6 +30,12 @@ class SidebarView extends View {
     return markup;
   }
 
+  _generatePlaceholder() {
+    const markup = `
+    <li class="nav-subdiv--content project--title">Example Project</li>`;
+    return markup;
+  }
+
   _handleOrientationChange(e) {
     if (e.matches) {
       this._matchPortrait();
