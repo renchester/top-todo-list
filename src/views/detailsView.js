@@ -131,7 +131,14 @@ class DetailsView extends ModalView {
     return markup;
   }
 
-  _generatePlaceholder() {
+  _generatePlaceholder(id) {
+    const sampleTask = document.querySelector('.task[data-id="Sample Task"]');
+    const sampleTaskCheckbox = sampleTask.querySelector('.task-checkbox');
+    const sampleTaskProject = document.querySelector(
+      '.task-display--project-title'
+    ).textContent;
+    const sampleTaskPriority = sampleTask.classList[1].split('-')[1];
+
     const date = new Date();
     const taskYear = date.getFullYear();
     const taskMonth = date.getMonth();
@@ -146,8 +153,7 @@ class DetailsView extends ModalView {
         <span class="material-icons icon--close-details-modal"> close </span>
         <div class="task-details--task-title">Sample Task</div>
         <div class="task-details--task-details">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          You are seeing this example of a task detail because you have not added any tasks yet. Add a task/project now by clicking on the add task button!
         </div>
         <div class="task-details--task-date-wrapper">
           Due date:
@@ -157,22 +163,31 @@ class DetailsView extends ModalView {
           Priority:
           <span
             class="task-details--task-priority task-details--task-priority-low"
-            >Low</span
+            >${sampleTaskPriority.replace(
+              sampleTaskPriority[0],
+              sampleTaskPriority[0].toUpperCase()
+            )}</span
           >
         </div>
         <div class="task-details--task-status-wrapper">
           Status:
-          <span class="task-details--task-status">Completed</span>
+          <span class="task-details--task-status">${
+            sampleTaskCheckbox.classList.contains('task-checkbox--checked')
+              ? 'Completed'
+              : 'Ongoing'
+          }</span>
         </div>
         <div class="task-details--task-project-wrapper">
           Project:
-          <span class="task-details--task-project">Home</span>
+          <span class="task-details--task-project">${
+            sampleTaskProject || 'Home'
+          }</span>
         </div>
         <div class="task-details--task-editor-wrapper">
-          <div class="task-details--icon-wrapper task-edit">
+          <div class="task-details--icon-wrapper task-edit hidden">
             Edit
           </div>
-          <div class="task-details--icon-wrapper task-delete">
+          <div class="task-details--icon-wrapper task-delete hidden">
             Delete
           </div>
         </div>

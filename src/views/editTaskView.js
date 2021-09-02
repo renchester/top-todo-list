@@ -14,7 +14,6 @@ class EditTaskView extends ModalView {
   }
 
   _generateMarkup() {
-    // <div class="modal--task-detailsmodal--task-editor">
     const markup = `
         <span class="material-icons icon--close-editor-modal"> close </span>
         <input

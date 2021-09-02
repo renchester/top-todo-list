@@ -97,11 +97,14 @@ class TaskView extends View {
     if (!e.target.classList.contains('task-checkbox')) return;
 
     const taskToMark = e.target.closest('.task');
-    const id = taskToMark.dataset.id;
 
     e.target.classList.toggle('task-checkbox--checked');
 
     taskToMark.querySelector('.task-title').classList.toggle('task--completed');
+
+    const id = taskToMark.dataset.id;
+
+    if (!id || id === 'Sample Task') return;
 
     handler(id);
   }
