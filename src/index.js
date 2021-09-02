@@ -56,7 +56,7 @@ const controlDeleteTask = function (id) {
 };
 
 const controlDeleteTaskOnModal = function (id) {
-  controlDeleteTask();
+  controlDeleteTask(id);
 
   detailsView.toggleWindow();
 };
@@ -241,7 +241,6 @@ function addHandlersToNote() {
 
 function getProjectBasedOnID(taskID) {
   const chosenTask = model.state.tasks.find((task) => task.id === taskID);
-  console.log(model.state.tasks.find((task) => task.id === taskID));
 
   return chosenTask.project;
 }
