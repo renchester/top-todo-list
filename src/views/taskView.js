@@ -61,6 +61,38 @@ class TaskView extends View {
         </div>`;
   }
 
+  _generatePlaceholder(projTitle) {
+    const date = new Date();
+    const taskYear = date.getFullYear();
+    const taskMonth = date.getMonth();
+    const taskDay = date.getDate();
+
+    const dateToDisplay = format(
+      new Date(taskYear, taskMonth, taskDay),
+      'LLL do'
+    );
+
+    const markup = `
+         <div class="task-display--project-title">${
+           projTitle ? projTitle : 'Home'
+         }</div>
+
+         <div class="task priority-low" data-id="Sample Task">
+            <div class="task-checkbox"></div>
+            <div class="task-title">Sample Task</div>
+            <div class="task-details">Details</div>
+            <div class="task-date">${dateToDisplay}</div>
+        </div>
+        
+        <div class="task-display--project-btn-edit btn ${
+          projTitle ? '' : 'hidden'
+        }">Edit Project</div>
+    `;
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
   _toggleCompleted(handler, e) {
     if (!e.target.classList.contains('task-checkbox')) return;
 

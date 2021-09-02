@@ -130,6 +130,57 @@ class DetailsView extends ModalView {
 
     return markup;
   }
+
+  _generatePlaceholder() {
+    const date = new Date();
+    const taskYear = date.getFullYear();
+    const taskMonth = date.getMonth();
+    const taskDay = date.getDate();
+
+    const dateToDisplay = format(
+      new Date(taskYear, taskMonth, taskDay),
+      'yyyy-LL-dd'
+    );
+
+    const markup = `
+        <span class="material-icons icon--close-details-modal"> close </span>
+        <div class="task-details--task-title">Sample Task</div>
+        <div class="task-details--task-details">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        </div>
+        <div class="task-details--task-date-wrapper">
+          Due date:
+          <span class="task-details--task-date">${dateToDisplay}</span>
+        </div>
+        <div class="task-details--task-priority-wrapper">
+          Priority:
+          <span
+            class="task-details--task-priority task-details--task-priority-low"
+            >Low</span
+          >
+        </div>
+        <div class="task-details--task-status-wrapper">
+          Status:
+          <span class="task-details--task-status">Completed</span>
+        </div>
+        <div class="task-details--task-project-wrapper">
+          Project:
+          <span class="task-details--task-project">Home</span>
+        </div>
+        <div class="task-details--task-editor-wrapper">
+          <div class="task-details--icon-wrapper task-edit">
+            Edit
+          </div>
+          <div class="task-details--icon-wrapper task-delete">
+            Delete
+          </div>
+        </div>
+    `;
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
 }
 
 export default new DetailsView();

@@ -4,6 +4,9 @@ export default class View {
   _data;
 
   render(data, other) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this._generatePlaceholder(other);
+
     this._data = data;
     const markup = this._generateMarkup(other);
 

@@ -240,7 +240,6 @@ function addHandlersToNote() {
 }
 
 function getProjectBasedOnID(taskID) {
-  console.log(taskID);
   const chosenTask = model.state.tasks.find((task) => task.id === taskID);
   console.log(model.state.tasks.find((task) => task.id === taskID));
 
