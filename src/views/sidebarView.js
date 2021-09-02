@@ -33,7 +33,9 @@ class SidebarView extends View {
   _generatePlaceholder() {
     const markup = `
     <li class="nav-subdiv--content project--title">Example Project</li>`;
-    return markup;
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
   _handleOrientationChange(e) {
