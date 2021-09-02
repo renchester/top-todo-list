@@ -38,6 +38,31 @@ class NoteView extends View {
             </div>`;
   }
 
+  _generatePlaceholder() {
+    const markup = `
+      <div class="task-display--notes-container">
+          <div class="notes-container--col-1">  
+            <div class="note" data-id="Sample Note">
+              <div class="note--title" contenteditable="true">Example Note</div>
+              <div class="note--details" contenteditable="true">You are seeing this example of a note detail because you have not added any notes yet. Add a note now by clicking on the add note button!
+              </div>
+            </div>
+          </div>
+          <div class="notes-container--col-2">
+           <div class="note" data-id="Sample Note 2">
+              <div class="note--title" contenteditable="true">Grocery List</div>
+              <div class="note--details" contenteditable="true">Milk
+Eggs
+Oreos</div>
+            </div>
+          </div>
+        </div>   
+            `;
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
   addHandlerDeleteNote(handler) {
     document.querySelectorAll('.note').forEach((el) =>
       el.addEventListener('click', function (e) {
