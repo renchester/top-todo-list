@@ -7,6 +7,43 @@
     <title>To-do List</title>
   </head>
   <body>
-    <div class="sample">YES</div>
+    <div class="container">
+      <div class="sidebar">
+        <div class="logo">TO DO LIST</div>
+
+        <div class="sidebar-nav">
+          <div class="nav--tasks">
+            <div class="tasks-today">Today</div>
+            <div class="tasks-upcoming">Upcoming</div>
+            <div class="tasks-anytime">Anytime</div>
+            <div class="tasks-finished">Finished</div>
+          </div>
+          <div class="nav--projects">
+            <div class="project-family" data-id="345"></div>
+            <div class="project-vacation" data-id="456"></div>
+          </div>
+          <div class="nav--notes">Notes</div>
+        </div>
+      </div>
+
+      <div class="content-container">
+        <div class="content-title">Tasks</div>
+        <div class="content-display">
+          <div class="task" data-id="123">
+            <input
+              type="checkbox"
+              name="task-status"
+              id="task-status"
+              value="Pending"
+            />
+            <span class="task-title">Finish this project</span>
+            <button class="btn-task-details"></button>
+          </div>
+        </div>
+        <div class="task-bar">
+          <button type="button" class="btn-add">+</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
