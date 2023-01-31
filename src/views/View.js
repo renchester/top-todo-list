@@ -1,22 +1,18 @@
-const View = (function () {
-  let _data;
+export default class View {
+  _data;
 
-  function render() {}
-  function update(data) {
-    const newMarkup = _generateMarkup();
+  render(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+
+    this._data = data;
+    const markup = this._generateMarkup(data);
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  function _clear(el) {
-    el.parentElement.innerHTML = '';
+  _clear() {
+    this._parentElement.innerHTML = '';
   }
-
-  function _generateMarkup() {}
-
-  function test() {
-    console.log('view.js');
-  }
-
-  return { test };
-})();
-
-export default View;
+}
