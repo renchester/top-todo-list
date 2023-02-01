@@ -10,30 +10,37 @@ export default class ModalView extends View {
   _btnSubmit = this._parentElement.querySelector('.btn-submit');
 
   _modalLinks = [...this._parentElement.querySelectorAll('.modal-link')];
-  _modalForms = [...this._parentElement.querySelectorAll('.modal-content')];
+  _modalFormContainer = [
+    ...this._parentElement.querySelectorAll('.modal-content'),
+  ];
 
   addHandlerShowModal = () => {
     this._btnAdd.addEventListener('click', this._showModal);
   };
 
+  addHandlerCloseModal = () => {
+    this._btnCloseModal.addEventListener('click', this._closeModal);
+  };
+
   _showModal = () => {
     this._unhideEl(this._parentElement);
     this._unhideEl(this._overlay);
-
-    this._btnCloseModal.addEventListener('click', this._closeModal);
   };
 
   _closeModal = () => {
     this._hideEl(this._parentElement);
     this._hideEl(this._overlay);
 
-    // clear forms
+    this._resetForms();
   };
 
   _showForm = (e) => {
     this._makeActiveLink(e.target);
 
-    this._modalForms.forEach((form) => this._hideEl(form));
+    this._modalFormContainer.forEach((form) => {
+      this._resetForms();
+      this._hideEl(form);
+    });
     this._unhideEl(this._form);
   };
 
@@ -42,5 +49,11 @@ export default class ModalView extends View {
       link.classList.remove('modal-link--active'),
     );
     target.classList.add('modal-link--active');
+  };
+
+  _resetForms = () => {
+    [...this._parentElement.querySelectorAll('form')].forEach((form) =>
+      form.reset(),
+    );
   };
 }

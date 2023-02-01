@@ -15,7 +15,20 @@ class AddNoteView extends ModalView {
   };
 
   addHandlerAddNote = (handler) => {
-    this._btnSubmit.addEventListener('click', handler);
+    this._form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const title = this._parentElement.querySelector('#new-note--title').value;
+
+      const details =
+        this._parentElement.querySelector('#new-note--details').value;
+
+      const data = { title, details };
+
+      handler(data);
+
+      this._closeModal();
+    });
   };
 }
 

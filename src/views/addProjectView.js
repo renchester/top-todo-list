@@ -15,7 +15,18 @@ class AddProjectView extends ModalView {
   };
 
   addHandlerAddProject = (handler) => {
-    this._btnSubmit.addEventListener('click', handler);
+    this._form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const title = this._parentElement.querySelector(
+        '#new-project--title',
+      ).value;
+
+      const data = { title };
+
+      handler(data);
+      this._closeModal();
+    });
   };
 }
 
