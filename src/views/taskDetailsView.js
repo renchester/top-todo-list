@@ -1,62 +1,70 @@
+import ModalView from './modalView';
 import View from './View';
 
-class TaskDetailsView extends View {
-  addHandlerTaskDetails(handler) {
+class TaskDetailsView extends ModalView {
+  _window = document.querySelector('.modal-details');
+  _parentElement = document.querySelector('.modal-details');
+  _overlay = document.querySelector('.overlay');
+
+  addHandlerShowTaskDetails(handler) {
     document.querySelectorAll('.task').forEach((el) =>
       el.addEventListener('click', (e) => {
-        if (!e.target.parentNode.classList.contains('task-details-icon'))
-          return;
-
-        const targetTask = e.target.closest('.task');
-        const taskDetails = targetTask.querySelector('.task-expanded');
-
-        const detailsIcon = targetTask.querySelector(
-          '.material-symbols-outlined',
-        );
-        detailsIcon.textContent = this._toggleDetailsIcon(detailsIcon);
-
-        this._toggleEl(taskDetails);
-
-        handler();
-      }),
-    );
-  }
-
-  addHandlerEditTask = (handler) => {
-    document.querySelectorAll('.task').forEach((el) =>
-      el.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('btn-edit-task')) return;
-
-        console.log('edit');
-      }),
-    );
-  };
-
-  addHandlerDeleteTask = (handler) => {
-    document.querySelectorAll('.task').forEach((el) =>
-      el.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('btn-delete-task')) return;
+        if (!e.target.classList.contains('task-details-icon')) return;
 
         const targetTask = e.target.closest('.task');
         const { id } = targetTask.dataset;
 
+        this._parentElement.setAttribute('data-id', id);
+
+        this._unhideEl(this._parentElement);
+        this._unhideEl(this._overlay);
+
         handler(id);
+
+        this._btnCloseModal = document.querySelector(
+          '.btn-close-modal-details',
+        );
+        this._addHandlerCloseModal();
       }),
     );
-  };
-
-  _toggleDetailsIcon(el) {
-    let newText;
-    if (el.textContent === 'expand_more') {
-      newText = 'expand_less';
-    }
-
-    if (el.textContent === 'expand_less') {
-      newText = 'expand_more';
-    }
-
-    return newText;
   }
+
+  _generateMarkup = (data) => ` 
+       <span class="btn-close-modal-details material-symbols-outlined">close</span>  
+        <div class="detail--task-title">${data.title}</div>
+        <div class="detail--task-details">
+          ${data.details}
+        </div>
+        <div class="detail--task-date">Date: ${data.date}</div>
+        <div class="detail--task-priority">Priority: ${this._capitalizeFirstLetter(
+          data.priority,
+        )}</div>
+        <div class="detail--task-status">Status: ${this._capitalizeFirstLetter(
+          data.status,
+        )}</div>
+        <div class="detail--task-project-name">Project: ${
+          data.projectName
+        }</div>
+
+        <div class="detail--btn-container">
+          <button class="detail--btn-edit task-edit">Edit</button>
+        </div>`;
+
+  _generateBackup = () => `
+        <span class="btn-close-modal-details material-symbols-outlined">close</span> 
+        <div class="detail--task-title">Task title</div>
+        <div class="detail--task-details">
+          You are seeing this sample task because you have not added a task yet. Add one now!
+        </div>
+        <div class="detail--task-date">Date: Jan. 1, 2000</div>
+        <div class="detail--task-priority">Priority: High</div>
+        <div class="detail--task-status">Status: On-going</div>
+        <div class="detail--task-project-name">Project: Home</div>
+
+        <div class="detail--btn-container hidden">
+          <button class="detail--btn-edit task-edit">Edit</button>
+        </div> 
+  `;
 }
 
 export default new TaskDetailsView();
