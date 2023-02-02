@@ -15,8 +15,8 @@ class AddTaskView extends ModalView {
 
   constructor() {
     super();
-    this.addHandlerShowModal();
-    this.addHandlerCloseModal();
+    this._addHandlerShowModal();
+    this._addHandlerCloseModal();
     this._addHandlerShowForm();
     this._addHandlerTogglePriority();
     this.addHandlerListProjects();
@@ -24,12 +24,6 @@ class AddTaskView extends ModalView {
 
   _addHandlerShowForm = () => {
     this._navLink.addEventListener('click', this._showForm.bind(this));
-  };
-
-  _addHandlerTogglePriority = () => {
-    this._priorityList.forEach((el) =>
-      el.addEventListener('click', this._togglePriority.bind(this)),
-    );
   };
 
   addHandlerAddTask = (handler) => {
@@ -50,47 +44,33 @@ class AddTaskView extends ModalView {
       const details =
         this._parentElement.querySelector('#new-task--details').value;
 
-      const project =
+      const projectID =
         this._parentElement.querySelector('#new-task--project').value;
 
-      // Validate data
+      const projectName =
+        this._parentElement.querySelector('#new-task--project').textContent;
 
-      const data = {
-        title,
-        date,
-        status,
-        priority,
-        details,
-        project,
-      };
+      if (this._validateTask([title, date, priority])) {
+        const data = {
+          title,
+          date,
+          status,
+          priority,
+          details,
+          projectName,
+          projectID,
+        };
 
-      // Stores data in model state through controller
-      handler(data);
+        // Stores data in model state through controller
+        handler(data);
 
-      this._closeModal();
+        this._closeModal();
+      }
     });
   };
 
   addHandlerListProjects = (handler) => {
     this._btnAdd.addEventListener('click', handler);
-  };
-
-  _togglePriority = (e) => {
-    this._priorityList.forEach((el) => el.classList.remove('priority-active'));
-
-    e.target.classList.add('priority-active');
-  };
-
-  renderProjects = (data) => {
-    const markup = data
-      .map((proj) => `<option value="${proj.id}">${proj.title}</option>`)
-      .join('');
-
-    const projSelection =
-      this._parentElement.querySelector('#new-task--project');
-
-    projSelection.innerHTML = '';
-    projSelection.insertAdjacentHTML('afterbegin', markup);
   };
 }
 
