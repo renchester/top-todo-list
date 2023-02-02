@@ -9,6 +9,7 @@ import addTaskView from './views/addTaskView';
 import addProjectView from './views/addProjectView';
 import addNoteView from './views/addNoteView';
 import noteView from './views/noteView';
+import editTaskView from './views/editTaskView';
 
 // Task Controllers
 
@@ -27,26 +28,43 @@ const controlAddTask = (data) => {
 const controlToggleStatus = (data) => {
   model.updateTask(data);
 
-  console.log(data);
+  controlShowAllTasks();
+
+  addHandlersToTasks();
+};
+
+const controlTaskDetails = (id) => {
+  const toShow = model.state.tasks.find((task) => task.id === id);
+
+  taskDetailsView.render(toShow);
+
+  editTaskView.addHandlerEditTaskOnModal(controlEditTask);
+};
+
+const controlEditTask = (id) => {
+  const toShow = model.state.tasks.find((task) => task.id === id);
+
+  editTaskView.render(toShow);
+  editTaskView.renderProjects(model.state.projects);
+
+  editTaskView.addHandlerSaveEdit(controlUpdateTask);
+  editTaskView.addHandlerDeleteTask(controlDeleteTask);
+};
+
+const controlUpdateTask = (data) => {
+  model.updateTask(data);
 
   controlShowAllTasks();
 
   addHandlersToTasks();
 };
 
-const controlTaskDetails = () => {
-  taskDetailsView.addHandlerEditTask(controlEditTask);
-  taskDetailsView.addHandlerDeleteTask(controlDeleteTask);
-};
-
-const controlEditTask = () => {
-  console.log('yes');
-};
-
 const controlDeleteTask = (id) => {
   model.deleteTask(id);
 
   controlShowAllTasks();
+
+  addHandlersToTasks();
 };
 
 // Project Controllers
@@ -88,9 +106,12 @@ const init = () => {
   controlShowAllTasks();
 
   taskView.addHandlerShowAllTasks(controlShowAllTasks);
-
+  taskView.addHandlerDeleteTask(controlDeleteTask);
   taskView.addHandlerToggleStatus(controlToggleStatus);
-  taskDetailsView.addHandlerTaskDetails(controlTaskDetails);
+
+  editTaskView.addHandlerEditTask(controlEditTask);
+
+  taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
 
   addTaskView.addHandlerAddTask(controlAddTask);
   addTaskView.addHandlerListProjects(controlShowProjectsOnForm);
@@ -106,5 +127,7 @@ init();
 
 const addHandlersToTasks = () => {
   taskView.addHandlerToggleStatus(controlToggleStatus);
-  taskDetailsView.addHandlerTaskDetails(controlTaskDetails);
+  taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
+  editTaskView.addHandlerEditTask(controlEditTask);
+  taskView.addHandlerDeleteTask(controlDeleteTask);
 };
