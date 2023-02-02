@@ -39,6 +39,12 @@ export const updateTask = (data) => {
   _persistToLocalStorage('tasks');
 };
 
+export const deleteTask = (id) => {
+  state.tasks.splice(getIndex(state.tasks, id), 1);
+
+  _persistToLocalStorage('tasks');
+};
+
 // Projects
 
 const createProject = (data) => ({

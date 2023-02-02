@@ -12,23 +12,42 @@ import noteView from './views/noteView';
 
 // Task Controllers
 
-const controlAddTask = (data) => {
-  model.addTask(data);
-
-  controlShowAllTasks();
-};
-
 const controlShowAllTasks = () => {
   taskView.render(model.state.tasks);
 };
 
-const controlTaskDetails = (id) => {
-  const targetTask = model.state.tasks.find((task) => task.id === id);
+const controlAddTask = (data) => {
+  model.addTask(data);
 
-  taskDetailsView.render(targetTask);
+  controlShowAllTasks();
+
+  addHandlersToTasks();
 };
 
-const controlEditTask = () => {};
+const controlToggleStatus = (data) => {
+  model.updateTask(data);
+
+  console.log(data);
+
+  controlShowAllTasks();
+
+  addHandlersToTasks();
+};
+
+const controlTaskDetails = () => {
+  taskDetailsView.addHandlerEditTask(controlEditTask);
+  taskDetailsView.addHandlerDeleteTask(controlDeleteTask);
+};
+
+const controlEditTask = () => {
+  console.log('yes');
+};
+
+const controlDeleteTask = (id) => {
+  model.deleteTask(id);
+
+  controlShowAllTasks();
+};
 
 // Project Controllers
 
@@ -68,6 +87,9 @@ const controlEditNote = (data) => {
 const init = () => {
   controlShowAllTasks();
 
+  taskView.addHandlerShowAllTasks(controlShowAllTasks);
+
+  taskView.addHandlerToggleStatus(controlToggleStatus);
   taskDetailsView.addHandlerTaskDetails(controlTaskDetails);
 
   addTaskView.addHandlerAddTask(controlAddTask);
@@ -79,3 +101,10 @@ const init = () => {
 };
 
 init();
+
+// Helpers
+
+const addHandlersToTasks = () => {
+  taskView.addHandlerToggleStatus(controlToggleStatus);
+  taskDetailsView.addHandlerTaskDetails(controlTaskDetails);
+};
