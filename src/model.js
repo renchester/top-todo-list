@@ -7,7 +7,7 @@ export const state = {
 };
 
 const _persistToLocalStorage = (type) => {
-  localStorage.setItem(`${type}`, JSON.stringify(state[type]));
+  localStorage.setItem(type, JSON.stringify(state[type]));
 };
 
 // Tasks
@@ -62,18 +62,40 @@ export const addNote = (data) => {
   _persistToLocalStorage('notes');
 };
 
+export const updateNote = (data) => {
+  const target = state.notes[getIndex(state.notes, data.id)];
+
+  console.log(target, data);
+
+  Object.assign(target, data);
+
+  _persistToLocalStorage('notes');
+};
+
+export const deleteNote = (id) => {
+  state.notes.splice(getIndex(state.notes, id), 1);
+
+  _persistToLocalStorage('notes');
+};
+
+const getIndex = (array, id) => {
+  return array.findIndex((item) => item.id === id);
+};
+
 const init = () => {
   const stored = (type) => {
-    console.log(localStorage.getItem(type));
-    localStorage.getItem(type);
+    let result = !!localStorage.getItem(type);
+
+    return result;
   };
 
   const setToState = (type) => {
-    state[type] = JSON.parse(stored(type));
+    state[type] = JSON.parse(localStorage.getItem(type));
   };
 
   ['tasks', 'projects', 'notes'].forEach((type) => {
     if (stored(type)) setToState(type);
   });
 };
+
 init();
