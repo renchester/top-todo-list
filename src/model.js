@@ -31,6 +31,14 @@ export const addTask = (data) => {
   _persistToLocalStorage('tasks');
 };
 
+export const updateTask = (data) => {
+  const target = state.tasks[getIndex(state.tasks, data.id)];
+
+  Object.assign(target, data);
+
+  _persistToLocalStorage('tasks');
+};
+
 // Projects
 
 const createProject = (data) => ({
@@ -45,6 +53,8 @@ export const addProject = (data) => {
 
   _persistToLocalStorage('projects');
 };
+
+export const updateProject = () => {};
 
 // Notes
 
@@ -64,8 +74,6 @@ export const addNote = (data) => {
 
 export const updateNote = (data) => {
   const target = state.notes[getIndex(state.notes, data.id)];
-
-  console.log(target, data);
 
   Object.assign(target, data);
 

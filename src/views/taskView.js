@@ -2,6 +2,25 @@ import View from './View';
 
 class TaskView extends View {
   _parentElement = document.querySelector('.content-display');
+  _navShowAll = document.querySelector('.tasks-all');
+
+  addHandlerShowAllTasks = (handler) => {
+    this._navShowAll.addEventListener('click', handler);
+  };
+
+  addHandlerToggleStatus = (handler) => {
+    const statusBoxes = [...document.querySelectorAll('.task-status')];
+
+    statusBoxes.forEach((box) =>
+      box.addEventListener('click', (e) => {
+        const { id } = e.target.closest('.task').dataset;
+
+        const status = e.target.checked ? 'finished' : 'on-going';
+
+        handler({ id, status });
+      }),
+    );
+  };
 
   _generateMarkup = () => {
     const markup = this._data
@@ -15,11 +34,11 @@ class TaskView extends View {
                   type="checkbox"
                   name="task-status"
                   id="task-status"
-                  value="Finished"
+                  class="task-status"
                   ${task.status === 'finished' ? 'checked' : ''}
                 />
 
-                <span class="task-title ${
+                <span class="task-title${
                   task.status === 'finished' ? 'task-finished' : ''
                 }">${task.title}</span>
 
@@ -55,6 +74,65 @@ class TaskView extends View {
     `,
       )
       .join('');
+
+    return markup;
+  };
+
+  _generateBackup = () => {
+    const markup = `
+         <div class="task" data-id="null">
+            <div class="task-condensed">
+              <div class="task-left">
+                <input
+                  type="checkbox"
+                  name="task-status"
+                  id="task-status"
+                  value="Finished"
+                  checked
+                />
+                <span class="task-title">Sample task</span>
+              </div>
+              <div class="task-details-icon">
+                <span class="material-symbols-outlined">expand_more</span>
+              </div>
+            </div>
+            <div class="task-expanded">
+              <div class="task-details">
+                You are seeing this task because you have not added a task yet. Add one now through the add button!
+              </div>
+              <div class="task-priority">Priority: Low</div>
+              <div class="task-date">Due Date: Jan. 01,  2000</div>
+              <div class="task-project">Project: Home</div>
+              <div class="task-status">Status: Finished</div>
+            </div>
+          </div>
+          
+           <div class="task" data-id="null">
+            <div class="task-condensed">
+              <div class="task-left">
+                <input
+                  type="checkbox"
+                  name="task-status"
+                  id="task-status"
+                  value="Finished"
+                  checked
+                />
+                <span class="task-title">Sample task</span>
+              </div>
+              <div class="task-details-icon">
+                <span class="material-symbols-outlined">expand_more</span>
+              </div>
+            </div>
+            <div class="task-expanded hidden">
+              <div class="task-details">
+                You are seeing this task because you have not added a task yet. Add one now through the add button!
+              </div>
+              <div class="task-priority">Priority: Low</div>
+              <div class="task-date">Due Date: Jan. 01,  2000</div>
+              <div class="task-project">Project: Home</div>
+              <div class="task-status">Status: Finished</div>
+            </div>
+          </div>`;
 
     return markup;
   };
