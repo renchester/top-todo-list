@@ -14,11 +14,11 @@ export default class ModalView extends View {
     ...this._parentElement.querySelectorAll('.modal-content'),
   ];
 
-  addHandlerShowModal = () => {
+  _addHandlerShowModal = () => {
     this._btnAdd.addEventListener('click', this._showModal);
   };
 
-  addHandlerCloseModal = () => {
+  _addHandlerCloseModal = () => {
     this._btnCloseModal.addEventListener('click', this._closeModal);
   };
 
@@ -32,6 +32,7 @@ export default class ModalView extends View {
     this._hideEl(this._overlay);
 
     this._resetForms();
+    this._parentElement.removeAttribute('data-id');
   };
 
   _showForm = (e) => {
@@ -50,6 +51,24 @@ export default class ModalView extends View {
     );
     target.classList.add('modal-link--active');
   };
+
+  _addHandlerTogglePriority = () => {
+    this._priorityList.forEach((el) =>
+      el.addEventListener('click', (e) => {
+        this._priorityList.forEach((el) =>
+          el.classList.remove('priority-active'),
+        );
+
+        e.target.classList.add('priority-active');
+      }),
+    );
+  };
+
+  _validateTask(arr) {
+    const [title, date, priority] = arr;
+
+    return !title || !date || !priority ? false : true;
+  }
 
   _resetForms = () => {
     [...this._parentElement.querySelectorAll('form')].forEach((form) =>
