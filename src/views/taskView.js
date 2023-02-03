@@ -59,7 +59,7 @@ class TaskView extends View {
               </div>
 
               <div class="task-right">
-                <div class="task-details-icon">
+                <div class="task-details-icon" tabindex="0">
                   Details
                 </div>
 

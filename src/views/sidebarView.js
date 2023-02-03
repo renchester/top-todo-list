@@ -7,7 +7,7 @@ class SidebarView extends View {
     this._data
       .map(
         (proj) =>
-          `<div class="nav--project" data-id="${proj.id}">
+          `<div tabindex="0" class="nav--project" data-id="${proj.id}">
             <span class="nav--project-title">${proj.title}</span>
             ${
               proj.id !== 'ID00000'
