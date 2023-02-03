@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&family=Roboto&family=Raleway&family=Raleway:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link
@@ -25,141 +25,62 @@
 
         <div class="sidebar-nav">
           <div class="nav--tasks">
-            <div class="nav-task tasks-all">All tasks</div>
-            <div class="nav-task tasks-today">Today</div>
-            <div class="nav-task tasks-upcoming">Upcoming</div>
-            <div class="nav-task tasks-anytime">Anytime</div>
-            <div class="nav-task tasks-finished">Finished</div>
-          </div>
-          <div class="nav--projects">
-            <div class="nav-project project-family" data-id="345">Family</div>
-            <div class="nav-project project-vacation" data-id="456">
-              Vacation
+            <div tabindex="0" class="nav-task tasks-all">
+              <span class="emoji">🔥</span> All tasks
+            </div>
+            <div tabindex="0" class="nav-task tasks-today">
+              <span class="emoji">📅</span> Today
+            </div>
+            <div tabindex="0" class="nav-task tasks-upcoming">
+              <span class="emoji">⌛</span> Upcoming
+            </div>
+            <div tabindex="0" class="nav-task tasks-finished">
+              <span class="emoji">✅</span>
+              Finished
+            </div>
+            <div tabindex="0" class="nav-task tasks-high-priority">
+              <span class="emoji">🔴</span>
+              High Priority
+            </div>
+            <div tabindex="0" class="nav-task tasks-medium-priority">
+              <span class="emoji">🟡</span>
+              Medium Priority
+            </div>
+            <div tabindex="0" class="nav-task tasks-low-priority">
+              <span class="emoji">🟢</span>
+              Low Priority
             </div>
           </div>
-          <div class="nav--notes">Notes</div>
+          <div class="nav--projects"></div>
+          <div tabindex="0" class="nav--notes">
+            <span class="emoji">📝</span>Notes
+          </div>
         </div>
       </div>
 
       <div class="content-container">
-        <div class="content-title">Tasks</div>
-        <div class="content-display">
-          <!-- <div class="task" data-id="123">
-            <div class="task-condensed">
-              <div class="task-left">
-                <input
-                  type="checkbox"
-                  name="task-status"
-                  id="task-status"
-                  value="Finished"
-                  checked
-                />
-                <span class="task-title">Finished project</span>
-              </div>
-              <div class="task-details-icon">
-                <span class="material-symbols-outlined"> expand_more </span>
-              </div>
-            </div>
-            <div class="task-expanded">
-              <div class="task-details">
-                This is a finished project Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Mollitia obcaecati velit
-                voluptatum adipisci error aliquid! Repellat et perferendis
-                consequatur animi, explicabo aperiam iste rerum illum quos
-                fugiat illo cum optio!
-              </div>
-              <div class="task-priority">Priority: High</div>
-              <div class="task-date">Due Date: Jan. 23, 2023</div>
-              <div class="task-project">Project: Home</div>
-              <div class="task-status">Status: Finished</div>
-              <div class="btn-container">
-                <button type="button" class="btn-edit-task">Edit</button
-                ><button type="button" class="btn-delete-task">Delete</button>
-              </div>
-            </div>
-          </div> -->
+        <div class="content-title">All Tasks</div>
+        <div class="content-display"></div>
 
-          <!-- <div class="notes-col-1 hidden">
-            <div class="note" id="note123">
-              <button class="btn-delete-note">
-                <span class="material-symbols-outlined">close</span>
-              </button>
-              <div class="note-title" contenteditable="true">
-                Sample Note Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Similique consectetur sed eos quam nihil recusandae autem
-                nostrum odit, dolorem cupiditate quasi vitae perspiciatis,
-                possimus iusto alias harum? Laborum, in aliquam.
-              </div>
-              <div class="note-details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna. Adipiscing
-                at in tellus integer feugiat scelerisque varius morbi enim. Amet
-                sit amet justo. Tincidunt praesent semper feugiat nibh sed
-                pulvinar. Magna fermentum iaculis eu non diam phasellus
-                vestibulum lorem. Adipiscing commodo elit at imperdiet. Nisi
-                porta lorem mollis aliquam ut porttitor. Morbi quis commodo odio
-                aenean sed adipiscing diam donec adipiscing. At imperdiet dui
-                accumsan sit amet nulla facilisi morbi tempus. Id faucibus nisl
-                tincidunt eget nullam non nisi est sit. Mauris pharetra et
-                ultrices neque. Vestibulum lorem sed risus ultricies tristique
-                nulla aliquet. Diam quis enim lobortis scelerisque. Nulla
-                aliquet enim tortor at. Placerat vestibulum lectus mauris
-                ultrices eros. Condimentum vitae sapien pellentesque habitant
-                morbi tristique senectus et netus. Vivamus at augue eget arcu
-                dictum varius duis at consectetur.
-              </div>
-            </div>
-          </div>
-          <div class="notes-col-2 hidden">
-            <div class="note" id="note123">
-              <button class="btn-delete-note">
-                <span class="material-symbols-outlined">close</span>
-              </button>
-              <div class="note-title" contenteditable="true">
-                Sample Note Lorem ipsum dolor sit amet consectetur adipisicing
-                elit.
-              </div>
-              <div class="note-details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna. Adipiscing
-                at in tellus integer feugiat scelerisque varius morbi enim. Amet
-                sit amet justo. Tincidunt praesent semper
-              </div>
-            </div>
-            <div class="note" id="note123">
-              <button class="btn-delete-note">
-                <span class="material-symbols-outlined">close</span>
-              </button>
-              <div class="note-title" contenteditable="true">
-                Sample Note Lorem ipsum dolor sit amet consectetur adipisicing
-                elit.
-              </div>
-              <div class="note-details" contenteditable="true">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna. Adipiscing
-                at in tellus integer feugiat scelerisque varius morbi enim. Amet
-                sit amet justo. Tincidunt praesent semper
-              </div>
-            </div>
-          </div> -->
-        </div>
-
-        <div class="task-bar">
-          <button type="button" class="btn-add">
-            <span class="material-symbols-outlined"> add </span>
-          </button>
-        </div>
+        <button type="button" class="btn-add">
+          <span class="material-symbols-outlined"> add </span>
+        </button>
       </div>
 
       <div class="modal hidden">
         <div class="modal-header">
           <h1 class="modal-title">Create a new...</h1>
           <nav class="modal-nav">
-            <div class="modal-link modal-link--task modal-link--active">
+            <div
+              tabindex="0"
+              class="modal-link modal-link--task modal-link--active"
+            >
               Task
             </div>
-            <div class="modal-link modal-link--project">Project</div>
-            <div class="modal-link modal-link--note">Note</div>
+            <div tabindex="0" class="modal-link modal-link--project">
+              Project
+            </div>
+            <div tabindex="0" class="modal-link modal-link--note">Note</div>
           </nav>
           <span class="btn-close-modal material-symbols-outlined">close</span>
         </div>
@@ -190,6 +111,8 @@
                 class="new-task--form-input"
                 id="new-task--date"
                 name="new-task--date"
+                value=""
+                required
               />
             </div>
             <div class="new-task--form-element new-task--task-priority-wrapper">
@@ -238,7 +161,11 @@
             </div>
             <div class="new-task--form-element new-task--task-project-wrapper">
               <label for="new-task--project">Project:</label>
-              <select name="new-task--project" id="new-task--project">
+              <select
+                name="new-task--project"
+                id="new-task--project"
+                class="select-project"
+              >
                 <option value="Home" data-id="123">Home</option>
               </select>
             </div>
@@ -271,6 +198,7 @@
           </form>
 
           <!-- NEW NOTE FORM -->
+
           <form class="modal-content add-new--note hidden">
             <textarea
               name="new-note--title"
@@ -291,6 +219,8 @@
           </form>
         </div>
       </div>
+
+      <div class="modal-details hidden"></div>
     </div>
     <footer>
       <a
