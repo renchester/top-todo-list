@@ -4,15 +4,38 @@ class ProjectView extends View {
   _parentElement = document.querySelector('.content-display');
 
   addHandlerShowTasks = (handler) => {
-    document.querySelectorAll('.nav-project').forEach((proj) =>
+    document.querySelectorAll('.nav--project').forEach((proj) =>
       proj.addEventListener('click', (e) => {
-        const { id } = e.target.dataset;
+        if (!e.target.classList.contains('nav--project-title')) return;
+
+        const { id } = e.target.closest('.nav--project').dataset;
 
         this.changeTitle(e.target.textContent);
 
         handler(id);
       }),
     );
+  };
+
+  addHandlerTasksToday = (handler) => {
+    document.querySelector('.tasks-today').addEventListener('click', (e) => {
+      handler();
+      this.changeTitle('Due Today');
+    });
+  };
+
+  addHandlerTasksUpcoming = (handler) => {
+    document.querySelector('.tasks-upcoming').addEventListener('click', (e) => {
+      handler();
+      this.changeTitle('Upcoming');
+    });
+  };
+
+  addHandlerTasksFinished = (handler) => {
+    document.querySelector('.tasks-finished').addEventListener('click', (e) => {
+      handler();
+      this.changeTitle('Finished');
+    });
   };
 
   _generateMarkup = () => {
@@ -59,7 +82,7 @@ class ProjectView extends View {
   };
 
   _generateBackup = () =>
-    `<div class="placeholder-project">You have no tasks listed under this project currently.</div>`;
+    `<div class="placeholder-project">You have no tasks listed under this project/category currently.</div>`;
 }
 
 export default new ProjectView();
