@@ -12,13 +12,29 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderProjects = (data) => {
-    const markup = data
-      .map(
-        (proj) =>
-          `<option value="${proj.id}" class="project-option">${proj.title}</option>`,
-      )
-      .join('');
+  renderProjects = (data, chosenProjID) => {
+    let markup;
+
+    if (!chosenProjID) {
+      markup = data
+        .map(
+          (proj) =>
+            `<option value="${proj.id}" class="project-option">${proj.title}</option>`,
+        )
+        .join('');
+    } else if (chosenProjID) {
+      const firstChoice = data.find((proj) => proj.id === chosenProjID);
+      const others = data
+        .filter((proj) => proj.id !== chosenProjID)
+        .map(
+          (proj) =>
+            `<option value="${proj.id}" class="project-option">${proj.title}</option>`,
+        )
+        .join('');
+
+      markup = `<option value="${firstChoice.id}" class="project-option">${firstChoice.title}</option>
+      ${others}`;
+    }
 
     const projSelection = this._parentElement.querySelector('.select-project');
 
