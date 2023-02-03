@@ -10,27 +10,27 @@ import addProjectView from './views/addProjectView';
 import addNoteView from './views/addNoteView';
 import noteView from './views/noteView';
 import editTaskView from './views/editTaskView';
+import sidebarView from './views/sidebarView';
+import projectView from './views/projectView';
 
 // Task Controllers
 
 const controlShowAllTasks = () => {
   taskView.render(model.state.tasks);
+
+  addHandlersToTasks();
 };
 
 const controlAddTask = (data) => {
   model.addTask(data);
 
   controlShowAllTasks();
-
-  addHandlersToTasks();
 };
 
 const controlToggleStatus = (data) => {
   model.updateTask(data);
 
   controlShowAllTasks();
-
-  addHandlersToTasks();
 };
 
 const controlTaskDetails = (id) => {
@@ -55,25 +55,37 @@ const controlUpdateTask = (data) => {
   model.updateTask(data);
 
   controlShowAllTasks();
-
-  addHandlersToTasks();
 };
 
 const controlDeleteTask = (id) => {
   model.deleteTask(id);
 
   controlShowAllTasks();
-
-  addHandlersToTasks();
 };
 
 // Project Controllers
 
-const controlAddProject = (data) => {
-  model.addProject(data);
+const controlShowAllProjects = () => {
+  sidebarView.render(model.state.projects);
+
+  // projectview.addhandler
 };
 
-const controlShowProjectsOnForm = () => {
+const controlAddProject = (data) => {
+  model.addProject(data);
+
+  controlShowAllProjects();
+};
+
+const controlShowProjectTasks = (id) => {
+  const toShow = model.state.tasks.filter((task) => task.projectID === id);
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlProjectsOnForm = () => {
   addTaskView.renderProjects(model.state.projects);
 };
 
@@ -81,6 +93,8 @@ const controlShowProjectsOnForm = () => {
 
 const controlAddNote = (data) => {
   model.addNote(data);
+
+  controlShowNotes();
 };
 
 const controlShowNotes = () => {
@@ -114,9 +128,13 @@ const init = () => {
   taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
 
   addTaskView.addHandlerAddTask(controlAddTask);
-  addTaskView.addHandlerListProjects(controlShowProjectsOnForm);
+  addTaskView.addHandlerListProjects(controlProjectsOnForm);
   addNoteView.addHandlerAddNote(controlAddNote);
   addProjectView.addHandlerAddProject(controlAddProject);
+
+  controlShowAllProjects();
+
+  projectView.addHandlerShowTasks(controlShowProjectTasks);
 
   noteView.addHandlerShowNotes(controlShowNotes);
 };
@@ -125,9 +143,9 @@ init();
 
 // Helpers
 
-const addHandlersToTasks = () => {
+function addHandlersToTasks() {
   taskView.addHandlerToggleStatus(controlToggleStatus);
   taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
   editTaskView.addHandlerEditTask(controlEditTask);
   taskView.addHandlerDeleteTask(controlDeleteTask);
-};
+}
