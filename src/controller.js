@@ -2,7 +2,6 @@ import styles from '/src/style.css';
 
 import * as model from './model';
 
-import View from './views/View';
 import taskView from './views/taskView';
 import taskDetailsView from './views/taskDetailsView';
 import addTaskView from './views/addTaskView';
@@ -13,59 +12,60 @@ import editTaskView from './views/editTaskView';
 import sidebarView from './views/sidebarView';
 import projectView from './views/projectView';
 import editProjectView from './views/editProjectView';
-import { format, isFuture } from 'date-fns';
+
+import { format, isFuture, parseISO } from 'date-fns';
 
 // Task Controllers
 
-const controlShowAllTasks = () => {
+const ctrlShowAllTasks = () => {
   taskView.render(model.state.tasks);
 
   addHandlersToTasks();
 };
 
-const controlAddTask = (data) => {
-  model.addTask(data);
-
-  controlShowAllTasks();
-};
-
-const controlToggleStatus = (data) => {
+const ctrlToggleStatus = (data) => {
   model.updateTask(data);
-
-  // controlShowAllTasks();
 };
 
-const controlTaskDetails = (id) => {
+const ctrlTaskDetails = (id) => {
   const toShow = model.state.tasks.find((task) => task.id === id);
 
   taskDetailsView.render(toShow);
 
-  editTaskView.addHandlerEditTaskOnModal(controlEditTask);
+  editTaskView.addHandlerEditTaskOnModal(ctrlEditTask);
 };
 
-const controlEditTask = (id) => {
+const ctrlAddTask = (data) => {
+  model.addTask(data);
+
+  ctrlShowTasksByProject(data.projectID);
+};
+
+const ctrlEditTask = (id) => {
   const toShow = model.state.tasks.find((task) => task.id === id);
 
   editTaskView.render(toShow);
   editTaskView.renderProjects(model.state.projects, toShow.projectID);
 
-  editTaskView.addHandlerSaveEdit(controlUpdateTask);
-  editTaskView.addHandlerDeleteTask(controlDeleteTask);
+  editTaskView.addHandlerSaveEdit(ctrlUpdateTask);
+  editTaskView.addHandlerDeleteTask(ctrlDeleteTask);
 };
 
-const controlUpdateTask = (data) => {
+const ctrlUpdateTask = (data) => {
   model.updateTask(data);
 
-  controlShowProjectTasks(data.projectID);
+  ctrlShowTasksByProject(data.projectID);
 };
 
-const controlDeleteTask = (id) => {
+const ctrlDeleteTask = (id) => {
   model.deleteTask(id);
 
-  controlShowAllTasks();
+  ctrlShowAllTasks();
 };
 
-const controlTasksToday = () => {
+// Sidebar Task Controllers
+
+const ctrlTasksToday = () => {
   const date = new Date();
   const [day, month, year] = [
     date.getDate(),
@@ -82,15 +82,17 @@ const controlTasksToday = () => {
   addHandlersToTasks();
 };
 
-const controlTasksUpcoming = () => {
-  const toShow = model.state.tasks.filter((task) => isFuture(task.date));
+const ctrlTasksUpcoming = () => {
+  const toShow = model.state.tasks.filter((task) =>
+    isFuture(parseISO(task.date)),
+  );
 
   projectView.render(toShow);
 
   addHandlersToTasks();
 };
 
-const controlTasksFinished = () => {
+const ctrlTasksFinished = () => {
   const toShow = model.state.tasks.filter((task) => task.status === 'finished');
 
   projectView.render(toShow);
@@ -98,7 +100,7 @@ const controlTasksFinished = () => {
   addHandlersToTasks();
 };
 
-const controlHighPriority = () => {
+const ctrlHighPriority = () => {
   const toShow = model.state.tasks.filter((task) => task.priority === 'high');
 
   projectView.render(toShow);
@@ -106,7 +108,7 @@ const controlHighPriority = () => {
   addHandlersToTasks();
 };
 
-const controlMediumPriority = () => {
+const ctrlMediumPriority = () => {
   const toShow = model.state.tasks.filter((task) => task.priority === 'medium');
 
   projectView.render(toShow);
@@ -114,7 +116,7 @@ const controlMediumPriority = () => {
   addHandlersToTasks();
 };
 
-const controlLowPriority = () => {
+const ctrlLowPriority = () => {
   const toShow = model.state.tasks.filter((task) => task.priority === 'low');
 
   projectView.render(toShow);
@@ -122,22 +124,16 @@ const controlLowPriority = () => {
   addHandlersToTasks();
 };
 
-// Project Controllers
+// Sidebar Project ctrllers
 
-const controlShowAllProjects = () => {
+const ctrlRenderProjectsOnSidebar = () => {
   sidebarView.render(model.state.projects);
 
-  projectView.addHandlerShowTasks(controlShowProjectTasks);
-  editProjectView.addHandlerEditProject(controlEditProject);
+  projectView.addHandlerShowTasks(ctrlShowTasksByProject);
+  editProjectView.addHandlerEditProject(ctrlEditProject);
 };
 
-const controlAddProject = (data) => {
-  model.addProject(data);
-
-  controlShowAllProjects();
-};
-
-const controlShowProjectTasks = (id) => {
+const ctrlShowTasksByProject = (id) => {
   const toShow = model.state.tasks.filter((task) => task.projectID === id);
 
   projectView.render(toShow);
@@ -145,90 +141,93 @@ const controlShowProjectTasks = (id) => {
   addHandlersToTasks();
 };
 
-const controlProjectsOnForm = () => {
+const ctrlProjectsOnForm = () => {
   addTaskView.renderProjects(model.state.projects);
 };
 
-const controlEditProject = (id) => {
+const ctrlAddProject = (data) => {
+  model.addProject(data);
+
+  ctrlRenderProjectsOnSidebar();
+};
+
+const ctrlEditProject = (id) => {
   const toShow = model.state.projects.find((project) => project.id === id);
 
   editProjectView.render(toShow);
 
-  editProjectView.addHandlerSaveEdit(controlUpdateProject);
-  editProjectView.addHandlerDeleteProject(controlDeleteProject);
+  editProjectView.addHandlerSaveEdit(ctrlUpdateProject);
+  editProjectView.addHandlerDeleteProject(ctrlDeleteProject);
 };
 
-const controlUpdateProject = (data) => {
+const ctrlUpdateProject = (data) => {
   model.updateProject(data);
 
-  controlShowAllProjects();
-  controlShowProjectTasks(data.id);
+  ctrlRenderProjectsOnSidebar();
+  ctrlShowTasksByProject(data.id);
 };
 
-const controlDeleteProject = (id) => {
+const ctrlDeleteProject = (id) => {
   model.deleteProject(id);
 
-  controlShowAllProjects();
-  controlShowAllTasks();
+  ctrlRenderProjectsOnSidebar();
 };
 
-// Note Controllers
+// Note controllers
 
-const controlAddNote = (data) => {
-  model.addNote(data);
-
-  controlShowNotes();
-};
-
-const controlShowNotes = () => {
+const ctrlShowNotes = () => {
   noteView.render(model.state.notes);
 
-  noteView.addHandlerDeleteNotes(controlDeleteNote);
-  noteView.addHandlerEditNotes(controlEditNote);
+  noteView.addHandlerDeleteNotes(ctrlDeleteNote);
+  noteView.addHandlerEditNotes(ctrlEditNote);
 };
 
-const controlDeleteNote = (id) => {
-  model.deleteNote(id);
+const ctrlAddNote = (data) => {
+  model.addNote(data);
 
-  controlShowNotes();
+  ctrlShowNotes();
 };
 
-const controlEditNote = (data) => {
+const ctrlEditNote = (data) => {
   model.updateNote(data);
 
-  controlShowNotes();
+  ctrlShowNotes();
+};
+
+const ctrlDeleteNote = (id) => {
+  model.deleteNote(id);
+
+  ctrlShowNotes();
 };
 
 const init = () => {
   // Task initializers
-  controlShowAllTasks();
+  ctrlShowAllTasks();
 
-  taskView.addHandlerShowAllTasks(controlShowAllTasks);
-  taskView.addHandlerDeleteTask(controlDeleteTask);
-  taskView.addHandlerToggleStatus(controlToggleStatus);
+  taskView.addHandlerToggleStatus(ctrlToggleStatus);
+  taskDetailsView.addHandlerShowTaskDetails(ctrlTaskDetails);
+  editTaskView.addHandlerEditTask(ctrlEditTask);
+  taskView.addHandlerDeleteTask(ctrlDeleteTask);
 
-  editTaskView.addHandlerEditTask(controlEditTask);
+  // Project / Sidebar initializers
+  ctrlRenderProjectsOnSidebar();
 
-  taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
-
-  // Project initializers
-  controlShowAllProjects();
-
-  projectView.addHandlerTasksFinished(controlTasksFinished);
-  projectView.addHandlerTasksToday(controlTasksToday);
-  projectView.addHandlerTasksUpcoming(controlTasksUpcoming);
-  projectView.addHandlerHighPriority(controlHighPriority);
-  projectView.addHandlerMediumPriority(controlMediumPriority);
-  projectView.addHandlerLowPriority(controlLowPriority);
+  projectView.addHandlerTasksAll(ctrlShowAllTasks);
+  projectView.addHandlerTasksFinished(ctrlTasksFinished);
+  projectView.addHandlerTasksToday(ctrlTasksToday);
+  projectView.addHandlerTasksUpcoming(ctrlTasksUpcoming);
+  projectView.addHandlerHighPriority(ctrlHighPriority);
+  projectView.addHandlerMediumPriority(ctrlMediumPriority);
+  projectView.addHandlerLowPriority(ctrlLowPriority);
 
   // Note initializer
-  noteView.addHandlerShowNotes(controlShowNotes);
+  noteView.addHandlerShowNotes(ctrlShowNotes);
 
   // Modal initializers
-  addTaskView.addHandlerAddTask(controlAddTask);
-  addTaskView.addHandlerListProjects(controlProjectsOnForm);
-  addNoteView.addHandlerAddNote(controlAddNote);
-  addProjectView.addHandlerAddProject(controlAddProject);
+  addTaskView.addHandlerAddTask(ctrlAddTask);
+  addTaskView.addHandlerListProjects(ctrlProjectsOnForm);
+  addNoteView.addHandlerAddNote(ctrlAddNote);
+  addProjectView.addHandlerAddProject(ctrlAddProject);
 };
 
 init();
@@ -236,8 +235,8 @@ init();
 // Helpers
 
 function addHandlersToTasks() {
-  taskView.addHandlerToggleStatus(controlToggleStatus);
-  taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
-  editTaskView.addHandlerEditTask(controlEditTask);
-  taskView.addHandlerDeleteTask(controlDeleteTask);
+  taskView.addHandlerToggleStatus(ctrlToggleStatus);
+  taskDetailsView.addHandlerShowTaskDetails(ctrlTaskDetails);
+  editTaskView.addHandlerEditTask(ctrlEditTask);
+  taskView.addHandlerDeleteTask(ctrlDeleteTask);
 }

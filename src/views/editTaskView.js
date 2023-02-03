@@ -98,7 +98,7 @@ class EditTaskView extends ModalView {
             id,
           };
 
-          this.changeTitle(projectName);
+          this._changeTitle(projectName);
 
           handler(data);
 

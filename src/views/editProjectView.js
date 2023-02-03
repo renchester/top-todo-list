@@ -43,7 +43,7 @@ class EditProjectView extends modalView {
 
         handler(data);
 
-        this.changeTitle(title);
+        this._changeTitle(title);
         this._closeModal();
       });
   };

@@ -4,10 +4,6 @@ class TaskView extends View {
   _parentElement = document.querySelector('.content-display');
   _navShowAll = document.querySelector('.tasks-all');
 
-  addHandlerShowAllTasks = (handler) => {
-    this._navShowAll.addEventListener('click', handler);
-  };
-
   addHandlerToggleStatus = (handler) => {
     const statusBoxes = [...document.querySelectorAll('.task-status')];
 
@@ -38,7 +34,7 @@ class TaskView extends View {
   };
 
   _generateMarkup = () => {
-    this.changeTitle('All tasks');
+    this._changeTitle('All tasks');
 
     const markup = this._data
       .map(

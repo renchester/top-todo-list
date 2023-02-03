@@ -11,8 +11,7 @@ class TaskDetailsView extends ModalView {
       el.addEventListener('click', (e) => {
         if (!e.target.classList.contains('task-details-icon')) return;
 
-        const targetTask = e.target.closest('.task');
-        const { id } = targetTask.dataset;
+        const { id } = e.target.closest('.task').dataset;
 
         this._parentElement.setAttribute('data-id', id);
 
@@ -55,7 +54,7 @@ class TaskDetailsView extends ModalView {
 
   _generateBackup = () => `
         <span class="btn-close-modal-details material-symbols-outlined">close</span> 
-        <div class="detail--task-title">Task title</div>
+        <div class="detail--task-title">Sample Task</div>
         <div class="detail--task-details">
           You are seeing this sample task because you have not added a task yet. Add one now!
         </div>

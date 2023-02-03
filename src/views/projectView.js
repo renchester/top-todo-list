@@ -10,58 +10,65 @@ class ProjectView extends View {
 
         const { id } = e.target.closest('.nav--project').dataset;
 
-        this.changeTitle(e.target.textContent);
+        this._changeTitle(e.target.textContent);
 
         handler(id);
       }),
     );
   };
 
-  addHandlerTasksToday = (handler) => {
-    document.querySelector('.tasks-today').addEventListener('click', (e) => {
+  addHandlerTasksAll = (handler) => {
+    document.querySelector('.tasks-all').addEventListener('click', () => {
       handler();
-      this.changeTitle('Due Today');
+      this._changeTitle('All tasks');
+    });
+  };
+
+  addHandlerTasksToday = (handler) => {
+    document.querySelector('.tasks-today').addEventListener('click', () => {
+      handler();
+      this._changeTitle('Due Today');
     });
   };
 
   addHandlerTasksUpcoming = (handler) => {
-    document.querySelector('.tasks-upcoming').addEventListener('click', (e) => {
+    document.querySelector('.tasks-upcoming').addEventListener('click', () => {
       handler();
-      this.changeTitle('Upcoming');
+      this._changeTitle('Upcoming');
     });
   };
 
   addHandlerTasksFinished = (handler) => {
-    document.querySelector('.tasks-finished').addEventListener('click', (e) => {
+    document.querySelector('.tasks-finished').addEventListener('click', () => {
       handler();
-      this.changeTitle('Finished');
+      this._changeTitle('Finished');
     });
   };
 
   addHandlerHighPriority = (handler) => {
     document
       .querySelector('.tasks-high-priority')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', () => {
         handler();
-        this.changeTitle('High Priority');
+        this._changeTitle('High Priority');
       });
   };
 
   addHandlerMediumPriority = (handler) => {
     document
       .querySelector('.tasks-medium-priority')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', () => {
         handler();
-        this.changeTitle('Medium Priority');
+        this._changeTitle('Medium Priority');
       });
   };
 
   addHandlerLowPriority = (handler) => {
     document
       .querySelector('.tasks-low-priority')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', () => {
         handler();
-        this.changeTitle('Low Priority');
+        this._changeTitle('Low Priority');
       });
   };
 

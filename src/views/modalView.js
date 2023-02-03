@@ -1,5 +1,5 @@
-import View from './View';
 import format from 'date-fns/format';
+import View from './View';
 
 export default class ModalView extends View {
   _parentElement = document.querySelector('.modal');
@@ -21,6 +21,18 @@ export default class ModalView extends View {
 
   _addHandlerCloseModal = () => {
     this._btnCloseModal.addEventListener('click', this._closeModal);
+  };
+
+  _addHandlerTogglePriority = () => {
+    this._priorityList.forEach((el) =>
+      el.addEventListener('click', (e) => {
+        this._priorityList.forEach((priority) =>
+          priority.classList.remove('priority-active'),
+        );
+
+        e.target.classList.add('priority-active');
+      }),
+    );
   };
 
   _showModal = () => {
@@ -49,7 +61,14 @@ export default class ModalView extends View {
 
     this._parentElement.querySelector('#new-task--date').value =
       this._formatDateForForm();
+
     this._unhideEl(this._form);
+  };
+
+  _resetForms = () => {
+    [...this._parentElement.querySelectorAll('form')].forEach((form) =>
+      form.reset(),
+    );
   };
 
   _makeActiveLink = (target) => {
@@ -57,18 +76,6 @@ export default class ModalView extends View {
       link.classList.remove('modal-link--active'),
     );
     target.classList.add('modal-link--active');
-  };
-
-  _addHandlerTogglePriority = () => {
-    this._priorityList.forEach((el) =>
-      el.addEventListener('click', (e) => {
-        this._priorityList.forEach((el) =>
-          el.classList.remove('priority-active'),
-        );
-
-        e.target.classList.add('priority-active');
-      }),
-    );
   };
 
   _formatDateForForm = () => {
@@ -85,12 +92,6 @@ export default class ModalView extends View {
   _validateTask(arr) {
     const [title, date, priority] = arr;
 
-    return !title || !date || !priority ? false : true;
+    return !(!title || !date || !priority);
   }
-
-  _resetForms = () => {
-    [...this._parentElement.querySelectorAll('form')].forEach((form) =>
-      form.reset(),
-    );
-  };
 }

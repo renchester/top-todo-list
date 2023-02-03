@@ -42,7 +42,7 @@ export default class View {
     projSelection.insertAdjacentHTML('afterbegin', markup);
   };
 
-  changeTitle = (text) => {
+  _changeTitle = (text) => {
     document.querySelector('.content-title').textContent = text;
   };
 

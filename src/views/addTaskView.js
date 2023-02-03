@@ -66,6 +66,8 @@ class AddTaskView extends ModalView {
         // Stores data in model state through controller
         handler(data);
 
+        this._changeTitle(projectName);
+
         this._closeModal();
       }
     });
