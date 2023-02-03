@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&family=Roboto&family=Raleway&family=Raleway:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link
@@ -25,13 +25,36 @@
 
         <div class="sidebar-nav">
           <div class="nav--tasks">
-            <div class="nav-task tasks-all">All tasks</div>
-            <div class="nav-task tasks-today">Today</div>
-            <div class="nav-task tasks-upcoming">Upcoming</div>
-            <div class="nav-task tasks-finished">Finished</div>
+            <div tabindex="0" class="nav-task tasks-all">
+              <span class="emoji">🔥</span> All tasks
+            </div>
+            <div tabindex="0" class="nav-task tasks-today">
+              <span class="emoji">📅</span> Today
+            </div>
+            <div tabindex="0" class="nav-task tasks-upcoming">
+              <span class="emoji">⌛</span> Upcoming
+            </div>
+            <div tabindex="0" class="nav-task tasks-finished">
+              <span class="emoji">✅</span>
+              Finished
+            </div>
+            <div tabindex="0" class="nav-task tasks-high-priority">
+              <span class="emoji">🔴</span>
+              High Priority
+            </div>
+            <div tabindex="0" class="nav-task tasks-medium-priority">
+              <span class="emoji">🟡</span>
+              Medium Priority
+            </div>
+            <div tabindex="0" class="nav-task tasks-low-priority">
+              <span class="emoji">🟢</span>
+              Low Priority
+            </div>
           </div>
           <div class="nav--projects"></div>
-          <div class="nav--notes">Notes</div>
+          <div tabindex="0" class="nav--notes">
+            <span class="emoji">📝</span>Notes
+          </div>
         </div>
       </div>
 
@@ -39,22 +62,25 @@
         <div class="content-title">All Tasks</div>
         <div class="content-display"></div>
 
-        <div class="task-bar">
-          <button type="button" class="btn-add">
-            <span class="material-symbols-outlined"> add </span>
-          </button>
-        </div>
+        <button type="button" class="btn-add">
+          <span class="material-symbols-outlined"> add </span>
+        </button>
       </div>
 
       <div class="modal hidden">
         <div class="modal-header">
           <h1 class="modal-title">Create a new...</h1>
           <nav class="modal-nav">
-            <div class="modal-link modal-link--task modal-link--active">
+            <div
+              tabindex="0"
+              class="modal-link modal-link--task modal-link--active"
+            >
               Task
             </div>
-            <div class="modal-link modal-link--project">Project</div>
-            <div class="modal-link modal-link--note">Note</div>
+            <div tabindex="0" class="modal-link modal-link--project">
+              Project
+            </div>
+            <div tabindex="0" class="modal-link modal-link--note">Note</div>
           </nav>
           <span class="btn-close-modal material-symbols-outlined">close</span>
         </div>
