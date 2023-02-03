@@ -1,5 +1,4 @@
 import ModalView from './modalView';
-import format from 'date-fns/format';
 
 class EditTaskView extends ModalView {
   _parentElement = document.querySelector('.modal-details');
@@ -81,9 +80,9 @@ class EditTaskView extends ModalView {
           '#edit-task--project',
         ).value;
 
-        const projectName = this._parentElement.querySelector(
-          '#edit-task--project',
-        ).textContent;
+        const projectName = [
+          ...this._parentElement.querySelectorAll('.project-option'),
+        ].find((projEl) => projEl.value === projectID).textContent;
 
         const { id } = this._parentElement.dataset;
 
