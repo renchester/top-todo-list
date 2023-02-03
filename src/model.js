@@ -61,7 +61,47 @@ export const addProject = (data) => {
   _persistToLocalStorage('projects');
 };
 
-export const updateProject = () => {};
+export const updateProject = (data) => {
+  const target = state.projects[getIndex(state.projects, data.id)];
+
+  Object.assign(target, data);
+
+  updateProjectNames(data.id, data.title);
+
+  Object.assign(target, data);
+
+  _persistToLocalStorage('projects');
+  _persistToLocalStorage('tasks');
+};
+
+export const deleteProject = (id) => {
+  deleteTasksUnderProject(id);
+
+  state.projects.splice(getIndex(state.projects, id), 1);
+
+  _persistToLocalStorage('projects');
+  _persistToLocalStorage('tasks');
+};
+
+const updateProjectNames = (id, newProjName) => {
+  state.tasks.forEach((task) => {
+    if (task.projectID === id) {
+      task.projectName = newProjName;
+    }
+  });
+};
+
+const deleteTasksUnderProject = (id) => {
+  const tasksToDelete = state.tasks.filter((el) => el.projectID === id);
+
+  tasksToDelete.forEach((item) => {
+    let itemIndex = state.tasks.findIndex(
+      (task) => task.projectID === item.projectID,
+    );
+
+    state.tasks.splice(itemIndex, 1);
+  });
+};
 
 // Notes
 
