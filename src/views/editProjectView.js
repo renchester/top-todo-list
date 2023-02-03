@@ -61,6 +61,7 @@ class EditProjectView extends modalView {
   };
 
   _generateMarkup = () => `
+     <span class="edit-project--header">Edit Project</span>
      <span class="btn-close-modal-details material-symbols-outlined">close</span>  
       <form action="" class="edit-project--form">
           <input

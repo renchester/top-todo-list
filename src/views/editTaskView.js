@@ -98,6 +98,8 @@ class EditTaskView extends ModalView {
             id,
           };
 
+          this.changeTitle(projectName);
+
           handler(data);
 
           this._closeModal();
@@ -122,6 +124,7 @@ class EditTaskView extends ModalView {
     const task = this._data;
 
     const markup = ` 
+      <span class="edit-task--header">Edit Task</span>
       <span class="btn-close-modal-details material-symbols-outlined">close</span>  
       <form action="" class="edit-task--form">
           <textarea
