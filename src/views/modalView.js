@@ -1,4 +1,5 @@
 import View from './View';
+import format from 'date-fns/format';
 
 export default class ModalView extends View {
   _parentElement = document.querySelector('.modal');
@@ -25,6 +26,9 @@ export default class ModalView extends View {
   _showModal = () => {
     this._unhideEl(this._parentElement);
     this._unhideEl(this._overlay);
+
+    this._parentElement.querySelector('#new-task--date').value =
+      this._formatDateForForm();
   };
 
   _closeModal = () => {
@@ -42,6 +46,9 @@ export default class ModalView extends View {
       this._resetForms();
       this._hideEl(form);
     });
+
+    this._parentElement.querySelector('#new-task--date').value =
+      this._formatDateForForm();
     this._unhideEl(this._form);
   };
 
@@ -62,6 +69,17 @@ export default class ModalView extends View {
         e.target.classList.add('priority-active');
       }),
     );
+  };
+
+  _formatDateForForm = () => {
+    const date = new Date();
+    const [day, month, year] = [
+      date.getDate(),
+      date.getMonth(),
+      date.getFullYear(),
+    ];
+
+    return format(new Date(year, month, day), 'yyyy-MM-dd');
   };
 
   _validateTask(arr) {

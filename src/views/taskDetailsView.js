@@ -1,5 +1,5 @@
 import ModalView from './modalView';
-import View from './View';
+import format from 'date-fns/format';
 
 class TaskDetailsView extends ModalView {
   _window = document.querySelector('.modal-details');
@@ -35,7 +35,10 @@ class TaskDetailsView extends ModalView {
         <div class="detail--task-details">
           ${data.details}
         </div>
-        <div class="detail--task-date">Date: ${data.date}</div>
+        <div class="detail--task-date">Date: ${format(
+          new Date(data.date),
+          'MMMM d, yyy',
+        )}</div>
         <div class="detail--task-priority">Priority: ${this._capitalizeFirstLetter(
           data.priority,
         )}</div>

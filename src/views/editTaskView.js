@@ -1,5 +1,5 @@
 import ModalView from './modalView';
-import View from './View';
+import format from 'date-fns/format';
 
 class EditTaskView extends ModalView {
   _parentElement = document.querySelector('.modal-details');
@@ -148,6 +148,7 @@ class EditTaskView extends ModalView {
               class="edit-task--form-input"
               id="edit-task--date"
               name="edit-task--date"
+              value="${task.date}"
               required
             />
           </div>

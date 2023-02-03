@@ -15,6 +15,7 @@ class AddTaskView extends ModalView {
 
   constructor() {
     super();
+
     this._addHandlerShowModal();
     this._addHandlerCloseModal();
     this._addHandlerShowForm();
@@ -47,8 +48,9 @@ class AddTaskView extends ModalView {
       const projectID =
         this._parentElement.querySelector('#new-task--project').value;
 
-      const projectName =
-        this._parentElement.querySelector('#new-task--project').textContent;
+      const projectName = [
+        ...this._parentElement.querySelectorAll('.project-option'),
+      ].find((projEl) => projEl.value === projectID).textContent;
 
       if (this._validateTask([title, date, priority])) {
         const data = {
