@@ -38,6 +38,33 @@ class ProjectView extends View {
     });
   };
 
+  addHandlerHighPriority = (handler) => {
+    document
+      .querySelector('.tasks-high-priority')
+      .addEventListener('click', (e) => {
+        handler();
+        this.changeTitle('High Priority');
+      });
+  };
+
+  addHandlerMediumPriority = (handler) => {
+    document
+      .querySelector('.tasks-medium-priority')
+      .addEventListener('click', (e) => {
+        handler();
+        this.changeTitle('Medium Priority');
+      });
+  };
+
+  addHandlerLowPriority = (handler) => {
+    document
+      .querySelector('.tasks-low-priority')
+      .addEventListener('click', (e) => {
+        handler();
+        this.changeTitle('Low Priority');
+      });
+  };
+
   _generateMarkup = () => {
     const markup = this._data
       .map(

@@ -20,8 +20,6 @@ import { format, isFuture } from 'date-fns';
 const controlShowAllTasks = () => {
   taskView.render(model.state.tasks);
 
-  // change title to all tasks
-
   addHandlersToTasks();
 };
 
@@ -34,7 +32,7 @@ const controlAddTask = (data) => {
 const controlToggleStatus = (data) => {
   model.updateTask(data);
 
-  controlShowAllTasks();
+  // controlShowAllTasks();
 };
 
 const controlTaskDetails = (id) => {
@@ -94,6 +92,30 @@ const controlTasksUpcoming = () => {
 
 const controlTasksFinished = () => {
   const toShow = model.state.tasks.filter((task) => task.status === 'finished');
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlHighPriority = () => {
+  const toShow = model.state.tasks.filter((task) => task.priority === 'high');
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlMediumPriority = () => {
+  const toShow = model.state.tasks.filter((task) => task.priority === 'medium');
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlLowPriority = () => {
+  const toShow = model.state.tasks.filter((task) => task.priority === 'low');
 
   projectView.render(toShow);
 
@@ -178,6 +200,7 @@ const controlEditNote = (data) => {
 };
 
 const init = () => {
+  // Task initializers
   controlShowAllTasks();
 
   taskView.addHandlerShowAllTasks(controlShowAllTasks);
@@ -188,18 +211,24 @@ const init = () => {
 
   taskDetailsView.addHandlerShowTaskDetails(controlTaskDetails);
 
-  addTaskView.addHandlerAddTask(controlAddTask);
-  addTaskView.addHandlerListProjects(controlProjectsOnForm);
-  addNoteView.addHandlerAddNote(controlAddNote);
-  addProjectView.addHandlerAddProject(controlAddProject);
-
+  // Project initializers
   controlShowAllProjects();
 
   projectView.addHandlerTasksFinished(controlTasksFinished);
   projectView.addHandlerTasksToday(controlTasksToday);
   projectView.addHandlerTasksUpcoming(controlTasksUpcoming);
+  projectView.addHandlerHighPriority(controlHighPriority);
+  projectView.addHandlerMediumPriority(controlMediumPriority);
+  projectView.addHandlerLowPriority(controlLowPriority);
 
+  // Note initializer
   noteView.addHandlerShowNotes(controlShowNotes);
+
+  // Modal initializers
+  addTaskView.addHandlerAddTask(controlAddTask);
+  addTaskView.addHandlerListProjects(controlProjectsOnForm);
+  addNoteView.addHandlerAddNote(controlAddNote);
+  addProjectView.addHandlerAddProject(controlAddProject);
 };
 
 init();
