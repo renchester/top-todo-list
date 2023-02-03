@@ -14,13 +14,20 @@ export default class View {
 
   renderProjects = (data) => {
     const markup = data
-      .map((proj) => `<option value="${proj.id}">${proj.title}</option>`)
+      .map(
+        (proj) =>
+          `<option value="${proj.id}" class="project-option">${proj.title}</option>`,
+      )
       .join('');
 
     const projSelection = this._parentElement.querySelector('.select-project');
 
     projSelection.innerHTML = '';
     projSelection.insertAdjacentHTML('afterbegin', markup);
+  };
+
+  changeTitle = (text) => {
+    document.querySelector('.content-title').textContent = text;
   };
 
   _renderBackup() {

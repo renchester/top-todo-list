@@ -8,6 +8,8 @@ class ProjectView extends View {
       proj.addEventListener('click', (e) => {
         const { id } = e.target.dataset;
 
+        this.changeTitle(e.target.textContent);
+
         handler(id);
       }),
     );
@@ -55,6 +57,9 @@ class ProjectView extends View {
 
     return markup;
   };
+
+  _generateBackup = () =>
+    `<div class="placeholder-project">You have no tasks listed under this project currently.</div>`;
 }
 
 export default new ProjectView();

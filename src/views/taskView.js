@@ -5,7 +5,11 @@ class TaskView extends View {
   _navShowAll = document.querySelector('.tasks-all');
 
   addHandlerShowAllTasks = (handler) => {
-    this._navShowAll.addEventListener('click', handler);
+    this._navShowAll.addEventListener('click', (e) => {
+      handler();
+
+      this.changeTitle('All Tasks');
+    });
   };
 
   addHandlerToggleStatus = (handler) => {

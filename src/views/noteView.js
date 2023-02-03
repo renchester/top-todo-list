@@ -11,7 +11,10 @@ class NoteView extends View {
   }
 
   addHandlerShowNotes = (handler) => {
-    this._btnShowNotes.addEventListener('click', handler);
+    this._btnShowNotes.addEventListener('click', (e) => {
+      handler();
+      this.changeTitle('Notes');
+    });
   };
 
   addHandlerEditNotes = (handler) => {
