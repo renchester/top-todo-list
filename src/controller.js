@@ -12,11 +12,15 @@ import noteView from './views/noteView';
 import editTaskView from './views/editTaskView';
 import sidebarView from './views/sidebarView';
 import projectView from './views/projectView';
+import editProjectView from './views/editProjectView';
+import { format, isFuture } from 'date-fns';
 
 // Task Controllers
 
 const controlShowAllTasks = () => {
   taskView.render(model.state.tasks);
+
+  // change title to all tasks
 
   addHandlersToTasks();
 };
@@ -45,7 +49,7 @@ const controlEditTask = (id) => {
   const toShow = model.state.tasks.find((task) => task.id === id);
 
   editTaskView.render(toShow);
-  editTaskView.renderProjects(model.state.projects);
+  editTaskView.renderProjects(model.state.projects, toShow.projectID);
 
   editTaskView.addHandlerSaveEdit(controlUpdateTask);
   editTaskView.addHandlerDeleteTask(controlDeleteTask);
@@ -54,7 +58,7 @@ const controlEditTask = (id) => {
 const controlUpdateTask = (data) => {
   model.updateTask(data);
 
-  controlShowAllTasks();
+  controlShowProjectTasks(data.projectID);
 };
 
 const controlDeleteTask = (id) => {
@@ -63,12 +67,46 @@ const controlDeleteTask = (id) => {
   controlShowAllTasks();
 };
 
+const controlTasksToday = () => {
+  const date = new Date();
+  const [day, month, year] = [
+    date.getDate(),
+    date.getMonth(),
+    date.getFullYear(),
+  ];
+
+  const toShow = model.state.tasks.filter(
+    (task) => task.date === format(new Date(year, month, day), 'yyyy-MM-dd'),
+  );
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlTasksUpcoming = () => {
+  const toShow = model.state.tasks.filter((task) => isFuture(task.date));
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
+const controlTasksFinished = () => {
+  const toShow = model.state.tasks.filter((task) => task.status === 'finished');
+
+  projectView.render(toShow);
+
+  addHandlersToTasks();
+};
+
 // Project Controllers
 
 const controlShowAllProjects = () => {
   sidebarView.render(model.state.projects);
 
-  // projectview.addhandler
+  projectView.addHandlerShowTasks(controlShowProjectTasks);
+  editProjectView.addHandlerEditProject(controlEditProject);
 };
 
 const controlAddProject = (data) => {
@@ -87,6 +125,29 @@ const controlShowProjectTasks = (id) => {
 
 const controlProjectsOnForm = () => {
   addTaskView.renderProjects(model.state.projects);
+};
+
+const controlEditProject = (id) => {
+  const toShow = model.state.projects.find((project) => project.id === id);
+
+  editProjectView.render(toShow);
+
+  editProjectView.addHandlerSaveEdit(controlUpdateProject);
+  editProjectView.addHandlerDeleteProject(controlDeleteProject);
+};
+
+const controlUpdateProject = (data) => {
+  model.updateProject(data);
+
+  controlShowAllProjects();
+  controlShowProjectTasks(data.id);
+};
+
+const controlDeleteProject = (id) => {
+  model.deleteProject(id);
+
+  controlShowAllProjects();
+  controlShowAllTasks();
 };
 
 // Note Controllers
@@ -134,7 +195,9 @@ const init = () => {
 
   controlShowAllProjects();
 
-  projectView.addHandlerShowTasks(controlShowProjectTasks);
+  projectView.addHandlerTasksFinished(controlTasksFinished);
+  projectView.addHandlerTasksToday(controlTasksToday);
+  projectView.addHandlerTasksUpcoming(controlTasksUpcoming);
 
   noteView.addHandlerShowNotes(controlShowNotes);
 };
