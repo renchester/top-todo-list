@@ -212,6 +212,8 @@ const init = () => {
   // Project / Sidebar initializers
   ctrlRenderProjectsOnSidebar();
 
+  sidebarView.addHandlerShowNavProjects();
+
   projectView.addHandlerTasksAll(ctrlShowAllTasks);
   projectView.addHandlerTasksFinished(ctrlTasksFinished);
   projectView.addHandlerTasksToday(ctrlTasksToday);

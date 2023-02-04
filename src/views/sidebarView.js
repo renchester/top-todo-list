@@ -3,6 +3,14 @@ import View from './View';
 class SidebarView extends View {
   _parentElement = document.querySelector('.nav--projects');
 
+  addHandlerShowNavProjects = () => {
+    document.querySelector('.hamburger-icon').addEventListener('click', () => {
+      const projects = document.querySelector('.nav--projects');
+
+      projects.style.opacity = projects.style.opacity === '0' ? '1' : '0';
+    });
+  };
+
   _generateMarkup = () =>
     this._data
       .map(
