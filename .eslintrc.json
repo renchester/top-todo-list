@@ -1,16 +1,19 @@
 {
   "env": {
     "browser": true,
-    "commonjs": true,
     "es2021": true
   },
-  "extends": ["airbnb-base", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-typescript",
+    "standard-with-typescript",
+    "prettier"
+  ],
   "overrides": [],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
-  "rules": {
-    "no-underscore-dangle": "off",
-    "lines-between-class-members": "off"
-  }
+  "plugins": ["@typescript-eslint", "import"],
+  "rules": {}
 }

@@ -2,14 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/controller.js',
-  devtool: 'inline-source-map',
-  devServer: {
-    static: './dist',
-    watchFiles: ['src/*.html'],
-    hot: true,
-  },
+  entry: './src/controller.ts',
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -24,19 +17,36 @@ module.exports = {
   optimization: {
     runtimeChunk: 'single',
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   module: {
     rules: [
-      {
-        test: /.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
       {
         test: /.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
       {
-        test: /\.html$/i,
+        test: /.html$/i,
         loader: 'html-loader',
+      },
+      {
+        test: /\.m?ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: 'defaults' }],
+              ['@babel/preset-typescript'],
+            ],
+          },
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
     ],
   },
