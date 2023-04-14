@@ -40,34 +40,39 @@ class AddTaskView extends ModalView {
           const titleEl = this._parentElement.querySelector(
             '#new-task--title',
           ) as HTMLTextAreaElement | null;
+          const title = titleEl?.value as string;
+
           const dateEl = this._parentElement.querySelector(
             '#new-task--date',
           ) as HTMLInputElement | null;
+          const date = dateEl?.value as string;
+
           const statusEl = this._parentElement.querySelector(
             '#new-task--status',
           ) as HTMLSelectElement | null;
+          const status = statusEl?.value as string;
+
           const priorityEl = this._parentElement.querySelector(
             '.priority-active',
           )?.nextElementSibling as HTMLInputElement;
+          const priority = priorityEl?.value as string;
+
           const detailsEl = this._parentElement.querySelector(
             '#new-task--details',
           ) as HTMLTextAreaElement | null;
+          const details = detailsEl?.value as string;
+
           const projectIdEl = this._parentElement.querySelector(
             '#new-task--project',
           ) as HTMLSelectElement | null;
+          const projectID = projectIdEl?.value as string;
+
           const projectOptions = [
             ...this._parentElement.querySelectorAll('.project-option'),
           ] as HTMLOptionElement[];
           const targetProjectEl = projectOptions.find(
             (projEl) => projEl.value === projectID,
           );
-
-          const title = titleEl?.value as string;
-          const date = dateEl?.value as string;
-          const status = statusEl?.value as string;
-          const priority = priorityEl?.value as string;
-          const details = detailsEl?.value as string;
-          const projectID = projectIdEl?.value as string;
           const projectName = targetProjectEl?.textContent as string;
 
           if (this._validateTask([title, date, priority])) {
