@@ -5,20 +5,19 @@ export type State = {
 };
 
 export type TaskData = {
-  title: string;
+  title?: string | undefined;
   details?: string | undefined;
   priority: string;
-  projectName: string;
-  projectID: string;
-  status: unknown;
-  date: Date;
-  pinned: boolean;
+  projectName?: string | null | undefined;
+  projectID?: string | undefined;
+  status: string;
+  date?: string | undefined;
 };
 
 export type Task = TaskData & { id: string };
 
 export type ProjectData = {
-  title: string;
+  title?: string | undefined;
 };
 
 export type Project = ProjectData & { id: string };
