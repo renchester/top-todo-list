@@ -16,6 +16,8 @@ class SidebarView extends View {
     });
   };
 
+  hideNavProjects = () => this._renderBackup();
+
   override _generateMarkup = () => {
     const projectData = this._data as Project[];
     const markup = projectData

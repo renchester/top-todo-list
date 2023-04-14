@@ -20,6 +20,8 @@ class AccountView extends View {
   ) as HTMLElement | null;
   btnAdd = document.querySelector('.btn-add') as HTMLButtonElement | null;
 
+  sidebarNavEl = document.querySelector('.sidebar-nav') as HTMLElement | null;
+
   addHandlerLogin = (handler: () => void) => {
     this.btnLogin?.addEventListener('click', handler);
   };
@@ -48,6 +50,7 @@ class AccountView extends View {
     if (this.contentDisplayEl) this.contentDisplayEl.textContent = '';
 
     this.contentTitleEl && this._unhideEl(this.contentTitleEl);
+    this.sidebarNavEl && this._unhideEl(this.sidebarNavEl);
     this.btnAdd && this._unhideEl(this.btnAdd);
 
     this.btnLogout && this._unhideEl(this.btnLogout);
@@ -55,11 +58,14 @@ class AccountView extends View {
   };
 
   hideMainContent = () => {
-    if (this.contentDisplayEl)
+    if (this.contentDisplayEl) {
+      this.contentDisplayEl.innerHTML = '';
       this.contentDisplayEl.textContent =
         'You must be signed in to use the app';
+    }
 
     this.contentTitleEl && this._hideEl(this.contentTitleEl);
+    this.sidebarNavEl && this._hideEl(this.sidebarNavEl);
     this.btnAdd && this._hideEl(this.btnAdd);
 
     this.btnLogin && this._unhideEl(this.btnLogin);
