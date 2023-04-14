@@ -8,13 +8,14 @@ import {
 } from 'firebase/auth';
 import getFirebaseConfig from '../../firebase-config';
 
-import AccountView from '../views/accountView';
-
+import { resetState } from '../model/state';
 import initializeTodo from './appInitializer';
+
+import AccountView from '../views/accountView';
+import SidebarView from '../views/sidebarView';
 
 const AuthController = (() => {
   const firebaseConfig = getFirebaseConfig();
-  console.log(firebaseConfig);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
@@ -50,6 +51,8 @@ const AuthController = (() => {
         AccountView.showMainContent();
         initializeTodo(userID);
       } else {
+        resetState();
+        SidebarView.hideNavProjects();
         AccountView.hideAccountInfo();
         AccountView.hideMainContent();
       }
