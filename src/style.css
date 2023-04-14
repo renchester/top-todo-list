@@ -533,7 +533,7 @@ body {
   padding-left: 10px;
 }
 
-.modal-nav {
+.modal-nav ul {
   display: flex;
   gap: 20px;
 }

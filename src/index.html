@@ -23,6 +23,16 @@
       <div class="sidebar">
         <div class="logo">TO DO LIST</div>
 
+        <div class="sidebar--btn-logs">
+          <button class="btn-log btn-login hidden">Sign in</button>
+          <button class="btn-log btn-logout hidden">Sign out</button>
+        </div>
+
+        <div class="sidebar--account-info hidden">
+          <img src="#" alt="User profile" class="prof-pic" />
+          <h2 class="greeting">Hello, <span class="greeting-name"></span></h2>
+        </div>
+
         <div class="sidebar-nav">
           <div class="nav--tasks">
             <div tabindex="0" class="nav-task tasks-all">
@@ -51,7 +61,7 @@
               Low Priority
             </div>
           </div>
-          <div class="nav--projects"></div>
+          <ul class="nav--projects"></ul>
           <div tabindex="0" class="nav--notes">
             <span class="emoji">📝</span>Notes
           </div>
@@ -75,20 +85,36 @@
         <div class="modal-header">
           <h1 class="modal-title">Create a new...</h1>
           <nav class="modal-nav">
-            <div
-              tabindex="0"
-              class="modal-link modal-link--task modal-link--active"
-            >
-              Task
-            </div>
-            <div tabindex="0" class="modal-link modal-link--project">
-              Project
-            </div>
-            <div tabindex="0" class="modal-link modal-link--note">Note</div>
+            <ul role="tablist">
+              <li
+                role="tab"
+                aria-label="Show add task panel"
+                tabindex="0"
+                class="modal-link modal-link--task modal-link--active"
+              >
+                Task
+              </li>
+              <li
+                role="tab"
+                aria-label="Show add project panel"
+                tabindex="0"
+                class="modal-link modal-link--project"
+              >
+                Project
+              </li>
+              <li
+                role="tab"
+                aria-label="Show add note panel"
+                tabindex="0"
+                class="modal-link modal-link--note"
+              >
+                Note
+              </li>
+            </ul>
           </nav>
           <span class="btn-close-modal material-symbols-outlined">close</span>
         </div>
-        <div class="modal-content-wrapper">
+        <div class="modal-content-wrapper" role="tabpanel">
           <!--  NEW TASK FORM -->
 
           <form action="" class="modal-content add-new--task">
