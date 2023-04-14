@@ -1,9 +1,16 @@
+import type { NoteData } from '../types/types';
 import ModalView from './modalView';
 
 class AddNoteView extends ModalView {
-  _navLink = document.querySelector('.modal-link--note');
-  _form = document.querySelector('.modal-content.add-new--note');
-  _btnSubmit = document.querySelector('.btn-submit.submit--new-note');
+  _navLink = document.querySelector(
+    '.modal-link--note',
+  ) as HTMLElement | null;
+  override _form = document.querySelector(
+    '.modal-content.add-new--note',
+  ) as HTMLFormElement | null;
+  override _btnSubmit = document.querySelector(
+    '.btn-submit.submit--new-note',
+  ) as HTMLButtonElement | null;
 
   constructor() {
     super();
@@ -11,24 +18,36 @@ class AddNoteView extends ModalView {
   }
 
   _addHandlerShowForm = () => {
-    this._navLink.addEventListener('click', this._showForm.bind(this));
+    this._navLink &&
+      this._navLink.addEventListener('click', this._showForm.bind(this));
   };
 
-  addHandlerAddNote = (handler) => {
-    this._form.addEventListener('submit', (e) => {
-      e.preventDefault();
+  addHandlerAddNote = (handler: (data: NoteData) => void) => {
+    if (this._form) {
+      this._form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-      const title = this._parentElement.querySelector('#new-note--title').value;
+        let title, details;
 
-      const details =
-        this._parentElement.querySelector('#new-note--details').value;
+        if (this._parentElement) {
+          const titleEl = this._parentElement.querySelector(
+            '#new-note--title',
+          ) as HTMLTextAreaElement;
+          const detailsEl = this._parentElement.querySelector(
+            '#new-note--details',
+          ) as HTMLTextAreaElement;
 
-      const data = { title, details };
+          title = titleEl.value;
+          details = detailsEl.value;
+        }
 
-      handler(data);
+        const data = { title, details };
 
-      this._closeModal();
-    });
+        handler(data);
+
+        this._closeModal();
+      });
+    }
   };
 }
 

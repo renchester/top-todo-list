@@ -1,79 +1,89 @@
 import View from './View';
 
-class ProjectView extends View {
-  _parentElement = document.querySelector('.content-display');
+import type { Task } from '../types/types';
 
-  addHandlerShowTasks = (handler) => {
+class ProjectView extends View {
+  override _parentElement = document.querySelector(
+    '.content-display',
+  ) as HTMLElement | null;
+
+  addHandlerShowTasks = (handler: (id: string) => void) => {
     document.querySelectorAll('.nav--project').forEach((proj) =>
       proj.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('nav--project-title')) return;
+        if (e.target instanceof HTMLElement) {
+          if (!e.target.classList.contains('nav--project-title')) return;
 
-        const { id } = e.target.closest('.nav--project').dataset;
+          const targetProject = e.target.closest(
+            '.nav--project',
+          ) as HTMLLIElement;
+          const id = targetProject.dataset['id'] as string;
 
-        this._changeTitle(e.target.textContent);
+          e.target.textContent && this._changeTitle(e.target.textContent);
 
-        handler(id);
+          handler(id);
+        }
       }),
     );
   };
 
-  addHandlerTasksAll = (handler) => {
-    document.querySelector('.tasks-all').addEventListener('click', () => {
+  addHandlerTasksAll = (handler: () => void) => {
+    document.querySelector('.tasks-all')?.addEventListener('click', () => {
       handler();
       this._changeTitle('All tasks');
     });
   };
 
-  addHandlerTasksToday = (handler) => {
-    document.querySelector('.tasks-today').addEventListener('click', () => {
+  addHandlerTasksToday = (handler: () => void) => {
+    document.querySelector('.tasks-today')?.addEventListener('click', () => {
       handler();
       this._changeTitle('Due Today');
     });
   };
 
-  addHandlerTasksUpcoming = (handler) => {
-    document.querySelector('.tasks-upcoming').addEventListener('click', () => {
+  addHandlerTasksUpcoming = (handler: () => void) => {
+    document.querySelector('.tasks-upcoming')?.addEventListener('click', () => {
       handler();
       this._changeTitle('Upcoming');
     });
   };
 
-  addHandlerTasksFinished = (handler) => {
-    document.querySelector('.tasks-finished').addEventListener('click', () => {
+  addHandlerTasksFinished = (handler: () => void) => {
+    document.querySelector('.tasks-finished')?.addEventListener('click', () => {
       handler();
       this._changeTitle('Finished');
     });
   };
 
-  addHandlerHighPriority = (handler) => {
+  addHandlerHighPriority = (handler: () => void) => {
     document
       .querySelector('.tasks-high-priority')
-      .addEventListener('click', () => {
+      ?.addEventListener('click', () => {
         handler();
         this._changeTitle('High Priority');
       });
   };
 
-  addHandlerMediumPriority = (handler) => {
+  addHandlerMediumPriority = (handler: () => void) => {
     document
       .querySelector('.tasks-medium-priority')
-      .addEventListener('click', () => {
+      ?.addEventListener('click', () => {
         handler();
         this._changeTitle('Medium Priority');
       });
   };
 
-  addHandlerLowPriority = (handler) => {
+  addHandlerLowPriority = (handler: () => void) => {
     document
       .querySelector('.tasks-low-priority')
-      .addEventListener('click', () => {
+      ?.addEventListener('click', () => {
         handler();
         this._changeTitle('Low Priority');
       });
   };
 
-  _generateMarkup = () => {
-    const markup = this._data
+  override _generateMarkup = () => {
+    const taskData = this._data as Task[];
+    const markup = taskData
       .map(
         (task) => `
          <div class="task priority-${task.priority}" data-id="${task.id}">
@@ -115,7 +125,7 @@ class ProjectView extends View {
     return markup;
   };
 
-  _generateBackup = () =>
+  override _generateBackup = () =>
     `<div class="placeholder-project">You have no tasks listed under this project/category currently.</div>`;
 }
 

@@ -1,42 +1,57 @@
+import type { Task } from '../types/types';
 import View from './View';
 
 class TaskView extends View {
-  _parentElement = document.querySelector('.content-display');
-  _navShowAll = document.querySelector('.tasks-all');
+  override _parentElement = document.querySelector(
+    '.content-display',
+  ) as HTMLElement;
+  _navShowAll = document.querySelector('.tasks-all') as HTMLElement;
 
-  addHandlerToggleStatus = (handler) => {
+  addHandlerToggleStatus = (
+    handler: (data: { id: string; status: string }) => void,
+  ) => {
     const statusBoxes = [...document.querySelectorAll('.task-status')];
 
     statusBoxes.forEach((box) =>
       box.addEventListener('click', (e) => {
-        const { id } = e.target.closest('.task').dataset;
+        if (e.target instanceof HTMLInputElement) {
+          const targetTask = e.target.closest('.task') as HTMLElement;
+          const id = targetTask.dataset['id'] as string;
 
-        const status = e.target.checked ? 'finished' : 'on-going';
+          const status = e.target.checked ? 'finished' : 'on-going';
 
-        handler({ id, status });
+          handler({ id, status });
+        }
       }),
     );
   };
 
-  addHandlerDeleteTask = (handler) => {
+  addHandlerDeleteTask = (handler: (id: string) => void) => {
     const tasks = [...document.querySelectorAll('.task')];
 
     tasks.forEach((task) =>
       task.addEventListener('click', (e) => {
-        if (!e.target.parentNode.classList.contains('display-icon-delete'))
-          return;
+        if (e.target instanceof HTMLElement) {
+          if (
+            e.target.parentNode instanceof HTMLElement &&
+            !e.target.parentNode.classList.contains('display-icon-delete')
+          )
+            return;
 
-        const { id } = e.target.closest('.task').dataset;
+          const targetTask = e.target.closest('.task') as HTMLElement;
+          const id = targetTask.dataset['id'] as string;
 
-        handler(id);
+          handler(id);
+        }
       }),
     );
   };
 
-  _generateMarkup = () => {
+  override _generateMarkup = () => {
     this._changeTitle('All tasks');
 
-    const markup = this._data
+    const taskData = this._data as Task[];
+    const markup = taskData
       .map(
         (task) => `
          <div class="task priority-${task.priority}" data-id="${task.id}">
@@ -78,7 +93,7 @@ class TaskView extends View {
     return markup;
   };
 
-  _generateBackup = () => {
+  override _generateBackup = () => {
     const markup = `
           <div class="task priority-medium" data-id="null">
 

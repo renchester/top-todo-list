@@ -1,17 +1,20 @@
+import type { TaskData } from '../types/types';
 import ModalView from './modalView';
 
 class AddTaskView extends ModalView {
-  _navLink = document.querySelector('.modal-link--task');
-  _form = this._parentElement.querySelector('.modal-content.add-new--task');
-  _btnSubmit = this._parentElement.querySelector(
+  _navLink = document.querySelector('.modal-link--task') as HTMLElement | null;
+  override _form = document.querySelector(
+    '.modal-content.add-new--task',
+  ) as HTMLFormElement | null;
+  override _btnSubmit = document.querySelector(
     '.btn-submit.submit--new-task',
-  );
-  _priorityList = [
-    ...this._parentElement.querySelectorAll('.new-task--priority-label'),
+  ) as HTMLButtonElement | null;
+  override _priorityList = [
+    ...document.querySelectorAll('.new-task--priority-label'),
   ];
-  _projectSelector = this._parentElement.querySelector(
+  _projectSelector = document.querySelector(
     '.new-task--task-project-wrapper',
-  );
+  ) as HTMLDivElement;
 
   constructor() {
     super();
@@ -24,57 +27,73 @@ class AddTaskView extends ModalView {
   }
 
   _addHandlerShowForm = () => {
-    this._navLink.addEventListener('click', this._showForm.bind(this));
+    this._navLink &&
+      this._navLink.addEventListener('click', this._showForm.bind(this));
   };
 
-  addHandlerAddTask = (handler) => {
-    this._form.addEventListener('submit', (e) => {
-      e.preventDefault();
+  addHandlerAddTask = (handler: (data: TaskData) => void) => {
+    this._form &&
+      this._form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-      const title = this._parentElement.querySelector('#new-task--title').value;
+        if (this._parentElement) {
+          const titleEl = this._parentElement.querySelector(
+            '#new-task--title',
+          ) as HTMLTextAreaElement | null;
+          const dateEl = this._parentElement.querySelector(
+            '#new-task--date',
+          ) as HTMLInputElement | null;
+          const statusEl = this._parentElement.querySelector(
+            '#new-task--status',
+          ) as HTMLSelectElement | null;
+          const priorityEl = this._parentElement.querySelector(
+            '.priority-active',
+          )?.nextElementSibling as HTMLInputElement;
+          const detailsEl = this._parentElement.querySelector(
+            '#new-task--details',
+          ) as HTMLTextAreaElement | null;
+          const projectIdEl = this._parentElement.querySelector(
+            '#new-task--project',
+          ) as HTMLSelectElement | null;
+          const projectOptions = [
+            ...this._parentElement.querySelectorAll('.project-option'),
+          ] as HTMLOptionElement[];
+          const targetProjectEl = projectOptions.find(
+            (projEl) => projEl.value === projectID,
+          );
 
-      const date = this._parentElement.querySelector('#new-task--date').value;
+          const title = titleEl?.value as string;
+          const date = dateEl?.value as string;
+          const status = statusEl?.value as string;
+          const priority = priorityEl?.value as string;
+          const details = detailsEl?.value as string;
+          const projectID = projectIdEl?.value as string;
+          const projectName = targetProjectEl?.textContent as string;
 
-      const status =
-        this._parentElement.querySelector('#new-task--status').value;
+          if (this._validateTask([title, date, priority])) {
+            const data = {
+              title,
+              date,
+              status,
+              priority,
+              details,
+              projectName,
+              projectID,
+            };
 
-      const priority =
-        this._parentElement.querySelector('.priority-active').nextElementSibling
-          .value;
+            // Stores data in model state through controller
+            handler(data);
 
-      const details =
-        this._parentElement.querySelector('#new-task--details').value;
+            this._changeTitle(projectName);
 
-      const projectID =
-        this._parentElement.querySelector('#new-task--project').value;
-
-      const projectName = [
-        ...this._parentElement.querySelectorAll('.project-option'),
-      ].find((projEl) => projEl.value === projectID).textContent;
-
-      if (this._validateTask([title, date, priority])) {
-        const data = {
-          title,
-          date,
-          status,
-          priority,
-          details,
-          projectName,
-          projectID,
-        };
-
-        // Stores data in model state through controller
-        handler(data);
-
-        this._changeTitle(projectName);
-
-        this._closeModal();
-      }
-    });
+            this._closeModal();
+          }
+        }
+      });
   };
 
-  addHandlerListProjects = (handler) => {
-    this._btnAdd.addEventListener('click', handler);
+  addHandlerListProjects = (handler?: () => void) => {
+    this._btnAdd && handler && this._btnAdd.addEventListener('click', handler);
   };
 }
 

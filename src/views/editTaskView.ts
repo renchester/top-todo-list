@@ -1,127 +1,162 @@
+import type { Task } from '../types/types';
 import ModalView from './modalView';
 
 class EditTaskView extends ModalView {
-  _parentElement = document.querySelector('.modal-details');
+  override _parentElement = document.querySelector(
+    '.modal-details',
+  ) as HTMLElement | null;
 
-  addHandlerEditTask = (handler) => {
+  addHandlerEditTask = (handler: (id: string) => void) => {
     const tasks = [...document.querySelectorAll('.task')];
 
     tasks.forEach((task) =>
       task.addEventListener('click', (e) => {
-        if (!e.target.parentNode.classList.contains('display-icon-edit'))
-          return;
+        if (e.target instanceof HTMLElement) {
+          if (
+            e.target.parentNode instanceof HTMLElement &&
+            !e.target.parentNode.classList.contains('display-icon-edit')
+          )
+            return;
 
-        const { id } = e.target.closest('.task').dataset;
+          const targetTask = e.target.closest('.task') as HTMLElement;
+          const id = targetTask.dataset['id'] as string;
 
-        this._unhideEl(this._parentElement);
-        this._unhideEl(this._overlay);
+          this._parentElement && this._unhideEl(this._parentElement);
+          this._overlay && this._unhideEl(this._overlay);
 
-        this._parentElement.setAttribute('data-id', id);
+          if (this._parentElement) {
+            this._parentElement.setAttribute('data-id', id);
 
-        handler(id);
+            handler(id);
 
-        this._priorityList = [
-          ...this._parentElement.querySelectorAll('.edit-task--priority-label'),
-        ];
-        this._addHandlerTogglePriority();
+            this._priorityList = [
+              ...this._parentElement.querySelectorAll(
+                '.edit-task--priority-label',
+              ),
+            ];
+            this._addHandlerTogglePriority();
 
-        this._btnCloseModal = document.querySelector(
-          '.btn-close-modal-details',
-        );
-        this._addHandlerCloseModal();
+            this._btnCloseModal = document.querySelector(
+              '.btn-close-modal-details',
+            );
+            this._addHandlerCloseModal();
+          }
+        }
       }),
     );
   };
 
-  addHandlerEditTaskOnModal = (handler) => {
+  addHandlerEditTaskOnModal = (handler: (id: string) => void) => {
     this._parentElement
-      .querySelector('.detail--btn-edit')
-      .addEventListener('click', (e) => {
-        const { id } = e.target.closest('.modal-details').dataset;
+      ?.querySelector('.detail--btn-edit')
+      ?.addEventListener('click', (e) => {
+        if (e.target instanceof HTMLElement) {
+          const targetTask = e.target.closest('.modal-details') as HTMLElement;
+          const id = targetTask.dataset['id'] as string;
 
-        handler(id);
+          handler(id);
 
-        this._priorityList = [
-          ...this._parentElement.querySelectorAll('.edit-task--priority-label'),
-        ];
-        this._addHandlerTogglePriority();
+          if (this._parentElement) {
+            this._priorityList = [
+              ...this._parentElement.querySelectorAll(
+                '.edit-task--priority-label',
+              ),
+            ];
+            this._addHandlerTogglePriority();
 
-        this._btnCloseModal = document.querySelector(
-          '.btn-close-modal-details',
-        );
-        this._addHandlerCloseModal();
-      });
-  };
-
-  addHandlerSaveEdit = (handler) => {
-    this._parentElement
-      .querySelector('form')
-      .addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const title =
-          this._parentElement.querySelector('#edit-task--title').value;
-
-        const date =
-          this._parentElement.querySelector('#edit-task--date').value;
-
-        const status =
-          this._parentElement.querySelector('#edit-task--status').value;
-
-        const priority =
-          this._parentElement.querySelector('.priority-active')
-            .nextElementSibling.value;
-
-        const details = this._parentElement.querySelector(
-          '#edit-task--details',
-        ).value;
-
-        const projectID = this._parentElement.querySelector(
-          '#edit-task--project',
-        ).value;
-
-        const projectName = [
-          ...this._parentElement.querySelectorAll('.project-option'),
-        ].find((projEl) => projEl.value === projectID).textContent;
-
-        const { id } = this._parentElement.dataset;
-
-        if (this._validateTask([title, date, priority])) {
-          const data = {
-            title,
-            date,
-            status,
-            priority,
-            details,
-            projectName,
-            projectID,
-            id,
-          };
-
-          this._changeTitle(projectName);
-
-          handler(data);
-
-          this._closeModal();
+            this._btnCloseModal = document.querySelector(
+              '.btn-close-modal-details',
+            );
+            this._addHandlerCloseModal();
+          }
         }
       });
   };
 
-  addHandlerDeleteTask = (handler) => {
-    this._parentElement
-      .querySelector('.delete--edit-task')
-      .addEventListener('click', (e) => {
-        const targetTask = e.target.closest('.modal-details');
-        const { id } = targetTask.dataset;
+  addHandlerSaveEdit = (handler: (data: Task) => void) => {
+    this._parentElement &&
+      this._parentElement
+        ?.querySelector('form')
+        ?.addEventListener('submit', (e) => {
+          e.preventDefault();
 
-        handler(id);
+          if (this._parentElement) {
+            const titleEl = this._parentElement.querySelector(
+              '#edit-task--title',
+            ) as HTMLTextAreaElement | null;
+            const dateEl = this._parentElement.querySelector(
+              '#edit-task--date',
+            ) as HTMLInputElement | null;
+            const statusEl = this._parentElement.querySelector(
+              '#edit-task--status',
+            ) as HTMLSelectElement | null;
+            const priorityEl = this._parentElement.querySelector(
+              '.priority-active',
+            )?.nextElementSibling as HTMLInputElement;
+            const detailsEl = this._parentElement.querySelector(
+              '#edit-task--details',
+            ) as HTMLTextAreaElement | null;
+            const projectIdEl = this._parentElement.querySelector(
+              '#edit-task--project',
+            ) as HTMLSelectElement | null;
+            const projectOptions = [
+              ...this._parentElement.querySelectorAll('.project-option'),
+            ] as HTMLOptionElement[];
+            const targetProjectEl = projectOptions.find(
+              (projEl) => projEl.value === projectID,
+            );
 
-        this._closeModal();
-      });
+            const title = titleEl?.value as string;
+            const date = dateEl?.value as string;
+            const status = statusEl?.value as string;
+            const priority = priorityEl?.value as string;
+            const details = detailsEl?.value as string;
+            const projectID = projectIdEl?.value as string;
+            const projectName = targetProjectEl?.textContent as string;
+            const id = this._parentElement.dataset['id'] as string;
+
+            if (this._validateTask([title, date, priority])) {
+              const data = {
+                title,
+                date,
+                status,
+                priority,
+                details,
+                projectName,
+                projectID,
+                id,
+              };
+
+              handler(data);
+
+              this._changeTitle(projectName);
+
+              this._closeModal();
+            }
+          }
+        });
   };
 
-  _generateMarkup = () => {
-    const task = this._data;
+  addHandlerDeleteTask = (handler: (id: string) => void) => {
+    this._parentElement &&
+      this._parentElement
+        ?.querySelector('.delete--edit-task')
+        ?.addEventListener('click', (e) => {
+          if (e.target instanceof HTMLElement) {
+            const targetTask = e.target.closest(
+              '.modal-details',
+            ) as HTMLElement;
+            const id = targetTask.dataset['id'] as string;
+
+            handler(id);
+
+            this._closeModal();
+          }
+        });
+  };
+
+  override _generateMarkup = () => {
+    const task = this._data as Task;
 
     const markup = ` 
       <span class="edit-task--header">Edit Task</span>

@@ -1,40 +1,50 @@
+import type { Project } from '../types/types';
 import modalView from './modalView';
 
 class EditProjectView extends modalView {
-  _parentElement = document.querySelector('.modal-details');
-  _overlay = document.querySelector('.overlay');
+  override _parentElement = document.querySelector(
+    '.modal-details',
+  ) as HTMLElement | null;
+  override _overlay = document.querySelector('.overlay') as HTMLElement | null;
 
-  addHandlerEditProject = (handler) => {
+  addHandlerEditProject = (handler: (id: string) => void) => {
     document.querySelectorAll('.edit-project-icon').forEach((btn) =>
       btn.addEventListener('click', (e) => {
-        const { id } = e.target.closest('.nav--project').dataset;
+        if (e.target instanceof HTMLElement) {
+          const targetProject = e.target.closest(
+            '.nav--project',
+          ) as HTMLSpanElement;
+          const id = targetProject.dataset['id'] as string;
 
-        this._parentElement.setAttribute('data-id', id);
+          this._parentElement &&
+            this._parentElement.setAttribute('data-id', id);
 
-        this._unhideEl(this._parentElement);
-        this._unhideEl(this._overlay);
+          this._parentElement && this._unhideEl(this._parentElement);
+          this._overlay && this._unhideEl(this._overlay);
 
-        handler(id);
+          handler(id);
 
-        this._btnCloseModal = document.querySelector(
-          '.btn-close-modal-details',
-        );
-        this._addHandlerCloseModal();
+          this._btnCloseModal = document.querySelector(
+            '.btn-close-modal-details',
+          );
+          this._addHandlerCloseModal();
+        }
       }),
     );
   };
 
-  addHandlerSaveEdit = (handler) => {
+  addHandlerSaveEdit = (handler: (data: Project) => void) => {
     this._parentElement
-      .querySelector('form')
-      .addEventListener('submit', (e) => {
+      ?.querySelector('form')
+      ?.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const title = this._parentElement.querySelector(
+        const titleEl = this._parentElement?.querySelector(
           '#edit-project--title',
-        ).value;
+        ) as HTMLInputElement | null;
+        const title = titleEl?.value;
 
-        const { id } = this._parentElement.dataset;
+        const id = this._parentElement?.dataset['id'] as string;
 
         const data = {
           title,
@@ -48,19 +58,26 @@ class EditProjectView extends modalView {
       });
   };
 
-  addHandlerDeleteProject = (handler) => {
+  addHandlerDeleteProject = (handler: (id: string) => void) => {
     this._parentElement
-      .querySelector('.delete--edit-project')
-      .addEventListener('click', (e) => {
-        const { id } = e.target.closest('.modal-details').dataset;
+      ?.querySelector('.delete--edit-project')
+      ?.addEventListener('click', (e) => {
+        if (e.target instanceof HTMLElement) {
+          const targetProject = e.target.closest(
+            '.modal-details',
+          ) as HTMLDivElement;
+          const id = targetProject?.dataset['id'] as string;
 
-        handler(id);
+          handler(id);
 
-        this._closeModal();
+          this._closeModal();
+        }
       });
   };
 
-  _generateMarkup = () => `
+  override _generateMarkup = () => {
+    const projectData = this._data as Project;
+    const markup = `
      <span class="edit-project--header">Edit Project</span>
      <span class="btn-close-modal-details material-symbols-outlined">close</span>  
       <form action="" class="edit-project--form">
@@ -70,7 +87,7 @@ class EditProjectView extends modalView {
             class="edit-project--form-element"
             minlength="1"
             maxlength="60"
-            value="${this._data.title}"
+            value="${projectData.title}"
             required
          />
 
@@ -85,7 +102,10 @@ class EditProjectView extends modalView {
     </form>
     `;
 
-  _generateBackup = () => 'You have not added anything yet';
+    return markup;
+  };
+
+  override _generateBackup = () => 'You have not added anything yet';
 }
 
 export default new EditProjectView();

@@ -1,7 +1,12 @@
-export default class View {
-  _data;
+import type { Project } from '../types/types';
 
-  render(data) {
+export default class View {
+  _data: unknown;
+  _parentElement: HTMLElement | null;
+  _generateMarkup: (data: any) => string;
+  _generateBackup: () => string;
+
+  render(data: any) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this._renderBackup();
 
@@ -9,10 +14,11 @@ export default class View {
     const markup = this._generateMarkup(data);
 
     this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    this._parentElement &&
+      this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderProjects = (data, chosenProjID) => {
+  renderProjects = (data: Project[], chosenProjID: string | null) => {
     let markup;
 
     if (!chosenProjID) {
@@ -32,43 +38,49 @@ export default class View {
         )
         .join('');
 
-      markup = `<option value="${firstChoice.id}" class="project-option">${firstChoice.title}</option>
+      markup =
+        firstChoice &&
+        `<option value="${firstChoice.id}" class="project-option">${firstChoice.title}</option>
       ${others}`;
     }
 
-    const projSelection = this._parentElement.querySelector('.select-project');
+    const projSelection = this._parentElement?.querySelector(
+      '.select-project',
+    ) as HTMLElement;
 
     projSelection.innerHTML = '';
-    projSelection.insertAdjacentHTML('afterbegin', markup);
+    markup && projSelection.insertAdjacentHTML('afterbegin', markup);
   };
 
-  _changeTitle = (text) => {
-    document.querySelector('.content-title').textContent = text;
+  _changeTitle = (text?: string) => {
+    const titleEl = document.querySelector('.content-title');
+
+    if (titleEl && text) titleEl.textContent = text;
   };
 
   _renderBackup() {
     const markup = this._generateBackup();
     this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    this._parentElement?.insertAdjacentHTML('afterbegin', markup);
   }
 
   _clear() {
-    this._parentElement.innerHTML = '';
+    if (this._parentElement) this._parentElement.innerHTML = '';
   }
 
-  _capitalizeFirstLetter(str) {
-    return str[0].toUpperCase() + str.slice(1);
+  _capitalizeFirstLetter(str: string) {
+    return str[0] && str[0].toUpperCase() + str.slice(1);
   }
 
-  _unhideEl(el) {
+  _unhideEl(el: HTMLElement) {
     el.classList.remove('hidden');
   }
 
-  _hideEl(el) {
+  _hideEl(el: HTMLElement) {
     el.classList.add('hidden');
   }
 
-  _toggleEl(el) {
+  _toggleEl(el: HTMLElement) {
     el.classList.toggle('hidden');
   }
 }

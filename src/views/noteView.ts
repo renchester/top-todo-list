@@ -1,8 +1,13 @@
+import type { Note } from '../types/types';
 import View from './View';
 
 class NoteView extends View {
-  _parentElement = document.querySelector('.content-display');
-  _btnShowNotes = document.querySelector('.nav--notes');
+  override _parentElement = document.querySelector(
+    '.content-display',
+  ) as HTMLElement | null;
+  _btnShowNotes = document.querySelector(
+    '.nav--notes',
+  ) as HTMLButtonElement | null;
 
   constructor() {
     super();
@@ -10,43 +15,53 @@ class NoteView extends View {
     this.addHandlerDeleteNotes();
   }
 
-  addHandlerShowNotes = (handler) => {
-    this._btnShowNotes.addEventListener('click', (e) => {
-      handler();
-      this._changeTitle('Notes');
-    });
+  addHandlerShowNotes = (handler: () => void) => {
+    this._btnShowNotes &&
+      this._btnShowNotes.addEventListener('click', () => {
+        handler();
+        this._changeTitle('Notes');
+      });
   };
 
-  addHandlerEditNotes = (handler) => {
+  addHandlerEditNotes = (handler?: (data: Note) => void) => {
     const notes = [...document.querySelectorAll('.note')];
 
     notes.forEach((note) =>
       note.addEventListener('focusout', (e) => {
-        const noteToChange = e.target.closest('.note');
-        const { id } = noteToChange.dataset;
+        if (e.target instanceof HTMLElement) {
+          const noteToChange = e.target.closest('.note') as HTMLElement;
+          const id = noteToChange.dataset['id'] as string;
 
-        const title = noteToChange.querySelector('.note-title').textContent;
-        const details = noteToChange.querySelector('.note-details').textContent;
+          const title = noteToChange.querySelector('.note-title')
+            ?.textContent as string;
+          const details = noteToChange.querySelector('.note-details')
+            ?.textContent as string;
 
-        handler({ title, details, id });
+          if (handler) handler({ title, details, id });
+        }
       }),
     );
   };
 
-  addHandlerDeleteNotes = (handler) => {
+  addHandlerDeleteNotes = (handler?: (id: string) => void) => {
     const deleteBtns = [...document.querySelectorAll('.btn-delete-note')];
 
     deleteBtns.forEach((btn) =>
       btn.addEventListener('click', (e) => {
-        const { id } = e.target.closest('.note').dataset;
-        handler(id);
+        if (e.target instanceof HTMLElement) {
+          const noteToDelete = e.target.closest('.note') as HTMLElement;
+          const id = noteToDelete.dataset['id'] as string;
+
+          if (handler) handler(id);
+        }
       }),
     );
   };
 
-  _generateMarkup = () => {
-    const even = this._data.filter((note, i) => i % 2 === 0);
-    const odd = this._data.filter((note, i) => i % 2 !== 0);
+  override _generateMarkup = () => {
+    const noteData = this._data as Note[];
+    const even = noteData.filter((_: unknown, i: number) => i % 2 === 0);
+    const odd = noteData.filter((_: unknown, i: number) => i % 2 !== 0);
 
     const markup = `
         <div class="notes-container">
@@ -59,11 +74,11 @@ class NoteView extends View {
     return markup;
   };
 
-  _generateNoteMarkup = (data) => {
+  _generateNoteMarkup = (data: Note[]) => {
     const markup = data
       .map(
         (note) => `
-            <div class="note" data-id="${note.id}">
+            <article class="note" data-id="${note.id}" aria-label="note">
               <button class="btn-delete-note">
                 <span class="material-symbols-outlined">close</span>
               </button>
@@ -73,7 +88,7 @@ class NoteView extends View {
               <div class="note-details" contenteditable="true">
                 ${note.details}
               </div>
-            </div>
+            </article>
          `,
       )
       .join('');
@@ -81,7 +96,7 @@ class NoteView extends View {
     return markup;
   };
 
-  _generateBackup = () => `
+  override _generateBackup = () => `
             <div class="note" id="null">
               <div class="note-title" contenteditable="true">
                 Sample Note

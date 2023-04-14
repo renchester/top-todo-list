@@ -2,25 +2,43 @@ import format from 'date-fns/format';
 import View from './View';
 
 export default class ModalView extends View {
-  _parentElement = document.querySelector('.modal');
-  _overlay = document.querySelector('.overlay');
-  _window = document.querySelector('.modal-content-wrapper');
-  _btnAdd = document.querySelector('.btn-add');
+  override _parentElement = document.querySelector(
+    '.modal',
+  ) as HTMLElement | null;
+  _overlay = document.querySelector('.overlay') as HTMLElement | null;
+  _window = document.querySelector(
+    '.modal-content-wrapper',
+  ) as HTMLElement | null;
+  _btnAdd = document.querySelector('.btn-add') as HTMLButtonElement | null;
 
-  _btnCloseModal = this._parentElement.querySelector('.btn-close-modal');
-  _btnSubmit = this._parentElement.querySelector('.btn-submit');
+  _btnCloseModal = this._parentElement?.querySelector(
+    '.btn-close-modal',
+  ) as HTMLButtonElement | null;
+  _btnSubmit = this._parentElement?.querySelector(
+    '.btn-submit',
+  ) as HTMLButtonElement | null;
 
-  _modalLinks = [...this._parentElement.querySelectorAll('.modal-link')];
+  _modalLinks = [
+    ...(this._parentElement?.querySelectorAll(
+      '.modal-link',
+    ) as NodeListOf<HTMLLIElement>),
+  ];
   _modalFormContainer = [
-    ...this._parentElement.querySelectorAll('.modal-content'),
+    ...(this._parentElement?.querySelectorAll(
+      '.modal-content',
+    ) as NodeListOf<HTMLFormElement>),
   ];
 
+  _priorityList: Element[];
+  _form: HTMLFormElement | null;
+
   _addHandlerShowModal = () => {
-    this._btnAdd.addEventListener('click', this._showModal);
+    this._btnAdd && this._btnAdd.addEventListener('click', this._showModal);
   };
 
   _addHandlerCloseModal = () => {
-    this._btnCloseModal.addEventListener('click', this._closeModal);
+    this._btnCloseModal &&
+      this._btnCloseModal.addEventListener('click', this._closeModal);
   };
 
   _addHandlerTogglePriority = () => {
@@ -30,48 +48,57 @@ export default class ModalView extends View {
           priority.classList.remove('priority-active'),
         );
 
-        e.target.classList.add('priority-active');
+        if (e.target instanceof HTMLElement)
+          e.target.classList.add('priority-active');
       }),
     );
   };
 
   _showModal = () => {
-    this._unhideEl(this._parentElement);
-    this._unhideEl(this._overlay);
+    this._parentElement && this._unhideEl(this._parentElement);
+    this._overlay && this._unhideEl(this._overlay);
 
-    this._parentElement.querySelector('#new-task--date').value =
-      this._formatDateForForm();
+    const dateEl = this._parentElement?.querySelector(
+      '#new-task--date',
+    ) as HTMLInputElement;
+
+    dateEl.value = this._formatDateForForm();
   };
 
   _closeModal = () => {
-    this._hideEl(this._parentElement);
-    this._hideEl(this._overlay);
+    this._parentElement && this._hideEl(this._parentElement);
+    this._overlay && this._hideEl(this._overlay);
 
     this._resetForms();
-    this._parentElement.removeAttribute('data-id');
+    this._parentElement && this._parentElement.removeAttribute('data-id');
   };
 
-  _showForm = (e) => {
-    this._makeActiveLink(e.target);
+  _showForm = (e: Event) => {
+    if (e.target instanceof HTMLElement) this._makeActiveLink(e.target);
 
     this._modalFormContainer.forEach((form) => {
       this._resetForms();
       this._hideEl(form);
     });
 
-    this._parentElement.querySelector('#new-task--date').value =
-      this._formatDateForForm();
+    const dateEl = this._parentElement?.querySelector(
+      '#new-task--date',
+    ) as HTMLInputElement;
 
-    this._unhideEl(this._form);
+    dateEl.value = this._formatDateForForm();
+
+    this._form && this._unhideEl(this._form);
   };
 
   _resetForms = () => {
-    [...this._parentElement.querySelectorAll('form')].forEach((form) =>
-      form.reset(),
-    );
+    [
+      ...(this._parentElement?.querySelectorAll(
+        'form',
+      ) as NodeListOf<HTMLFormElement>),
+    ].forEach((form) => form.reset());
   };
 
-  _makeActiveLink = (target) => {
+  _makeActiveLink = (target: HTMLElement) => {
     this._modalLinks.forEach((link) =>
       link.classList.remove('modal-link--active'),
     );
@@ -89,7 +116,7 @@ export default class ModalView extends View {
     return format(new Date(year, month, day), 'yyyy-MM-dd');
   };
 
-  _validateTask(arr) {
+  _validateTask(arr: [string, string, string]) {
     const [title, date, priority] = arr;
 
     return !(!title || !date || !priority);
