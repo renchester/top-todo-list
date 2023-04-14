@@ -23,7 +23,7 @@ const TaskController = (() => {
     addHandlersToTasks();
   };
 
-  const ctrlToggleStatus = (data: Task) => {
+  const ctrlToggleStatus = (data: { id: string; status: string }) => {
     TaskModel.updateTask(data);
   };
 
@@ -38,14 +38,15 @@ const TaskController = (() => {
   const ctrlAddTask = (data: TaskData) => {
     TaskModel.addTask(data);
 
-    ProjectController.ctrlShowTasksByProject(data.projectID);
+    data.projectID && ProjectController.ctrlShowTasksByProject(data.projectID);
   };
 
   const ctrlEditTask = (id: string) => {
     const toShow = state.tasks.find((task) => task.id === id) as Task;
 
     EditTaskView.render(toShow);
-    EditTaskView.renderProjects(state.projects, toShow.projectID);
+    toShow.projectID &&
+      EditTaskView.renderProjects(state.projects, toShow.projectID);
 
     EditTaskView.addHandlerSaveEdit(ctrlUpdateTask);
     EditTaskView.addHandlerDeleteTask(ctrlDeleteTask);
@@ -54,7 +55,7 @@ const TaskController = (() => {
   const ctrlUpdateTask = (data: Task) => {
     TaskModel.updateTask(data);
 
-    ProjectController.ctrlShowTasksByProject(data.projectID);
+    data.projectID && ProjectController.ctrlShowTasksByProject(data.projectID);
   };
 
   const ctrlDeleteTask = (id: string) => {
