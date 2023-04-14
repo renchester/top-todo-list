@@ -1,9 +1,13 @@
 import { state } from './state';
 
+import Firestore from './firestore';
+
 import { getIndex } from '../utils/utils';
 import type { ProjectData, Project } from '../types/types';
 
 const ProjectModel = (() => {
+  let userId: string;
+
   const createProject = (data: ProjectData) => ({
     title: data.title,
     id: `ID${Math.random().toString(16).slice(2)}`,
@@ -12,31 +16,28 @@ const ProjectModel = (() => {
   const addProject = (data: ProjectData) => {
     const newProject = createProject(data);
 
-    state.projects.push(newProject);
+    state.projects = [...state.projects, newProject];
 
-    // _persistToLocalStorage('projects');
+    Firestore.updateProjects(state.projects, userId);
   };
 
   const updateProject = (data: Project) => {
-    const target = state.projects[getIndex(state.projects, data.id)] as Project;
+    const target = state.projects[getIndex(state.projects, data.id)];
 
-    Object.assign(target, data);
+    data.title && updateProjectNames(data.id, data.title);
+    target && Object.assign(target, data);
 
-    updateProjectNames(data.id, data.title);
-
-    Object.assign(target, data);
-
-    // _persistToLocalStorage('projects');
-    // _persistToLocalStorage('tasks');
+    Firestore.updateProjects(state.projects, userId);
+    Firestore.updateTasks(state.tasks, userId);
   };
 
   const deleteProject = (id: string) => {
     deleteTasksUnderProject(id);
 
-    state.projects.splice(getIndex(state.projects, id), 1);
+    state.projects = state.projects.filter((proj) => proj.id !== id);
 
-    // _persistToLocalStorage('projects');
-    // _persistToLocalStorage('tasks');
+    Firestore.updateProjects(state.projects, userId);
+    Firestore.updateTasks(state.tasks, userId);
   };
 
   const updateProjectNames = (id: string, newProjName: string) => {
@@ -48,15 +49,13 @@ const ProjectModel = (() => {
   };
 
   const deleteTasksUnderProject = (id: string) => {
-    const tasksToDelete = state.tasks.filter((el) => el.projectID === id);
+    state.tasks = state.tasks.filter((task) => task.projectID !== id);
+  };
 
-    tasksToDelete.forEach((item) => {
-      let itemIndex = state.tasks.findIndex(
-        (task) => task.projectID === item.projectID,
-      );
+  const initializeModel = async (currentUserId: string) => {
+    userId = currentUserId;
 
-      state.tasks.splice(itemIndex, 1);
-    });
+    state.projects = await Firestore.getProjects(userId);
   };
 
   return {
@@ -65,6 +64,7 @@ const ProjectModel = (() => {
     deleteProject,
     updateProjectNames,
     deleteTasksUnderProject,
+    initializeModel,
   };
 })();
 

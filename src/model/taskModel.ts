@@ -1,9 +1,13 @@
 import { state } from './state';
 
+import Firestore from './firestore';
+
 import type { TaskData, Task } from '../types/types';
 import { getIndex } from '../utils/utils';
 
 const TaskModel = (() => {
+  let userId: string;
+
   const createTask = (data: TaskData): Task => ({
     title: data.title,
     details: data.details,
@@ -13,35 +17,42 @@ const TaskModel = (() => {
     projectID: data.projectID,
     status: data.status,
     date: data.date,
-    pinned: data.pinned || false,
   });
 
   const addTask = (data: TaskData) => {
     const newTask = createTask(data);
 
-    state.tasks.unshift(newTask);
+    console.log(newTask);
 
-    // _persistToLocalStorage('tasks');
+    state.tasks = [newTask, ...state.tasks];
+
+    Firestore.updateTasks(state.tasks, userId);
   };
 
-  const updateTask = (data: Task) => {
-    const target = state.tasks[getIndex(state.tasks, data.id)] as Task;
+  const updateTask = (data: { id: string; status: string }) => {
+    const target = state.tasks[getIndex(state.tasks, data.id)];
 
-    Object.assign(target, data);
+    target && Object.assign(target, data);
 
-    // _persistToLocalStorage('tasks');
+    Firestore.updateTasks(state.tasks, userId);
   };
 
   const deleteTask = (id: string) => {
-    state.tasks.splice(getIndex(state.tasks, id), 1);
+    state.tasks = state.tasks.filter((task) => task.id !== id);
 
-    // _persistToLocalStorage('tasks');
+    Firestore.updateTasks(state.tasks, userId);
+  };
+
+  const initializeModel = async (currentUserId: string) => {
+    userId = currentUserId;
+    state.tasks = await Firestore.getTasks(userId);
   };
 
   return {
     addTask,
     updateTask,
     deleteTask,
+    initializeModel,
   };
 })();
 
