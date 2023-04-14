@@ -10,12 +10,15 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "exactOptionalPropertyTypes": false
   },
   "extends": [
     "@tsconfig/strictest/tsconfig",
     "@tsconfig/node18/tsconfig",
     "@tsconfig/esm/tsconfig"
   ],
+  "include": ["src/**/*"],
   "exclude": ["webpack.*.js"]
 }
