@@ -3,7 +3,6 @@ import { state } from './state';
 import Firestore from './firestore';
 
 import type { TaskData, Task } from '../types/types';
-import { getIndex } from '../utils/utils';
 
 const TaskModel = (() => {
   let userId: string;
@@ -19,28 +18,32 @@ const TaskModel = (() => {
     date: data.date,
   });
 
-  const addTask = (data: TaskData) => {
+  const addTask = async (data: TaskData) => {
     const newTask = createTask(data);
-
-    console.log(newTask);
 
     state.tasks = [newTask, ...state.tasks];
 
-    Firestore.updateTasks(state.tasks, userId);
+    await Firestore.updateTasks(state.tasks, userId);
   };
 
-  const updateTask = (data: { id: string; status: string }) => {
-    const target = state.tasks[getIndex(state.tasks, data.id)];
+  const updateTask = async (data: { id: string; status: string }) => {
+    const target = state.tasks.find((t) => t.id === data.id);
+    const otherTasks = state.tasks.filter((t) => t.id !== data.id);
 
-    target && Object.assign(target, data);
+    if (target) {
+      Object.assign(target, data);
 
-    Firestore.updateTasks(state.tasks, userId);
+      // Move updated task to start of array
+      state.tasks = [target, ...otherTasks];
+
+      await Firestore.updateTasks(state.tasks, userId);
+    }
   };
 
-  const deleteTask = (id: string) => {
+  const deleteTask = async (id: string) => {
     state.tasks = state.tasks.filter((task) => task.id !== id);
 
-    Firestore.updateTasks(state.tasks, userId);
+    await Firestore.updateTasks(state.tasks, userId);
   };
 
   const initializeModel = async (currentUserId: string) => {

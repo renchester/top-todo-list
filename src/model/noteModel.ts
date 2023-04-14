@@ -3,7 +3,6 @@ import { state } from './state';
 import Firestore from './firestore';
 
 import type { Note, NoteData } from '../types/types';
-import { getIndex } from '../utils/utils';
 
 const NoteModel = (() => {
   let userId: string;
@@ -14,26 +13,31 @@ const NoteModel = (() => {
     id: `ID${Math.random().toString(16).slice(2)}`,
   });
 
-  const addNote = (data: NoteData) => {
+  const addNote = async (data: NoteData) => {
     const newNote = createNote(data);
 
-    state.notes = [...state.notes, newNote];
+    state.notes = [newNote, ...state.notes];
 
-    Firestore.updateNotes(state.notes, userId);
+    await Firestore.updateNotes(state.notes, userId);
   };
 
-  const updateNote = (data: Note) => {
-    const target = state.notes[getIndex(state.notes, data.id)];
+  const updateNote = async (data: Note) => {
+    const target = state.notes.find((n) => n.id === data.id);
+    const otherNotes = state.notes.filter((n) => n.id !== data.id);
 
-    target && Object.assign(target, data);
+    if (target) {
+      Object.assign(target, data);
 
-    Firestore.updateNotes(state.notes, userId);
+      state.notes = [target, ...otherNotes];
+
+      await Firestore.updateNotes(state.notes, userId);
+    }
   };
 
-  const deleteNote = (id: string) => {
+  const deleteNote = async (id: string) => {
     state.notes = state.notes.filter((n) => n.id !== id);
 
-    Firestore.updateNotes(state.notes, userId);
+    await Firestore.updateNotes(state.notes, userId);
   };
 
   const initializeModel = async (currentUserId: string) => {

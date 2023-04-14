@@ -2,10 +2,10 @@ import { state } from './state';
 
 import Firestore from './firestore';
 
-import { getIndex } from '../utils/utils';
 import type { ProjectData, Project } from '../types/types';
 
 const ProjectModel = (() => {
+  const defaultProject = { title: 'Home', id: 'ID00000' };
   let userId: string;
 
   const createProject = (data: ProjectData) => ({
@@ -13,31 +13,38 @@ const ProjectModel = (() => {
     id: `ID${Math.random().toString(16).slice(2)}`,
   });
 
-  const addProject = (data: ProjectData) => {
+  const addProject = async (data: ProjectData) => {
     const newProject = createProject(data);
 
-    state.projects = [...state.projects, newProject];
+    state.projects = [newProject, ...state.projects];
 
-    Firestore.updateProjects(state.projects, userId);
+    await Firestore.updateProjects(state.projects, userId);
   };
 
-  const updateProject = (data: Project) => {
-    const target = state.projects[getIndex(state.projects, data.id)];
+  const updateProject = async (data: Project) => {
+    const target = state.projects.find((p) => p.id === data.id);
+    const otherProjects = state.projects.filter(
+      (p) => p.id !== data.id && p.id !== 'ID00000',
+    );
 
-    data.title && updateProjectNames(data.id, data.title);
-    target && Object.assign(target, data);
+    if (target) {
+      data.title && updateProjectNames(data.id, data.title);
+      Object.assign(target, data);
 
-    Firestore.updateProjects(state.projects, userId);
-    Firestore.updateTasks(state.tasks, userId);
+      state.projects = [defaultProject, target, ...otherProjects];
+
+      await Firestore.updateProjects(state.projects, userId);
+      await Firestore.updateTasks(state.tasks, userId);
+    }
   };
 
-  const deleteProject = (id: string) => {
+  const deleteProject = async (id: string) => {
     deleteTasksUnderProject(id);
 
     state.projects = state.projects.filter((proj) => proj.id !== id);
 
-    Firestore.updateProjects(state.projects, userId);
-    Firestore.updateTasks(state.tasks, userId);
+    await Firestore.updateProjects(state.projects, userId);
+    await Firestore.updateTasks(state.tasks, userId);
   };
 
   const updateProjectNames = (id: string, newProjName: string) => {
