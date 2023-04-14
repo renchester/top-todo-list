@@ -12,7 +12,8 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": false,
-    "exactOptionalPropertyTypes": false
+    "exactOptionalPropertyTypes": false,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "extends": [
     "@tsconfig/strictest/tsconfig",
