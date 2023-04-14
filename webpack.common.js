@@ -10,7 +10,8 @@ module.exports = {
     }),
     new Dotenv({
       path: './.env',
-      safe: true,
+      ignoreStub: true,
+      systemvars: true,
     }),
   ],
   output: {
