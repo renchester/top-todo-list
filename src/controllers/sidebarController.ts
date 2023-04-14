@@ -1,5 +1,9 @@
 import { format, isFuture, parseISO } from 'date-fns';
 
+import { state } from '../model/state';
+
+import TaskController from './taskController';
+
 import ProjectView from '../views/projectView';
 
 const SidebarController = (() => {
@@ -11,59 +15,55 @@ const SidebarController = (() => {
       date.getFullYear(),
     ];
 
-    const toShow = model.state.tasks.filter(
+    const toShow = state.tasks.filter(
       (task) => task.date === format(new Date(year, month, day), 'yyyy-MM-dd'),
     );
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   const ctrlTasksUpcoming = () => {
-    const toShow = model.state.tasks.filter((task) =>
-      isFuture(parseISO(task.date)),
+    const toShow = state.tasks.filter(
+      (task) => task.date && isFuture(parseISO(task.date)),
     );
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   const ctrlTasksFinished = () => {
-    const toShow = model.state.tasks.filter(
-      (task) => task.status === 'finished',
-    );
+    const toShow = state.tasks.filter((task) => task.status === 'finished');
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   const ctrlHighPriority = () => {
-    const toShow = model.state.tasks.filter((task) => task.priority === 'high');
+    const toShow = state.tasks.filter((task) => task.priority === 'high');
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   const ctrlMediumPriority = () => {
-    const toShow = model.state.tasks.filter(
-      (task) => task.priority === 'medium',
-    );
+    const toShow = state.tasks.filter((task) => task.priority === 'medium');
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   const ctrlLowPriority = () => {
-    const toShow = model.state.tasks.filter((task) => task.priority === 'low');
+    const toShow = state.tasks.filter((task) => task.priority === 'low');
 
     ProjectView.render(toShow);
 
-    addHandlersToTasks();
+    TaskController.addHandlersToTasks();
   };
 
   return {
