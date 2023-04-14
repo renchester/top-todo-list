@@ -13,20 +13,20 @@ const NoteController = (() => {
     NoteView.addHandlerEditNotes(ctrlEditNote);
   };
 
-  const ctrlAddNote = (data: NoteData) => {
-    NoteModel.addNote(data);
+  const ctrlAddNote = async (data: NoteData) => {
+    await NoteModel.addNote(data);
 
     ctrlShowNotes();
   };
 
-  const ctrlEditNote = (data: Note) => {
-    NoteModel.updateNote(data);
+  const ctrlEditNote = async (data: Note) => {
+    await NoteModel.updateNote(data);
 
     ctrlShowNotes();
   };
 
-  const ctrlDeleteNote = (id: string) => {
-    NoteModel.deleteNote(id);
+  const ctrlDeleteNote = async (id: string) => {
+    await NoteModel.deleteNote(id);
 
     ctrlShowNotes();
   };

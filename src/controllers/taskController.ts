@@ -23,8 +23,10 @@ const TaskController = (() => {
     addHandlersToTasks();
   };
 
-  const ctrlToggleStatus = (data: { id: string; status: string }) => {
-    TaskModel.updateTask(data);
+  const ctrlToggleStatus = async (data: { id: string; status: string }) => {
+    await TaskModel.updateTask(data);
+
+    ctrlShowAllTasks();
   };
 
   const ctrlTaskDetails = (id: string) => {
@@ -35,8 +37,8 @@ const TaskController = (() => {
     EditTaskView.addHandlerEditTaskOnModal(ctrlEditTask);
   };
 
-  const ctrlAddTask = (data: TaskData) => {
-    TaskModel.addTask(data);
+  const ctrlAddTask = async (data: TaskData) => {
+    await TaskModel.addTask(data);
 
     data.projectID && ProjectController.ctrlShowTasksByProject(data.projectID);
   };
@@ -52,14 +54,14 @@ const TaskController = (() => {
     EditTaskView.addHandlerDeleteTask(ctrlDeleteTask);
   };
 
-  const ctrlUpdateTask = (data: Task) => {
-    TaskModel.updateTask(data);
+  const ctrlUpdateTask = async (data: Task) => {
+    await TaskModel.updateTask(data);
 
     data.projectID && ProjectController.ctrlShowTasksByProject(data.projectID);
   };
 
-  const ctrlDeleteTask = (id: string) => {
-    TaskModel.deleteTask(id);
+  const ctrlDeleteTask = async (id: string) => {
+    await TaskModel.deleteTask(id);
 
     ctrlShowAllTasks();
   };

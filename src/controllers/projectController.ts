@@ -30,8 +30,8 @@ const ProjectController = (() => {
     AddTaskView.renderProjects(state.projects, null);
   };
 
-  const ctrlAddProject = (data: ProjectData) => {
-    ProjectModel.addProject(data);
+  const ctrlAddProject = async (data: ProjectData) => {
+    await ProjectModel.addProject(data);
 
     ctrlRenderProjectsOnSidebar();
   };
@@ -45,15 +45,15 @@ const ProjectController = (() => {
     EditProjectView.addHandlerDeleteProject(ctrlDeleteProject);
   };
 
-  const ctrlUpdateProject = (data: Project) => {
-    ProjectModel.updateProject(data);
+  const ctrlUpdateProject = async (data: Project) => {
+    await ProjectModel.updateProject(data);
 
     ctrlRenderProjectsOnSidebar();
     ctrlShowTasksByProject(data.id);
   };
 
-  const ctrlDeleteProject = (id: string) => {
-    ProjectModel.deleteProject(id);
+  const ctrlDeleteProject = async (id: string) => {
+    await ProjectModel.deleteProject(id);
 
     ctrlRenderProjectsOnSidebar();
   };
