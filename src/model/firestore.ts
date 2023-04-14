@@ -16,10 +16,7 @@ const Firestore = (() => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('tasks exist');
-
       tasks = docSnap.data()['tasks'] || [];
-      console.log('tasks', tasks);
     }
 
     return tasks;
@@ -33,8 +30,6 @@ const Firestore = (() => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('projecs exist');
-
       projects = docSnap.data()['projects'] || defaultProjects;
     }
 
@@ -48,8 +43,6 @@ const Firestore = (() => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('notes exist');
-
       notes = docSnap.data()['notes'] || [];
     }
 
