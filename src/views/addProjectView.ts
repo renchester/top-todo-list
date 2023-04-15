@@ -37,6 +37,7 @@ class AddProjectView extends ModalView {
 
           handler(data);
           this._closeModal();
+          this._form && this._form.reset();
         }
       });
     }

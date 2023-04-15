@@ -92,6 +92,7 @@ class AddTaskView extends ModalView {
             this._changeTitle(projectName);
 
             this._closeModal();
+            this._form && this._form.reset();
           }
         }
       });

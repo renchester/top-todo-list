@@ -2,9 +2,7 @@ import type { NoteData } from '../types/types';
 import ModalView from './modalView';
 
 class AddNoteView extends ModalView {
-  _navLink = document.querySelector(
-    '.modal-link--note',
-  ) as HTMLElement | null;
+  _navLink = document.querySelector('.modal-link--note') as HTMLElement | null;
   override _form = document.querySelector(
     '.modal-content.add-new--note',
   ) as HTMLFormElement | null;
@@ -46,6 +44,7 @@ class AddNoteView extends ModalView {
         handler(data);
 
         this._closeModal();
+        this._form && this._form.reset();
       });
     }
   };
