@@ -12,11 +12,11 @@ const Firestore = (() => {
   async function getTasks(userId: string) {
     let tasks: any = [];
 
-    const docRef = doc(db, 'users', userId);
+    const docRef = doc(db, `users/${userId}/state`, 'tasks');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      tasks = docSnap.data()['tasks'] || [];
+      tasks = docSnap.data()['data'] || [];
     }
 
     return tasks;
@@ -24,13 +24,13 @@ const Firestore = (() => {
 
   async function getProjects(userId: string) {
     const defaultProjects = [{ title: 'Home', id: 'ID00000' }];
-    let projects: any = [];
+    let projects: any = defaultProjects;
 
-    const docRef = doc(db, 'users', userId);
+    const docRef = doc(db, `users/${userId}/state`, 'projects');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      projects = docSnap.data()['projects'] || defaultProjects;
+      projects = docSnap.data()['data'] || defaultProjects;
     }
 
     return projects;
@@ -39,11 +39,11 @@ const Firestore = (() => {
   async function getNotes(userId: string) {
     let notes: any = [];
 
-    const docRef = doc(db, 'users', userId);
+    const docRef = doc(db, `users/${userId}/state`, 'notes');
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      notes = docSnap.data()['notes'] || [];
+      notes = docSnap.data()['data'] || [];
     }
 
     return notes;
@@ -51,8 +51,9 @@ const Firestore = (() => {
 
   async function updateTasks(tasksArr: Task[], userId: string) {
     try {
-      const ref = doc(db, `users`, userId);
-      await setDoc(ref, { tasks: tasksArr }, { merge: true });
+      const ref = doc(db, `users/${userId}/state`, 'tasks');
+
+      await setDoc(ref, { data: tasksArr });
     } catch (e) {
       console.error('Error updating tasks', e);
     }
@@ -60,8 +61,8 @@ const Firestore = (() => {
 
   async function updateProjects(projArr: Project[], userId: string) {
     try {
-      const ref = doc(db, `users`, userId);
-      await setDoc(ref, { projects: projArr }, { merge: true });
+      const ref = doc(db, `users/${userId}/state`, 'projects');
+      await setDoc(ref, { data: projArr });
     } catch (e) {
       console.error('Error updating projects', e);
     }
@@ -69,8 +70,8 @@ const Firestore = (() => {
 
   async function updateNotes(notesArr: Note[], userId: string) {
     try {
-      const ref = doc(db, `users`, userId);
-      await setDoc(ref, { notes: notesArr }, { merge: true });
+      const ref = doc(db, `users/${userId}/state`, 'notes');
+      await setDoc(ref, { data: notesArr });
     } catch (e) {
       console.error('Error updating notes', e);
     }
