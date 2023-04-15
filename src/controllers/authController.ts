@@ -26,6 +26,7 @@ const AuthController = (() => {
 
   function signOutUser() {
     signOut(auth);
+    window.location.reload();
   }
 
   function getProfilePhotoURL() {
