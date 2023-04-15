@@ -2,7 +2,7 @@
 
 # Project: To-do list
 
-**Live version** of the site can be found [here](https://renchester.github.io/top-todo-list/)
+[**Live version** of the site can be found here](https://renchester.github.io/top-todo-list/)
 
 This to-do list webapp allows you to take notes, list tasks, and organize these tasks through projects.
 
@@ -12,16 +12,22 @@ Features:
    This main panel displays all the tasks listed regardless of their project. Within the task bar are options to display the task details, edit the details, and delete the task entirely.
 
 2. _*Sidebar*_
-   The sidebar allows you to filter the tasks either by project, by urgency, or by their due dates. The details of the project are also editable
+   The sidebar allows you to filter the tasks either by project, by urgency, or by their due dates. The details of the project are also editable.
 
 3. _*Notes*_
-   The notes tab displays all the notes taken.
+   The notes tab displays all the notes taken. The notes themselves are also editable within each note box.
+
+4. _Authentication and Cloud Storage_
+   The app uses Firebase services (authentication and Firestore) to store user data in the cloud.
+
+   The
 
 Add tasks by clicking on the "Add" button (located at the bottom of the main panel). Enter in a description, due date, urgency, and project name. Tasks listed without specific projects will only show up in the default _Home_ panel.
 
-### Built With
+### Technologies Used
 
-- Vanilla JS
+- Typescript
+- Firebase (Authentication and FirestoreDB)
 - HTML5
 - CSS
 
