@@ -55,6 +55,8 @@ class AccountView extends View {
 
     this.btnLogout && this._unhideEl(this.btnLogout);
     this.btnLogin && this._hideEl(this.btnLogin);
+
+    this._changeTitle('All tasks');
   };
 
   hideMainContent = () => {
