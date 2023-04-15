@@ -15,8 +15,9 @@ const ProjectModel = (() => {
 
   const addProject = async (data: ProjectData) => {
     const newProject = createProject(data);
+    const otherProjects = state.projects.filter((p) => p.id !== 'ID00000');
 
-    state.projects = [newProject, ...state.projects];
+    state.projects = [defaultProject, newProject, ...otherProjects];
 
     await Firestore.updateProjects(state.projects, userId);
   };
