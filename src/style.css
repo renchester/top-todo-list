@@ -98,15 +98,16 @@ table {
 }
 
 body {
-  background-color: rgb(247, 255, 242);
+  background-color: rgb(255, 255, 255);
   overflow-y: auto;
   font-family: 'Roboto', 'Open Sans', Arial, Helvetica, sans-serif, monospace;
 }
 
 .container {
-  width: clamp(450px, 90%, 1000px);
-  height: clamp(680px, 80vh, 720px);
-  margin: 20px auto;
+  width: clamp(450px, 100%, 1000px);
+  /* height: clamp(680px, 100%, 720px); */
+  height: max(100vh, 800px);
+  margin: 0 auto;
   outline: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--container-border-radius);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
@@ -128,13 +129,57 @@ body {
   box-shadow: 5px 0px 12px -5px rgba(0, 0, 0, 0.1);
 }
 
+.sidebar-main {
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
 .logo {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   transform: skewX(-10deg);
   font-family: 'Bebas Neue', Arial, Helvetica, sans-serif, monospace;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: var(--color-purple-2);
   cursor: default;
+}
+
+.btn-log {
+  padding: 5px 15px;
+  background: transparent;
+  border: 1px solid var(--color-seafoam-6);
+  border-radius: 5px;
+
+  font-size: 0.9rem;
+  color: var(--color-seafoam-6);
+}
+
+.btn-log:hover,
+.btn-log:focus {
+  background: var(--color-seafoam-6);
+  color: white;
+}
+
+.btn-login {
+  font-size: 1.05rem;
+}
+
+.sidebar--account-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.prof-pic {
+  width: 40px;
+  border-radius: 100px;
+}
+
+.greeting {
+  font-size: 0.9rem;
+  font-family: 'Open Sans', Arial, Helvetica;
+  width: 60%;
 }
 
 .sidebar-nav {
@@ -905,7 +950,7 @@ div.edit-task--form-element > *:first-child {
 /*  FOOTER */
 
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   margin: auto;
   width: 100%;
@@ -956,7 +1001,6 @@ footer {
 @media screen and (max-width: 720px) {
   .container {
     width: 100vw;
-    height: auto;
     margin: 0;
   }
 
@@ -976,7 +1020,28 @@ footer {
     width: 100%;
   }
 
+  .sidebar-main {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-bottom: 20px;
+  }
+
+  .sidebar--account-info {
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .prof-pic {
+    width: 32px;
+  }
+
+  .greeting {
+    font-size: 0.85rem;
+  }
+
   .logo {
+    flex-grow: 1;
     margin-bottom: 10px;
     font-size: 2rem;
   }
